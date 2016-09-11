@@ -1,0 +1,143 @@
+  <div nav-bar></div>
+  <div side-bar></div>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+           Department
+      </h1>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        
+        <div class="box">
+            <div class="box-header with-border">
+                <div class="row">
+                   <div class="col-md-12">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                            <a href="#addnewdepartment" data-toggle="modal" class="btn btn btn-primary " data-toggle="dropdown" role="menu">Add New Department</a>
+                          </div>
+                      </div>
+                  </div>
+                </div> 
+                      
+                   
+                <div class="modal fade" id="addnewdepartment" data-target="#addnewdepartment">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header orange">
+                                <div class="row">
+                                     <div class="col-md-12">
+                                           <div ng-controller="DepartmentCtrl">
+                                              <form novalidate>
+                                                <div class="row">
+                                                        <div class="col-md-6 center">
+                                                          <h3>Add New Department</h3>
+                                                           </div>
+                                                       </div> 
+                                                   <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label ">Department</label>
+                                                                    <div class="">
+                                                                        <input type="text" class="form-control" ng-model="newdepartmentform.departmentname" name="departmentname" >
+                                                                        <span class="help-block">Provide Department name</span>
+                                                                     </div>
+                                                           </div>
+                                                   </div>
+                                                    <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label ">Faculty</label>
+                                                                    <div class="">
+                                                                        <select class="form-control" ng-model="newdepartmentform.faculty" id="faculty">
+                                                                          <option>Select a Faculty</option>
+                                                                          <option>Computing</option>
+                                                                          <option>Hospitality</option>
+                                                                          <option>Business</option>
+                                                                          <option>Engineering</option>
+                                                                        </select>
+                                                                    </div>
+                                                           </div>
+                                                   </div>
+                                                   <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="control-label ">Head of Department</label>
+                                                                    <div class="">
+                                                                        <input type="text" class="form-control" ng-model="newdepartmentform.hod" name="hod">
+                                                                        <span class="help-block">Provide HOD name</span>
+                                                                     </div>
+                                                           </div>
+                                                   </div>
+                                                   <div class="row">
+                                                      <div class="col-md-6">
+                                                              <div class="form-group">
+                                                                  <button ng-click="newdepartmentform.addNewDepartment()" class="btn btn btn-primary" >Add</button>
+                                                             </div>
+                                                     </div>
+                                                   </div>
+                                              </form>
+                                            </div>
+                                      </div>
+                                    </div>         
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        <div class="box-body">
+         <div class="row">
+	       <div class="col-md-12">
+               <div class="container">
+                      <h2>Departments</h2>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th>Department Name</th>
+                            <th>Faculty</th>
+                            <th>Head of Department</th>
+                            <th>Status</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Software Engineering</td>
+                            <td>Computing</td>
+                            <td>Mr. Saman</td>
+                            <td>Active</td>
+                            <td><button type="button" class="btn btn-warning">Edit</button></td>
+                          </tr>
+                          <tr>
+                            <td>Information Technology</td>
+                            <td>Computing</td>
+                            <td>Mr. Saman</td>
+                            <td>Active</td>
+                            <td><button type="button" class="btn btn-warning">Edit</button></td>
+                          </tr>
+                        <tr>
+                            <td>Business</td>
+                            <td>Business Administration</td>
+                            <td>Mr. Kasun</td>
+                            <td>Active</td>
+                            <td><button type="button" class="btn btn-warning">Edit</button></td>
+                        </tr>
+                        </tbody>
+                      </table>
+                   
+                   </div>
+            </div>
+        </div>
+        </div>
+            
+        
+      </div>
+           
+      </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+<div footer></div>
