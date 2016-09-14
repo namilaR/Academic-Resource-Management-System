@@ -2,15 +2,14 @@
 
 /**
  * @ngdoc directive
- * @name armsAngularApp.directive:sideBar
+ * @name armsAngularApp.directive:footer
  * @description
- * # sideBar
+ * # footer
  */
 angular.module('armsAngularApp')
-  .directive('sideBar', function () {
+  .directive('footer', function () {
     return {
-      templateUrl: 'views/dashboard/sidebar.html',
-      controller : 'SidebarCtrl',
+      templateUrl: 'views/master/footer.html',
       restrict: 'A',
       link: function postLink(scope, element, attrs) {
 

@@ -24,7 +24,7 @@ angular
 
         $routeProvider
       .when('/', {
-        templateUrl: 'views/dashboard/main.html',
+        templateUrl: 'views/master/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
@@ -55,7 +55,7 @@ angular
               $rootScope.bodyClass = 'login-page';
               break;
           default:
-              $rootScope.bodyClass = 'skin-blue sidebar-mini';
+              $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav';
               break;
       }
   });
