@@ -7,9 +7,11 @@ var router = express.Router();
 var StudentRoute = require('./moduleRoutes/StudentRoute');
 var UserTypeRoute = require('./moduleRoutes/UserTypeRoute');
 var LecturerRoute = require('./moduleRoutes/LecturerRoute');
+var SubjectRoute = require('./moduleRoutes/SubjectRoute');
 
 router.use('/student/', StudentRoute);
 router.use('/userType/', UserTypeRoute);
 router.use('/lecturer/', LecturerRoute);
+router.use('/subject/', SubjectRoute);
 
 module.exports = router;

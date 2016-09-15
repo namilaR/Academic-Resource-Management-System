@@ -2,39 +2,27 @@
 
 /**
  * @ngdoc function
- * @name armsAngularApp.controller:RoleRoletableCtrl
+ * @name armsAngularApp.controller:AppointmentsRequestTableCtrl
  * @description
- * # RoleRoletableCtrl
+ * # AppointmentsRequestTableCtrl
  * Controller of the armsAngularApp
  */
 angular.module('armsAngularApp')
-    .controller('RoleRoletableCtrl', [
+    .controller('RequestTableCtrl', [
         'DTOptionsBuilder',
         'DTColumnBuilder',
         '$q',
-        'dataServiceRole',
-        function(DTOptionsBuilder, DTColumnBuilder, $q, dataServiceRole) {
+        'appointmentDataservice',
+        function(DTOptionsBuilder, DTColumnBuilder, $q, appointmentDataservice) {
             this.awesomeThings = [
                 'HTML5 Boilerplate',
                 'AngularJS',
                 'Karma'
             ];
 
-            //console.log($q);
-
-
-            function getTableData() {
-                //invloke api service
-                var promise = dataServiceRole.getAllUsers().then(function(response) {
-                    //console.log(response);
-                    return response.data;
-                });
-                return promise;
-            }
-
             var vm = this;
             vm.dtOptions = DTOptionsBuilder
-                .fromFnPromise(getTableData())
+                .fromFnPromise(appointmentDataservice.getMyAppointment())
                 // Add Bootstrap compatibility
                 .withBootstrap();
             vm.dtColumns = [
@@ -43,5 +31,9 @@ angular.module('armsAngularApp')
                 DTColumnBuilder.newColumn('createdAt').withTitle('Created At'),
                 DTColumnBuilder.newColumn('updatedAt').withTitle('Updated At')
             ];
+
+
+
+
         }
     ]);

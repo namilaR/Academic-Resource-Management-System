@@ -14,10 +14,10 @@
           <ul class="nav navbar-nav">
 
             <!-- NAVIGATION AREA -->
-            <li class="dropdown">
+            <li class="dropdown" ng-class="{active : pathPara1 == 'appointments'}">
               <a href="" class="dropdown-toggle" data-toggle="dropdown">Appointments <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="">Make an appointment </a></li>
+                <li><a href="#/appointments/appointment">Appointment</a></li>
                 <li><a href="">Another action</a></li>
                 <li><a href="">Something else here</a></li>
                 <li class="divider"></li>
@@ -40,7 +40,7 @@
               </ul>
             </li>
             <!-- ALWAYS KEEP SPACE BETWEEN TWO DROP DOWN ITEMS -->
-            <li class="dropdown" ng-class="{active : pathPara1 == 'manage-users'}">
+            <li ng-show="role == 'admin'" class="dropdown" ng-class="{active : pathPara1 == 'manage-users'}">
               <a href="" class="dropdown-toggle" data-toggle="dropdown">User <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a ng-href="#/manage-users/create-u-role">User roles</a></li>
@@ -53,7 +53,7 @@
               </ul>
             </li>
             <!-- ALWAYS KEEP SPACE BETWEEN TWO DROP DOWN ITEMS -->
-            <li class="dropdown">
+            <li ng-show="role == 'admin'" class="dropdown">
               <a href="" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="">Action</a></li>
@@ -66,7 +66,7 @@
               </ul>
             </li>
             <!-- ALWAYS KEEP SPACE BETWEEN TWO DROP DOWN ITEMS -->
-            <li class="dropdown">
+            <li ng-show="role == 'admin'" class="dropdown">
               <a href="" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="">Action</a></li>
@@ -152,7 +152,7 @@
             <li class="dropdown tasks-menu">
               <!-- Menu Toggle Button -->
               <a href="" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-flag-o"></i>
+                <i class="fa fa-calendar"></i>
                 <span class="label label-danger">9</span>
               </a>
               <ul class="dropdown-menu">

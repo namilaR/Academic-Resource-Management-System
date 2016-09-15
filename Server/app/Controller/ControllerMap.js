@@ -8,4 +8,5 @@ var Controllers = {};
 Controllers.UserTypeController = require('./ModuleControllers/UserTypeController');
 Controllers.StudentController = require('./ModuleControllers/StudentController');
 Controllers.LecturerController = require('./ModuleControllers/LecturerController');
+Controllers.SubjectController = require('./ModuleControllers/SubjectController');
 module.exports = Controllers;
