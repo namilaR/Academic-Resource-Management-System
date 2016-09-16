@@ -21,35 +21,41 @@
                         </div>
                         <!-- /.box-header --> 
                         <!-- form start -->
-                        <form role="form">
+                        <form role="form" novalidate name="appointmentRequestForm" ng-submit="submitAppointmentRequestForm(appointmentRequestForm.$valid)"">
                             <div class="box-body">
-                                <div class="form-group">
+                                <div class="form-group" ng-class="{ 'has-error' : (appointmentRequestForm.subject.$invalid && appointmentRequestForm.$submitted )}">
                                     <label for="selectSubject">Subject</label>
-                                    <select ui-select2 ng-model="select2" id="selectSubject" theme="select2" class="form-control select2" data-placeholder="Pick a subject">
+                                    <select ui-select2 ng-model="appointmentRequest.subject" name="subject" id="selectSubject" theme="select2" class="form-control select2" data-placeholder="Pick a subject" required>
                                         <option value=""></option>
                                         <option ng-repeat="subject in subjects" value="{{subject.subjectCode}}">{{subject.subjectName}}</option>
                                     </select>
+                                    <p ng-show="(appointmentRequestForm.subject.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Subject is required.</p>
                                 </div>
-                                <div class="form-group">
+
+                                <div class="form-group" ng-class="{ 'has-error' : (appointmentRequestForm.lecture.$invalid && appointmentRequestForm.$submitted )}">
                                     <label for="selectLecture">Lecture</label>
-                                    <select ui-select2 ng-model="select2" id="selectLecture" theme="select2" class="form-control select2" data-placeholder="Pick a lecture">
+                                    <select ui-select2 ng-model="appointmentRequest.lecture" name="lecture"  id="selectLecture" theme="select2" class="form-control select2" data-placeholder="Pick a lecture" required>
                                         <option value=""></option>
                                         <option ng-repeat="lecture in lectures" value="{{lecture.lecturerId}}">{{lecture.lecturerFullName}}</option>
                                     </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="enterRequestTitle">Request Title</label>
-                                    <input type="text" class="form-control" id="enterRequestTitle" placeholder="Reason for appointment">
+                                    <p ng-show="(appointmentRequestForm.lecture.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Lecture is required.</p>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group"  ng-class="{ 'has-error' : (appointmentRequestForm.requestTitle.$invalid && !appointmentRequestForm.requestTitle.$pristine) || (appointmentRequestForm.requestTitle.$invalid && appointmentRequestForm.$submitted )}">
+                                    <label for="enterRequestTitle">Request Title</label>
+                                    <input type="text" ng-model="appointmentRequest.requestTitle" name="requestTitle" class="form-control" id="enterRequestTitle" placeholder="Reason for appointment" required>
+                                    <p ng-show="(appointmentRequestForm.requestTitle.$invalid && !appointmentRequestForm.requestTitle.$pristine) || (appointmentRequestForm.requestTitle.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Request title required.</p>
+                                </div>
+
+                                <div class="form-group" ng-class="{ 'has-error' : (appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted )}">
                                     <label for="enterRequestTitle">Date</label>
                                     <p class="input-group">
-                                      <input type="text" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="dt" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                      <input type="text" required name="date" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="appointmentRequest.date" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                       <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                                       </span>
                                     </p>
+                                    <p ng-show="(appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Date is required.</p>
                                   </div>
 
                                 <div class="form-group">
@@ -57,19 +63,20 @@
                                     <div class="row">
                                       <div class="col-md-6">
                                       <label class="text-italic">From</label>
-                                         <div uib-timepicker ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                                         <div uib-timepicker ng-model="appointmentRequest.startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
                                       </div>
 
                                       <div class="col-md-6">
                                       <label class="text-italic">To</label>
-                                        <div uib-timepicker ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                                        <div uib-timepicker ng-model="appointmentRequest.endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
                                       </div>
                                     </div>
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group" ng-class="{ 'has-error' : (appointmentRequestForm.brief.$invalid && !appointmentRequestForm.brief.$pristine) || (appointmentRequestForm.brief.$invalid && appointmentRequestForm.$submitted )}">
                                     <label for="enterRequestBrief">Small Brief</label>
-                                    <textarea name="name" id="enterRequestBrief" placeholder="Small description" class="form-control" rows="8" cols="40"></textarea>
+                                    <textarea ng-model="appointmentRequest.brief" name="brief" required id="enterRequestBrief" placeholder="Small description" class="form-control" rows="8" cols="40"></textarea>
+                                    <p ng-show="(appointmentRequestForm.brief.$invalid && !appointmentRequestForm.brief.$pristine) || (appointmentRequestForm.brief.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Small brief required.</p>
                                 </div>
                             </div>
                             <!-- /.box-body -->

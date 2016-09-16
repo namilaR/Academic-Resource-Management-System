@@ -7,8 +7,9 @@ var router = express.Router();
 var StudentRoute = require('./moduleRoutes/StudentRoute');
 var UserTypeRoute = require('./moduleRoutes/UserTypeRoute');
 var LecturerRoute = require('./moduleRoutes/LecturerRoute');
-var SubjectRoute = require('./moduleRoutes/SubjectRoute');
 var FacultyRoute = require('./moduleRoutes/FacultyRoute');
+var SubjectRoute = require('./moduleRoutes/SubjectRoute');
+var RequestRoute = require('./moduleRoutes/RequestRoute');
 
 
 router.use('/student/', StudentRoute);
@@ -16,6 +17,7 @@ router.use('/userType/', UserTypeRoute);
 router.use('/lecturer/', LecturerRoute);
 router.use('/subject/', SubjectRoute);
 router.use('/faculty/', FacultyRoute);
+router.use('/request/', FacultyRoute);
 
 
 module.exports = router;

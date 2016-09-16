@@ -22,11 +22,17 @@ angular.module('armsAngularApp')
 
             appointmentDataservice.getAllSubjects = function() {
                 return $http.get(baseUrl + 'subject');
-            };            
+            };
 
             appointmentDataservice.getMyAppointment = function() {
                 return $http.get(baseUrl + 'subject');
             };
+
+            appointmentDataservice.sendRequest = function() {
+                return $http.post(baseUrl + 'request/create')
+            }
+
+
 
             return appointmentDataservice;
         }

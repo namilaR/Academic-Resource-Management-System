@@ -21,6 +21,15 @@ angular.module('armsAngularApp')
 
             $scope.subjects = [];
             $scope.lectures = [];
+            $scope.appointmentRequest= {};
+
+            $scope.submitAppointmentRequestForm = function(isValid) {
+                 if (isValid) {
+                    console.log($scope.appointmentRequest);
+                    $scope.appointmentRequest = {};
+                    $scope.appointmentRequestForm.$setPristine();
+                 }
+            }
 
 
             appointmentDataservice.getAllLectures().then(
@@ -46,11 +55,11 @@ angular.module('armsAngularApp')
                 ANGULAR UI DATEPICKER CONFIGS
              *********************************/
             $scope.today = function() {
-                $scope.dt = new Date();
+                $scope.appointmentRequest.date = new Date();
             };
 
             $scope.clear = function() {
-                $scope.dt = null;
+                $scope.appointmentRequest.date = null;
             };
             $scope.dateOptions = {
 
@@ -63,7 +72,7 @@ angular.module('armsAngularApp')
                 $scope.popup2.opened = true;
             };
             $scope.setDate = function(year, month, day) {
-                $scope.dt = new Date(year, month, day);
+                $scope.appointmentRequest.date = new Date(year, month, day);
             };
             $scope.popup2 = {
                 opened: false
@@ -72,7 +81,7 @@ angular.module('armsAngularApp')
             /*********************************
                 ANGULAR UI TIMEPICKER CONFIGS
              *********************************/
-            $scope.startTime = $scope.endTime  = new Date()
+            $scope.appointmentRequest.startTime = $scope.appointmentRequest.endTime  = new Date()
             $scope.hstep = 1;
             $scope.mstep = 1;
             $scope.ismeridian = true;
@@ -80,7 +89,7 @@ angular.module('armsAngularApp')
               $scope.ismeridian = ! $scope.ismeridian;
             };
             $scope.changed = function () {
-              $log.log('Time changed to: ' + $scope.startTime + ' ' + $scope.endTime);
+              $log.log('Time changed to: ' + $scope.appointmentRequest.startTime + ' ' + $scope.appointmentRequest.endTime);
             };
 
 
