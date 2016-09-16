@@ -17,7 +17,7 @@ router.use('/userType/', UserTypeRoute);
 router.use('/lecturer/', LecturerRoute);
 router.use('/subject/', SubjectRoute);
 router.use('/faculty/', FacultyRoute);
-router.use('/request/', FacultyRoute);
+router.use('/request/', RequestRoute);
 
 
 module.exports = router;

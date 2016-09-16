@@ -28,9 +28,13 @@ angular.module('armsAngularApp')
                 return $http.get(baseUrl + 'subject');
             };
 
-            appointmentDataservice.sendRequest = function() {
-                return $http.post(baseUrl + 'request/create')
-            }
+            appointmentDataservice.sendRequest = function(appointmentRequest) {
+                return $http.post(baseUrl + 'request/create',appointmentRequest)
+            };            
+
+            appointmentDataservice.getPendingRequests = function() {
+                return $http.get(baseUrl + 'request')
+            };
 
 
 

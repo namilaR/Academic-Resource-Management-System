@@ -13,6 +13,7 @@ RequestController = function() {
     };
     
     this.create = function(RequestInstance, res) {
+        console.log("create")
         Request.create(RequestInstance).then(function(data) {
             res.send(data);
         });
@@ -55,4 +56,4 @@ RequestController = function() {
     };
 };
 
-module.exports = new StudentController();
+module.exports = new RequestController();

@@ -50,7 +50,7 @@ angular
                 controller: 'AppointmentCtrl',
                 controllerAs: 'appointment'
             })
-			.when('/faculty/main', {
+			.when(' /faculty/main', {
 				templateUrl: 'views/faculty/main.html',
 				controller: 'FacultyMainCtrl',
 				controllerAs: 'facultyController',
@@ -82,5 +82,6 @@ angular
         'GOOGLE_ANALYTICS_ID': '',
         'BASE_URL': 'http://localhost:8002/',
         'SYSTEM_LANGUAGE': ''
-    });
+    })
+    .constant("moment", moment);
 

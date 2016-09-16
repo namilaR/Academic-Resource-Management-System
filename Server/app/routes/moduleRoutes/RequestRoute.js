@@ -12,11 +12,14 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
+	console.log(req.body);
     RequestController.create(req.body, res);
+
 });
 
 router.put('/', function(req, res, next) {
     RequestController.update(req.body, res);
+
 });
 
 router.delete('/', function(req, res, next) {

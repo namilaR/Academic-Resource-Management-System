@@ -46,6 +46,7 @@ module.exports = function(config) {
       'bower_components/angular-datatables/dist/plugins/select/angular-datatables.select.js',
       'bower_components/select2/dist/js/select2.js',
       'bower_components/angular-ui-select2/src/select2.js',
+      'bower_components/moment/moment.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
