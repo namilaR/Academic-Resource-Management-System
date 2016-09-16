@@ -1,23 +1,23 @@
 'use strict';
 
-describe('Controller: NavbarCtrl', function () {
+describe('Controller: AppointmentsAppointmentCtrl', function () {
 
   // load the controller's module
   beforeEach(module('armsAngularApp'));
 
-  var NavbarCtrl,
+  var AppointmentsAppointmentCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    NavbarCtrl = $controller('NavbarCtrl', {
+    AppointmentsAppointmentCtrl = $controller('AppointmentCtrl', {
       $scope: scope
       // place here mocked dependencies
     });
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(NavbarCtrl.awesomeThings.length).toBe(3);
+    expect(AppointmentsAppointmentCtrl.awesomeThings.length).toBe(3);
   });
 });

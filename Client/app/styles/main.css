@@ -1,2 +1,20 @@
 @import "AdminLTE.css";
 @import "_all-skins.css";
+
+.content-wrapper {
+  min-height: 89vh;
+}
+.navbar {
+  background-color: #248 !important;
+}
+.box-orange {
+  border-top-color: #f93;
+}
+.text-orange {
+  color: #f93;
+}
+.sliit-logo {
+  margin: 0 auto;
+  max-width: 100px;
+
+}
