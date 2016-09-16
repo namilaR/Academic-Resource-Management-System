@@ -7,3 +7,5 @@ Client/bower_components
 Server/node_modules/
 Server/app/modules/Connection.js
 Server/.idea
+/Client/nbproject/private/
+/Server/nbproject/private/
