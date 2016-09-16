@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: NavbarCtrl', function () {
+describe('Controller: NavbarCtrlUser', function () {
 
   // load the controller's module
   beforeEach(module('armsAngularApp'));
@@ -11,7 +11,7 @@ describe('Controller: NavbarCtrl', function () {
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    NavbarCtrl = $controller('NavbarCtrl', {
+    NavbarCtrl = $controller('NavbarCtrlUser', {
       $scope: scope
       // place here mocked dependencies
     });
