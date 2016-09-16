@@ -44,6 +44,25 @@ FacultyController = function() {
             return;
         });
     };
+    
+    /*
+     * update the faculty
+     */
+    this.updateFaculty  = function(facultyId, updatedName, res) {
+        Faculty.find({
+            where: {
+                id: facultyId
+            }
+        }).then(function(data) {
+            if(data) {
+                data.update({
+                    facultyName : updatedName
+                }).then(function(result) {
+                   return res.send(result); 
+                });
+            }
+        });
+    };
 };
 
 module.exports = new FacultyController();

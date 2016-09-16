@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: navBar', function () {
+describe('Directive: navBarUser', function () {
 
   // load the directive's module
   beforeEach(module('armsAngularApp'));

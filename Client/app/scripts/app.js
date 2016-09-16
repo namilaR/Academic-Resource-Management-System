@@ -50,26 +50,37 @@ angular
                 controller: 'AppointmentCtrl',
                 controllerAs: 'appointment'
             })
+			.when('/faculty/main', {
+				templateUrl: 'views/faculty/main.html',
+				controller: 'FacultyMainCtrl',
+				controllerAs: 'facultyController',
+			})
             .otherwise({
                 redirectTo: '/'
             });
     }]).run(function($rootScope) {
-
+        $rootScope.role = 'student';
         $rootScope.$on('$routeChangeSuccess', function(event, currentRoute) {
             switch (currentRoute.templateUrl) {
                 case 'views/login.html':
                     $rootScope.bodyClass = 'login-page';
                     break;
                 default:
-                    $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav';
+                    if($rootScope.role == 'Admin'){
+                       $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini'; 
+                    }
+                    else {
+                        $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav'; 
+                    }
                     break;
             }
-            $rootScope.role = 'student';
+            
         });
     }).constant('CONFIG', {
         'APP_NAME': 'Acadamic Resource Management',
         'APP_VERSION': '0.0.1',
         'GOOGLE_ANALYTICS_ID': '',
-        'BASE_URL': 'http://localhost:3000/',
+        'BASE_URL': 'http://localhost:8002/',
         'SYSTEM_LANGUAGE': ''
     });
+

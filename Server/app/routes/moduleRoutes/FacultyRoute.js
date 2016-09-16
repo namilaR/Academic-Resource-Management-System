@@ -22,4 +22,8 @@ router.delete('/', function(req, res, next) {
     FacultyController.deleteFaculty(req.query.facultyId, res);
 });
 
+router.put('/', function(req, res, next) {
+   FacultyController.updateFaculty(req.query.facultyId, req.query.updatedName, res); 
+});
+
 module.exports = router;
