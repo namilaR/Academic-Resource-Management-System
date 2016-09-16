@@ -47,8 +47,8 @@ LecturerController = function() {
                }
             }
         }).then(function(data) {
-        res.send(data);
-    })
+            res.send(data);
+        });
     }
 };
 

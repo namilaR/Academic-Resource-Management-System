@@ -8,7 +8,7 @@
  * Controller of the armsAngularApp
  */
 angular.module('armsAngularApp')
-  .controller('NavbarCtrl', function ($scope,$location) {
+  .controller('NavbarCtrlUser', function ($scope,$location) {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
