@@ -20,18 +20,13 @@ angular.module('armsAngularApp')
                 'AngularJS',
                 'Karma'
             ];
-
             var lectureTable = this;
             var sudentTable = this;
             var user = $rootScope.user;
-            
-
-
             /*
                 student appointment display table configuration and logic
              */
             var displayStudentAppointmentTable = function() {
-
                 sudentTable.dtOptions = DTOptionsBuilder
                     .fromFnPromise(appointmentDataservice.getPendingRequests().then(function(response) {
                         console.log(response.data)
@@ -60,14 +55,12 @@ angular.module('armsAngularApp')
                     }),
                     DTColumnBuilder.newColumn(null).withTitle('Action').notSortable().renderWith(actionsHtml)
                 ];
-
                 function actionsHtml(data, type, full, meta) {
                     return '<button class="btn btn-sm btn-danger" ng-click="showCase.delete(showCase.persons[])" )"="">' +
                         '   Cancel' +
                         '</button>';
                 }
             }
-
             /*
                 lecture appointment display table configuration and logic
              */
@@ -75,7 +68,6 @@ angular.module('armsAngularApp')
                     console.log(JSON.stringify($rootScope.user));
                 lectureTable.dtOptions = DTOptionsBuilder
                     .fromFnPromise(appointmentDataservice.getStudentRequests(user).then(function(response) {
-                        
                         console.log(response.data)
                         return response.data;
                     }))
@@ -102,20 +94,17 @@ angular.module('armsAngularApp')
                     }),
                     DTColumnBuilder.newColumn(null).withTitle('Action').notSortable().renderWith(actionsHtml)
                 ];
-
                 function actionsHtml(data, type, full, meta) {
                     return '<button class="btn btn-sm btn-danger" ng-click="showCase.delete(showCase.persons[])" )"="">' +
                         '   Cancel' +
                         '</button>';
                 }
             }
-
             if ($rootScope.user.role == 'lecture') {
                 displayLectureAppointmentTable();
             }
             if ($rootScope.user.role == 'student') {
                 displayStudentAppointmentTable();
             }
-
         }
     ]);
