@@ -11,6 +11,8 @@ router.get('/', function(req, res, next) {
     LecturerController.get(res);
 });
 
+
+
 router.post('/', function(req, res, next) {
     LecturerController.create(req.body, res);
 });

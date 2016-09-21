@@ -21,6 +21,7 @@ angular.module('armsAngularApp')
             $scope.subjects = [];
             $scope.lectures = [];
             $scope.appointmentRequest = {};
+            console.log("called");
             //send request data to server
             $scope.submitAppointmentRequestForm = function(isValid) {
                 if (isValid) {
@@ -32,7 +33,7 @@ angular.module('armsAngularApp')
                     //set status to 1
                     $scope.appointmentRequest.status = 1;
                     //invoke post method and pass $scope.appointmentRequest as a JSON object 
-                    appointmentDataservice.sendRequest(JSON.stringify($scope.appointmentRequest)).then(
+                    appointmentDataservice.sendRequest($scope.appointmentRequest).then(
                         function(response) {
                             console.log(response);
                             swal({   title: "Request Sent",   text: "You request has been successfully send",   type: "success", timer :2000})

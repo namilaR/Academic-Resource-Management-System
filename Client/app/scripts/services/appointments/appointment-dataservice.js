@@ -29,11 +29,18 @@ angular.module('armsAngularApp')
             };
 
             appointmentDataservice.sendRequest = function(appointmentRequest) {
-                return $http.post(baseUrl + 'request/create',appointmentRequest)
+                return $http.post(baseUrl + 'request/create',JSON.stringify(appointmentRequest));
             };            
 
             appointmentDataservice.getPendingRequests = function() {
                 return $http.get(baseUrl + 'request')
+            };
+
+            appointmentDataservice.getStudentRequests = function(lecturer) {
+                console.log(lecturer);
+                return $http.get(baseUrl + 'request/get-student-requests',{
+                    params: lecturer
+                })
             };
 
 

@@ -58,8 +58,12 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
-    }]).run(function($rootScope) {
-        $rootScope.role = 'student';
+    }]).run(function($rootScope) {        
+        $rootScope.user = {
+            id: 2,
+            userName:'student01',
+            role:'lecture'
+        };
         $rootScope.$on('$routeChangeSuccess', function(event, currentRoute) {
             switch (currentRoute.templateUrl) {
                 case 'views/login.html':

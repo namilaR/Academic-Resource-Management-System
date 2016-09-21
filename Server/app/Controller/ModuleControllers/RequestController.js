@@ -11,6 +11,21 @@ RequestController = function() {
             res.send(data);
         });
     };
+
+    this.getStudentRequests = function(RequestInstance,res) {
+       // console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'+ RequestInstance);
+        Request.findAll({
+            where: {
+               LecturerId: RequestInstance.id,
+               status: 1 
+            }
+        }).then(function(data) {
+            console.log(data);
+            res.send(data);
+        });
+    };
+
+
     
     this.create = function(RequestInstance, res) {
         console.log("create")
