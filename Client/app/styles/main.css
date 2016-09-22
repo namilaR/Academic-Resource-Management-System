@@ -16,5 +16,8 @@
 .sliit-logo {
   margin: 0 auto;
   max-width: 100px;
+}
 
+.action-wrapper {
+  border-bottom: 1px solid #f4f4f4;
 }

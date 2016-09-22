@@ -186,6 +186,29 @@
                                                         <label class="control-label  "><a href="">Request Description</a></label>
                                                     </div>
                                                 </div>
+
+                                                <div class="form-group" ng-class="{ 'has-error' : (appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted )}">
+                                                    <label for="enterRequestTitle">Date</label>
+                                                    <p class="input-group">
+                                                        <input type="text" required name="date" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="appointmentRequest.requestDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                                        <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                      </span> {{datePicker}}
+                                                    </p>
+                                                    <p ng-show="(appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Date is required.</p>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="enterRequestTitle">Start Time</label>
+                                                    <div uib-timepicker ng-model="appointmentRequest.requestStartTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="enterRequestTitle">End Time</label>
+                                                    <div uib-timepicker ng-model="appointmentRequest.requestEndTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                                                </div>
+
+
                                             </div>
                                             <!-- /.box-body -->
                                             <div class="box-footer">
