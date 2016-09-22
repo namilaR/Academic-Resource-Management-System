@@ -33,11 +33,11 @@ angular.module('armsAngularApp')
 
     //form submit event
     $scope.submitUserRoleForm = function(isValid){
-      console.log("submitUserRoleForm");
+      console.log( $scope.userRoleForm);
       //if validation sucess
       if (isValid) {
         //invloke add new role method
-        addNewRole($scope.userRole);
+        //addNewRole($scope.userRole);
 
         //reset form
         $scope.userRole = '';

@@ -48,7 +48,9 @@ angular
             .when('/appointments/appointment', {
                 templateUrl: 'views/appointments/appointment.html',
                 controller: 'AppointmentCtrl',
-                controllerAs: 'appointment'
+                controllerAs: 'appointment',
+                bindToController: 'true'
+
             })
 			.when(' /faculty/main', {
 				templateUrl: 'views/faculty/main.html',
@@ -62,7 +64,7 @@ angular
         $rootScope.user = {
             id: 2,
             userName:'student01',
-            role:'student'
+            role:'lecture'
         };
         $rootScope.$on('$routeChangeSuccess', function(event, currentRoute) {
             switch (currentRoute.templateUrl) {
