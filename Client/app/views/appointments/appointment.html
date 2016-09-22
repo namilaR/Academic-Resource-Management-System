@@ -13,7 +13,7 @@
         </section>
         <!-- Main content -->
         <section class="content">
-            <div ng-if="user.role=='student'" class="row" >
+            <div ng-if="user.role=='student'" class="row">
                 <div class="col-md-6">
                     <div class="box box-orange">
                         <div class="box-header with-border">
@@ -51,6 +51,7 @@
                                         <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
                                       </span>
+                                      {{datePicker}}
                                     </p>
                                     <p ng-show="(appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Date is required.</p>
                                 </div>
@@ -59,6 +60,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label class="text-italic">From</label>
+                                            {{startTime}}
                                             <div uib-timepicker ng-model="appointmentRequest.requestStartTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
                                         </div>
                                         <div class="col-md-6">
@@ -100,17 +102,124 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="user.role=='lecture'"class="row">
+            <div ng-if="user.role=='lecture'" class="row">
                 <div class="col-md-12">
                     <div class="box box-orange">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Appointment Requests</h3>
+                            <h3 class="box-title">My Appointments</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
                         </div>
                         <!-- /.box-header -->
                         <!-- form start -->
                         <div class="box-body">
-                            <div ng-controller="RequestTableCtrl as showCase">
-                                <table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" class="table table-striped table-bordered"></table>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div ng-controller="RequestTableCtrl as showCase">
+                                        <table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" class="table table-striped table-bordered"></table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 action-wrapper">
+                                    <div class="">
+                                        <form action="" method="POST" role="form">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer">
+                            {{role}}
+                        </div>
+                        <!-- /.box-footer -->
+                    </div>
+                    <div class="box box-orange">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Appointment Requests</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <!-- form start -->
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div ng-controller="RequestTableCtrl as showCase">
+                                        <table datatable="" dt-options="showCase.dtOptions" dt-columns="showCase.dtColumns" class="table table-striped table-bordered"></table>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 action-wrapper">
+                                    <div class="">
+                                        <form class="form-horizontal">
+                                            <div class="box-body">
+
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-2 control-label ">DIT</label>
+                                                    <div class="col-sm-10">
+                                                        <label class="control-label  "><a href="">DIT</a></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-2 control-label  ">Student Name</label>
+                                                    <div class="col-sm-10">
+                                                        <label class="control-label  "><a href="">Student Name</a></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-2 control-label  ">Student Year</label>
+                                                    <div class="col-sm-10">
+                                                        <label class="control-label  "><a href="">Student Year</a></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-2 control-label  ">Request Title</label>
+                                                    <div class="col-sm-10">
+                                                        <label class="control-label  "><a href="">Request Title</a></label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-2 control-label  ">Request Description</label>
+                                                    <div class="col-sm-10">
+                                                        <label class="control-label  "><a href="">Request Description</a></label>
+                                                    </div>
+                                                </div>
+<!--                                                 <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-2 control-label  ">Date</label>
+                                                    <div class="col-sm-10">
+                                                        <p class="input-group">
+                                                            <input type="text" required name="date" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="appointmentRequest.requestDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                                            <span class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                                          </span>
+                                                        </p>
+                                                    </div>
+                                                </div> -->
+
+<!--                                                 <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-2 control-label  ">Start Time</label>
+                                                    <div uib-timepicker ng-model="startTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                                                </div> -->
+
+<!--                                                 <div class="form-group">
+                                                    <label for="inputEmail3" class="col-sm-2 control-label  ">End Time</label>
+                                                    <div uib-timepicker ng-model="endTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                                                </div> -->
+
+                                            </div>
+                                            <!-- /.box-body -->
+                                            <div class="box-footer">
+                                                <button type="submit" class="btn btn-default">Cancel</button>
+                                                <button type="submit" class="btn btn-info pull-right">Sign in</button>
+                                            </div>
+                                            <!-- /.box-footer -->
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <!-- /.box-body -->

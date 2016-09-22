@@ -83,20 +83,14 @@ angular.module('armsAngularApp')
                     }),
                     DTColumnBuilder.newColumn('requestEndTime').withTitle('End Time').renderWith(function(data, type, full) {
                         return moment(full.requestEndTime, 'HH:mm:ss').format("hh:mm A");
-                    }),
-                    DTColumnBuilder.newColumn('status').withTitle('Status').renderWith(function(data, type, full) {
-                        var st;
-                        if (full.status == 'true') {
-                            return '<span class="label label-warning">Pending</span>';
-                        } else {
-                            return '<span class="label label-warning">Pending</span>';
-                        }
-                    }),
-                    DTColumnBuilder.newColumn(null).withTitle('Action').notSortable().renderWith(actionsHtml)
+                    })
                 ];
                 function actionsHtml(data, type, full, meta) {
-                    return '<button class="btn btn-sm btn-danger" ng-click="showCase.delete(showCase.persons[])" )"="">' +
-                        '   Cancel' +
+                    return '<button class="btn btn-sm btn-success" ng-click="showCase.delete(showCase.persons[])" )"="">' +
+                        '   Make Appointment' +
+                        '</button>&nbsp;'+
+                        '<button class="btn btn-sm btn-danger" ng-click="showCase.delete(showCase.persons[])" )"="">' +
+                        '   Cancel Appointment' +
                         '</button>';
                 }
             }

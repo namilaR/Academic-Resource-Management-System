@@ -11,8 +11,8 @@ angular.module('armsAngularApp')
         '$scope',
         '$log',
         'appointmentDataservice',
-        'moment',
-        function($scope, $log, appointmentDataservice, moment) {
+        'moment',        
+        function($scope, $log, appointmentDataservice, moment, $setPristine) {
             this.awesomeThings = [
                 'HTML5 Boilerplate',
                 'AngularJS',
@@ -20,6 +20,9 @@ angular.module('armsAngularApp')
             ];
             $scope.subjects = [];
             $scope.lectures = [];
+            $scope.datePicker = null;
+            $scope.startTime = null;
+            $scope.endTime = null;
             $scope.appointmentRequest = {};
             console.log("called");
             //send request data to server
@@ -29,24 +32,28 @@ angular.module('armsAngularApp')
                     $scope.appointmentRequest.requestDate = moment($scope.appointmentRequest.requestDate).format("YYYY-MM-DD");
                     //convert time to SQL format
                     $scope.appointmentRequest.requestStartTime = moment($scope.appointmentRequest.requestStartTime).format("HH:mm");
-                    $scope.appointmentRequest.requestEndTime = moment($scope.appointmentRequest.requestEndTime).format("HH:mm");
+                    $scope.appointmentRequest.requestEndTime = moment($scope.appointmentRequest.requestEndTime ).format("HH:mm");
                     //set status to 1
                     $scope.appointmentRequest.status = 1;
                     //invoke post method and pass $scope.appointmentRequest as a JSON object 
-                    appointmentDataservice.sendRequest($scope.appointmentRequest).then(
-                        function(response) {
-                            console.log(response);
-                            swal({   title: "Request Sent",   text: "You request has been successfully send",   type: "success", timer :2000})
-                        },
-                        function(error) {
-                            console.error(error);
-                        }
-                    );
+                    // appointmentDataservice.sendRequest($scope.appointmentRequest).then(
+                    //     function(response) {
+                    //         console.log(response);
+                    //         swal({   title: "Request Sent",   text: "You request has been successfully send",   type: "success", timer :2000})
+                    //     },
+                    //     function(error) {
+                    //         console.error(error);
+                    //     }
+                    // );
+                    console.log($scope.appointmentRequest);
                     //reset statue
                     $scope.appointmentRequest = {};
+                    console.log($scope.appointmentRequestForm);
                     $scope.appointmentRequestForm.$setPristine();
                 }
             }
+
+
             //load all lecture details to select2 component 
             appointmentDataservice.getAllLectures().then(
                 function(response) {
@@ -66,7 +73,7 @@ angular.module('armsAngularApp')
                 }
             );
             /*********************************
-                ANGULAR UI DATEPICKER CONFIGS
+                ANGULAR UI DATEPICKER CONFIGS 
              *********************************/
             $scope.today = function() {
                 $scope.appointmentRequest.requestDate = new Date();
@@ -85,6 +92,7 @@ angular.module('armsAngularApp')
             };
             $scope.setDate = function(year, month, day) {
                 $scope.appointmentRequest.requestDate = new Date(year, month, day);
+                console.log($scope.appointmentRequest.requestDate);
             };
             $scope.popup2 = {
                 opened: false
@@ -92,7 +100,7 @@ angular.module('armsAngularApp')
             /*********************************
                 ANGULAR UI TIMEPICKER CONFIGS
              *********************************/
-            $scope.appointmentRequest.requestStartTime = $scope.appointmentRequest.requestEndTime = new Date()
+            $scope.appointmentRequest.requestStartTime  = $scope.appointmentRequest.requestEndTime   = new Date();
             $scope.hstep = 1;
             $scope.mstep = 1;
             $scope.ismeridian = true;
@@ -100,7 +108,8 @@ angular.module('armsAngularApp')
                 $scope.ismeridian = !$scope.ismeridian;
             };
             $scope.changed = function() {
-                $log.log('Time changed to: ' + $scope.appointmentRequest.requestStartTime + ' ' + $scope.appointmentRequest.requestEndTime);
+                console.log('startTime' + $scope.appointmentRequest.requestEndTime );
+                //console.log('endTime' + $scope.endTime);
             };
         }
     ]);
