@@ -11,6 +11,6 @@ Controllers.LecturerController = require('./ModuleControllers/LecturerController
 Controllers.SubjectController = require('./ModuleControllers/SubjectController');
 Controllers.RequestController = require('./ModuleControllers/RequestController');
 Controllers.FacultyController = require('./ModuleControllers/FacultyController');
+Controllers.QuestionController = require('./ModuleControllers/QuestionController');
 
 module.exports = Controllers;
-

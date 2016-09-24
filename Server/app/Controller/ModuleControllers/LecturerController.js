@@ -11,13 +11,13 @@ LecturerController = function() {
         Lecturer.findAll().then(function(data) {
           res.send(data);
         });
-    }
+    };
 
     this.create = function(LecturerInstance, res) {
         Lecturer.create(LecturerInstance).then(function(data) {
             res.send(data);
         });
-    }
+    };
 
     this.update = function(LecturerInstance, res) {
         Lecturer.update({
@@ -29,15 +29,15 @@ LecturerController = function() {
         }).then(function(data) {
             res.send(data);
         });
-    }
+    };
 
     this.delete = function(LectureInstance, res) {
         Lecturer.destroy({
             where: {
                 lecturerId: LectureInstance.lecturerId
             }
-        })
-    }
+        });
+    };
 
     this.getEachLecturer = function(LecturerName, res) {
         Lecturer.find({
@@ -49,7 +49,7 @@ LecturerController = function() {
         }).then(function(data) {
             res.send(data);
         });
-    }
+    };
 };
 
 module.exports = new LecturerController();
