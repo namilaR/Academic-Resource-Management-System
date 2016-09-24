@@ -60,7 +60,7 @@ angular
             .otherwise({
                 redirectTo: '/'
             });
-    }]).run(function($rootScope) {
+    }]).run(function($rootScope) {        
         $rootScope.user = {
             id: 3,
             userName:'student01',
@@ -73,14 +73,14 @@ angular
                     break;
                 default:
                     if($rootScope.role == 'Admin'){
-                       $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini';
+                       $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini'; 
                     }
                     else {
-                        $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav';
+                        $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav'; 
                     }
                     break;
             }
-
+            
         });
     }).constant('CONFIG', {
         'APP_NAME': 'Acadamic Resource Management',
@@ -90,3 +90,4 @@ angular
         'SYSTEM_LANGUAGE': ''
     })
     .constant("moment", moment);
+
