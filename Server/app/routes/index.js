@@ -10,6 +10,7 @@ var LecturerRoute = require('./moduleRoutes/LecturerRoute');
 var FacultyRoute = require('./moduleRoutes/FacultyRoute');
 var SubjectRoute = require('./moduleRoutes/SubjectRoute');
 var RequestRoute = require('./moduleRoutes/RequestRoute');
+var AppointmentRoute = require('./moduleRoutes/AppointmentRoute');
 
 
 router.use('/student/', StudentRoute);
@@ -18,6 +19,7 @@ router.use('/lecturer/', LecturerRoute);
 router.use('/subject/', SubjectRoute);
 router.use('/faculty/', FacultyRoute);
 router.use('/request/', RequestRoute);
+router.use('/appointment/', AppointmentRoute);
 
 
 module.exports = router;

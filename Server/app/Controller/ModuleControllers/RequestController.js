@@ -17,7 +17,8 @@ RequestController = function() {
             where: {
                 LecturerId: RequestInstance.id,
                 status: 1
-            }
+            },
+
         }).then(function(data) {
             console.log(data);
             res.send(data);

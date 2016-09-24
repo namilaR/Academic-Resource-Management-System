@@ -62,7 +62,11 @@ var Relationship = function() {
     Models.Lecturer.hasMany(Models.Room)
     Models.Room.belongsTo(Models.Lecturer)
 
-    Models.Request.belongsTo(Models.Appointment)
+
+   
+    Models.Appointment.belongsTo(Models.Request)
+
+
 
     Models.Appointment.belongsTo(Models.Room)
 

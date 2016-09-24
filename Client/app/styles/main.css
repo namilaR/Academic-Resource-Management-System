@@ -19,5 +19,9 @@
 }
 
 .action-wrapper {
-  border-bottom: 1px solid #f4f4f4;
+  border-left: 1px solid #f4f4f4;
+}
+
+.text-left {
+	text-align: left;
 }

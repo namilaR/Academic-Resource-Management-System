@@ -8,21 +8,24 @@
  */
 angular.module('armsAngularApp')
     .controller('RequestTableCtrl', [
+        '$scope',
         'DTOptionsBuilder',
         'DTColumnBuilder',
         '$q',
         'appointmentDataservice',
         'moment',
         '$rootScope',
-        function(DTOptionsBuilder, DTColumnBuilder, $q, appointmentDataservice, moment, $rootScope) {
+        function($scope,DTOptionsBuilder, DTColumnBuilder, $q, appointmentDataservice, moment, $rootScope) {
             this.awesomeThings = [
                 'HTML5 Boilerplate',
                 'AngularJS',
                 'Karma'
             ];
+            
             var lectureTable = this;
             var sudentTable = this;
             var user = $rootScope.user;
+            
             /*
                 student appointment display table configuration and logic
              */
@@ -72,7 +75,8 @@ angular.module('armsAngularApp')
                         return response.data;
                     }))
                     // Add Bootstrap compatibility
-                    .withBootstrap();
+                    .withBootstrap()
+                    .withOption('rowCallback', rowCallback);
                 lectureTable.dtColumns = [
                     DTColumnBuilder.newColumn('requestTitle').withTitle('Title').withClass('text-danger'),
                     DTColumnBuilder.newColumn('requestDate').withTitle('Date').renderWith(function(data, type, full) {
@@ -85,6 +89,7 @@ angular.module('armsAngularApp')
                         return moment(full.requestEndTime, 'HH:mm:ss').format("hh:mm A");
                     })
                 ];
+
                 function actionsHtml(data, type, full, meta) {
                     return '<button class="btn btn-sm btn-success" ng-click="showCase.delete(showCase.persons[])" )"="">' +
                         '   Make Appointment' +
@@ -93,6 +98,21 @@ angular.module('armsAngularApp')
                         '   Cancel Appointment' +
                         '</button>';
                 }
+
+                function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
+                    $('td', nRow).unbind('click');
+                    $('td', nRow).bind('click', function() {
+                        $scope.$apply(function() {
+                            someClickHandler(aData);
+                        });
+                    });
+                    return nRow;
+                };
+
+                function someClickHandler(info) {
+                    appointmentDataservice.passRequestData(info);
+                };
             }
             if ($rootScope.user.role == 'lecture') {
                 displayLectureAppointmentTable();
@@ -100,5 +120,14 @@ angular.module('armsAngularApp')
             if ($rootScope.user.role == 'student') {
                 displayStudentAppointmentTable();
             }
+
+            $scope.$on('refreshDataTables', function() {
+                if ($rootScope.user.role == 'lecture') {
+                    displayLectureAppointmentTable();
+                }
+                if ($rootScope.user.role == 'student') {
+                    displayStudentAppointmentTable();
+                }
+            });
         }
     ]);
