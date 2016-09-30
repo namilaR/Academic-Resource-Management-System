@@ -72,7 +72,7 @@ angular
                     $rootScope.bodyClass = 'login-page';
                     break;
                 default:
-                    if($rootScope.role == 'Admin'){
+                    if($rootScope.role === 'Admin'){
                        $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini';
                     }
                     else {
