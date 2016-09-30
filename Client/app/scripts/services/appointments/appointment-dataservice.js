@@ -30,17 +30,17 @@ angular.module('armsAngularApp')
         return $http.post(baseUrl + 'request/create', JSON.stringify(appointmentRequest));
       };
       appointmentDataservice.getPendingRequests = function() {
-        return $http.get(baseUrl + 'request')
+        return $http.get(baseUrl + 'request');
       };
       appointmentDataservice.getStudentRequests = function(lecturer) {
         console.log(lecturer);
         return $http.get(baseUrl + 'request/get-student-requests', {
           params: lecturer
-        })
+        });
       };
 
       appointmentDataservice.getAvailableRooms = function() {
-        return $http.get(baseUrl + 'appointment/get-available-rooms')
+        return $http.get(baseUrl + 'appointment/get-available-rooms');
       };
       appointmentDataservice.sendAppointment = function(appointment) {
         return $http.post(baseUrl + 'appointment/create', JSON.stringify(appointment));
@@ -60,6 +60,19 @@ angular.module('armsAngularApp')
 
       appointmentDataservice.refreshTables = function() {
         $rootScope.$broadcast('refreshDataTables');
+
+      };
+
+
+      appointmentDataservice.getMyAppointmentLecture = function(lecturer) {
+        return $http.get(baseUrl + 'lecturer/get-my-slots', {
+          params: lecturer
+        });
+      };
+
+      appointmentDataservice.saveTimeSlot = function(timeSlot) {
+        console.log(timeSlot);
+        return $http.post(baseUrl + 'lecturer/save-timeslot', JSON.stringify(timeSlot));
 
       };
 

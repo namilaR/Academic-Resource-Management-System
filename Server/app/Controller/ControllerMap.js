@@ -8,10 +8,10 @@ var Controllers = {};
 Controllers.UserTypeController = require('./ModuleControllers/UserTypeController');
 Controllers.StudentController = require('./ModuleControllers/StudentController');
 Controllers.LecturerController = require('./ModuleControllers/LecturerController');
+Controllers.LecturerAvailabilityController = require('./ModuleControllers/LecturerAvailabilityController');
 Controllers.SubjectController = require('./ModuleControllers/SubjectController');
 Controllers.RequestController = require('./ModuleControllers/RequestController');
 Controllers.FacultyController = require('./ModuleControllers/FacultyController');
 Controllers.AppointmentController = require('./ModuleControllers/AppointmentController');
 
 module.exports = Controllers;
-

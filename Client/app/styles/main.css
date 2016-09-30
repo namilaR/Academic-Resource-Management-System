@@ -25,3 +25,20 @@
 .text-left {
 	text-align: left;
 }
+
+.data-row {
+  margin-top: 20px;
+}
+
+.time-slot-wrapper {
+  margin-bottom: 10px;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.time-slot-wrapper input[type=number] {
+  max-width: 80px;
+  text-align: right;
+}

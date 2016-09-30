@@ -11,7 +11,8 @@ var LecturerAvailability = connection.define('LecturerAvailability',{
     fromTime : Sequelize.TIME,
     toTime : Sequelize.TIME,
     status: Sequelize.BOOLEAN,
-    hide: Sequelize.BOOLEAN
+    hide: Sequelize.BOOLEAN,
+    isChecked: Sequelize.BOOLEAN
 },{
     tableName: 'lecturerAvailability',
     updatedAt: 'updatedAt',
