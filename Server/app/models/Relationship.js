@@ -8,23 +8,37 @@ var connection = require('./Connection');
 var Relationship = function() {
 
 
-    Models.UserType.hasMany(Models.User)
-    Models.User.belongsTo(Models.UserType)
 
+    /**added by Kasun*/
+
+    //User Type Relationship
+
+    Models.UserRole.hasMany(Models.User)
+    Models.User.belongsTo(Models.UserRole)
+
+    //User Management Relationship
+    
     Models.User.hasMany(Models.Hod)
+    Models.User.hasMany(Models.Student)
+    Models.User.hasMany(Models.Lecturer)
+
     Models.Hod.belongsTo(Models.User)
+    Models.Student.belongsTo(Models.User)
+    Models.Lecturer.belongsTo(Models.User)
+ 
+    Models.Hod.belongsTo(Models.Department)
+   
+    
+
+
+
+
 
     Models.Hod.hasMany(Models.FeedBackSession)
     Models.FeedBackSession.belongsTo(Models.Hod)
 
     Models.FeedBackSession.hasMany(Models.Feedback)
     Models.Feedback.belongsTo(Models.FeedBackSession)
-
-    Models.User.hasMany(Models.Lecturer)
-    Models.Lecturer.belongsTo(Models.User)
-
-    Models.User.hasMany(Models.Student)
-    Models.Student.belongsTo(Models.User)
 
     Models.Subject.hasMany(Models.FeedBackSession)
     Models.FeedBackSession.belongsTo(Models.Subject)
@@ -64,14 +78,7 @@ var Relationship = function() {
     Models.Room.belongsTo(Models.Appointment)
 
     /**added by pasindu*/
-    Models.User.hasMany(Models.Student)
-    Models.Student.belongsTo(Models.User)
-
-    Models.User.hasMany(Models.Hod)
-    Models.Hod.belongsTo(Models.User)
-
-    Models.User.hasMany(Models.Lecturer)
-    Models.Lecturer.belongsTo(Models.User)
+   
 
     Models.Lecturer.hasMany(Models.FeedBackSession)
     Models.FeedBackSession.belongsTo(Models.Lecturer)
@@ -93,7 +100,6 @@ var Relationship = function() {
 
     Models.Room.belongsTo(Models.Faculty)
 
-    Models.Hod.belongsTo(Models.Department)
 
 
 

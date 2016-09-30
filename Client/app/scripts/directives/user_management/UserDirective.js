@@ -2,16 +2,16 @@
 
 /**
  * @ngdoc directive
- * @name armsAngularApp.directive:navBar
+ * @name armsAngularApp.directive:User
  * @description
- * # navBar
+ * # User
  */
 angular.module('armsAngularApp')
-  .directive('navBar', function () {
+  .directive('user', function () {
     return {
-      templateUrl: 'views/master/navbar.html',
+      templateUrl: 'views/user_management/users.html',
       restrict: 'A',
-      controller: 'NavbarCtrl',
+      controller: 'userCtrl',
       link: function postLink(scope, element, attrs) {
         //element.text('this is the navBar directive');
       }

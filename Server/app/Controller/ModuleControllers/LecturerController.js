@@ -8,7 +8,11 @@ var Lecturer = Modules.Lecturer;
 LecturerController = function() {
 
     this.get = function(res) {
-        Lecturer.findAll().then(function(data) {
+        Lecturer.findAll({
+            where: {
+                status: 1
+            }
+        }).then(function(data) {
           res.send(data);
         });
     }

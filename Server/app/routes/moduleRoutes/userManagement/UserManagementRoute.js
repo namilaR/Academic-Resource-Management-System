@@ -5,28 +5,29 @@
 var express = require('express');
 var router = express.Router();
 var ControllerMap = require('../../../Controller/ControllerMap');
+
+var UserRoleController = ControllerMap.UserRoleController;
+var UserController = ControllerMap.UserController;
 var StudentController = ControllerMap.StudentController;
-var StudentController = ControllerMap.StudentController;
-var StudentController = ControllerMap.StudentController;
-var StudentController = ControllerMap.StudentController;
+var LecturerController = ControllerMap.LecturerController;
+//var HodController = ControllerMap.HodController;
 
-router.get('/', function(req, res, next) {
-    StudentController.get(res);
+router.post('/add-new-user', function(req, res, next) {
+
+    UserController.create(req.body, res);
+
+    if (req.type == 'Student'){
+        StudentController.create(req.body, res);
+    }else if(req.type == 'Lecturer'){
+        LecturerController.create(req.body, res);
+    }else if(req.type == 'HOD'){
+        //HodController.create(req.body, res);
+    }
+
 });
 
-router.post('/', function(req, res, next) {
-    StudentController.create(req.body, res);
+router.get('/get-all-users', function(req, res, next) {
+    UserController.get(res);
 });
 
-router.put('/', function(req, res, next) {
-    StudentController.update(req.body, res);
-});
-
-router.delete('/', function(req, res, next) {
-    StudentController.delete(req.body, res);
-});
-
-router.get('/:studentNo', function(req, res, next) {
-    StudentController.getStudent(req.params.studentNo, res);
-});
 module.exports = router;
