@@ -2,8 +2,12 @@
  * Created by User on 9/9/2016.
  * Developer : Amila
  */
+ var Sequelize = require('sequelize');
 var Modules = require('../../models/Models');
 var Lecturer = Modules.Lecturer;
+var Appointment = Modules.Appointment;
+var Room = Modules.Room;
+var Request = Modules.Request;
 
 LecturerController = function() {
 
@@ -12,6 +16,28 @@ LecturerController = function() {
           res.send(data);
         });
     }
+
+    this.getMyAppointments = function(RequestInstance, res) {
+        console.log(RequestInstance);
+        Appointment.findAll({
+            where: {                
+                status: 1
+            },
+            include: [{
+                model: Room,
+                where: { id: Sequelize.col('Appointment.RoomId') }
+            }, {
+                model: Request,
+                where: { 
+                        //id: Sequelize.col('Appointment.RequestId'),
+                        LecturerId:RequestInstance.id,
+                }
+            }]
+        }).then(function(data) {
+            res.send(data);
+
+        });
+    };
 
     this.create = function(LecturerInstance, res) {
         Lecturer.create(LecturerInstance).then(function(data) {
@@ -47,8 +73,8 @@ LecturerController = function() {
                }
             }
         }).then(function(data) {
-        res.send(data);
-    })
+            res.send(data);
+        });
     }
 };
 
