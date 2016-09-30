@@ -55,6 +55,9 @@ var Relationship = function() {
     Models.Department.belongsToMany(Models.Faculty,{through: 'DepartmentFaculty'})
     Models.Faculty.belongsToMany(Models.Department,{through: 'DepartmentFaculty'})
 
+    Models.Center.hasMany(Models.Batch)
+    Models.Batch.belongsTo(Models.Center)
+
     Models.Department.hasMany(Models.Batch)
     Models.Batch.belongsTo(Models.Department)
 
@@ -73,9 +76,13 @@ var Relationship = function() {
     Models.Lecturer.hasMany(Models.Room)
     Models.Room.belongsTo(Models.Lecturer)
 
-    Models.Request.belongsTo(Models.Appointment)
 
-    Models.Room.belongsTo(Models.Appointment)
+   
+    Models.Appointment.belongsTo(Models.Request)
+
+
+
+    Models.Appointment.belongsTo(Models.Room)
 
     /**added by pasindu*/
    

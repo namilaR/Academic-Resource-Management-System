@@ -11,7 +11,7 @@ angular.module('armsAngularApp')
     return {
       templateUrl: 'views/master/navbar.html',
       restrict: 'A',
-      controller: 'NavbarCtrl',
+      controller: 'NavbarCtrlUser',
       link: function postLink(scope, element, attrs) {
         //element.text('this is the navBar directive');
       }

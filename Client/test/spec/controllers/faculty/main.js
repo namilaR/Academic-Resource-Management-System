@@ -1,23 +1,23 @@
 'use strict';
 
-describe('Controller: NavbarCtrl', function () {
+describe('Controller: FacultyMainCtrl', function () {
 
   // load the controller's module
   beforeEach(module('armsAngularApp'));
 
-  var NavbarCtrl,
+  var FacultyMainCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    NavbarCtrl = $controller('NavbarCtrl', {
+    FacultyMainCtrl = $controller('FacultyMainCtrl', {
       $scope: scope
       // place here mocked dependencies
     });
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(NavbarCtrl.awesomeThings.length).toBe(3);
+    expect(FacultyMainCtrl.awesomeThings.length).toBe(3);
   });
 });
