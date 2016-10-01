@@ -20,6 +20,8 @@ Models.Department = require('./entity/Department');
 Models.Batch = require('./entity/Batch');
 Models.Request = require('./entity/Request');
 Models.Room = require('./entity/Room');
-Models.Appointment = require('./entity/Appointment')
+Models.Appointment = require('./entity/Appointment');
+Models.QuestionTemplate = require('./entity/QuestionTemplate');
+
 
 module.exports = Models;

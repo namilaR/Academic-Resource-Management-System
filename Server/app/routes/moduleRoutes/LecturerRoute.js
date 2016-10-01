@@ -10,10 +10,6 @@ var LecturerController = ControllerMap.LecturerController;
 router.get('/', function(req, res, next) {
     LecturerController.get(res);
 });
-router.get('/get-my-appointments', function(req, res, next) {
-	LecturerController.getMyAppointments(req.query,res)
-    
-});
 
 router.post('/', function(req, res, next) {
     LecturerController.create(req.body, res);
