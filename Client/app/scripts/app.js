@@ -60,7 +60,7 @@ angular
         bindToController: 'true'
 
       })
-      .when(' /faculty/main', {
+      .when('/faculty/main', {
         templateUrl: 'views/faculty/main.html',
         controller: 'FacultyMainCtrl',
         controllerAs: 'facultyController',
@@ -82,7 +82,7 @@ angular
     $rootScope.user = {
       id: 3,
       userName: 'student01',
-      role: 'lecture'
+      role: 'Admin'
     };
     $rootScope.$on('$routeChangeSuccess', function(event, currentRoute) {
       switch (currentRoute.templateUrl) {
@@ -90,7 +90,7 @@ angular
           $rootScope.bodyClass = 'login-page';
           break;
         default:
-          if ($rootScope.role === 'Admin') {
+          if ($rootScope.user.role === 'Admin') {
             $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini';
           } else {
             $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav';
