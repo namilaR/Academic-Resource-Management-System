@@ -1,7 +1,7 @@
 'use strict';
 /**
  * @ngdoc service
- * @name armsAngularApp.appointments/appointmentDataService
+ * @name armsAngularApp.appointments/appointmentDataservice
  * @description
  * # appointments/appointmentDataservice
  * Service in the armsAngularApp.

@@ -65,6 +65,16 @@ angular
         controller: 'FacultyMainCtrl',
         controllerAs: 'facultyController',
       })
+      .when('/admin/questions', {
+        templateUrl: 'views/questions/questions.html',
+        controller: 'QuestionsCtrl',
+        controllerAs: 'questions'
+      })
+      .when('/hod/feedbackSession', {
+        templateUrl: 'views/feedbackSession/feedbackSession.html',
+        controller: 'QuestionsCtrl',
+        controllerAs: 'questions'
+      })
       .otherwise({
         redirectTo: '/'
       });

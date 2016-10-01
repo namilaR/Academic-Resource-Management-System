@@ -1,4 +1,5 @@
 'use strict';
+
 /**
  * @ngdoc function
  * @name armsAngularApp.controller:AppointmentsRequestTableCtrl
@@ -8,7 +9,6 @@
  */
 angular.module('armsAngularApp')
     .controller('RequestTableCtrl', [
-        '$scope',
         'DTOptionsBuilder',
         'DTColumnBuilder',
         '$q',
@@ -90,25 +90,7 @@ angular.module('armsAngularApp')
                     })
                 ];
 
-                function actionsHtml(data, type, full, meta) {
-                    return '<button class="btn btn-sm btn-success" ng-click="showCase.delete(showCase.persons[])" )"="">' +
-                        '   Make Appointment' +
-                        '</button>&nbsp;'+
-                        '<button class="btn btn-sm btn-danger" ng-click="showCase.delete(showCase.persons[])" )"="">' +
-                        '   Cancel Appointment' +
-                        '</button>';
-                }
 
-                function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
-                    $('td', nRow).unbind('click');
-                    $('td', nRow).bind('click', function() {
-                        $scope.$apply(function() {
-                            someClickHandler(aData);
-                        });
-                    });
-                    return nRow;
-                };
 
                 function someClickHandler(info) {
                     appointmentDataService.passRequestData(info);
@@ -121,13 +103,5 @@ angular.module('armsAngularApp')
                 displayStudentAppointmentTable();
             }
 
-            $scope.$on('refreshDataTables', function() {
-                if ($rootScope.user.role == 'lecture') {
-                    displayLectureAppointmentTable();
-                }
-                if ($rootScope.user.role == 'student') {
-                    displayStudentAppointmentTable();
-                }
-            });
         }
     ]);

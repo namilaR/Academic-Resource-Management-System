@@ -2,7 +2,6 @@
  * Created by User on 9/9/2016.
  * Developer : Amila
  */
- var Sequelize = require('sequelize');
 var Modules = require('../../models/Models');
 var Lecturer = Modules.Lecturer;
 var Appointment = Modules.Appointment;
@@ -50,7 +49,7 @@ LecturerController = function() {
         Lecturer.create(LecturerInstance).then(function(data) {
             res.send(data);
         });
-    }
+    };
 
     this.update = function(LecturerInstance, res) {
         Lecturer.update({
@@ -62,15 +61,15 @@ LecturerController = function() {
         }).then(function(data) {
             res.send(data);
         });
-    }
+    };
 
     this.delete = function(LectureInstance, res) {
         Lecturer.destroy({
             where: {
                 lecturerId: LectureInstance.lecturerId
             }
-        })
-    }
+        });
+    };
 
     this.getEachLecturer = function(LecturerName, res) {
         Lecturer.find({
@@ -82,7 +81,7 @@ LecturerController = function() {
         }).then(function(data) {
             res.send(data);
         });
-    }
+    };
 };
 
 function convertTo24Hours(time) {
