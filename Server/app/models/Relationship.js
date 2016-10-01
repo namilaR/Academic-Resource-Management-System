@@ -124,7 +124,7 @@ var Relationship = function() {
 
     Models.FeedBackSession.belongsTo(Models.Subject);
 
-    Models.Request.belongsTo(Models.Subject);
+   // Models.Request.belongsTo(Models.Subject);
 
     Models.FeedBackSession.belongsTo(Models.Center);
 
