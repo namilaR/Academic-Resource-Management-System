@@ -10,9 +10,9 @@ angular.module('armsAngularApp')
   .controller('AppointmentRequestsCtrl', [
     '$scope',
     '$log',
-    'appointmentDataservice',
+    'appointmentDataService',
     'moment',
-    function($scope, $log, appointmentDataservice, moment) {
+    function($scope, $log, appointmentDataService, moment) {
       $scope.subjects = [];
       $scope.lectures = [];
       $scope.appointmentRequest = {};
@@ -29,7 +29,7 @@ angular.module('armsAngularApp')
             //set status to 1
             $scope.appointmentRequest.status = 1;
             //invoke post method and pass $scope.appointmentRequest as a JSON object
-            appointmentDataservice.sendRequest($scope.appointmentRequest).then(
+            appointmentDataService.sendRequest($scope.appointmentRequest).then(
               function(response) {
                 console.log(response);
                 swal({
@@ -50,9 +50,9 @@ angular.module('armsAngularApp')
               $scope.appointmentRequestForm.$setPristine();
             }
           }
-        }
+        };
         //load all lecture details to select2 component
-      appointmentDataservice.getAllLectures().then(
+      appointmentDataService.getAllLectures().then(
         function(response) {
           $scope.lectures = response.data;
         },
@@ -61,7 +61,7 @@ angular.module('armsAngularApp')
         }
       );
       //load all lecture details to select2 component
-      appointmentDataservice.getAllSubjects().then(
+      appointmentDataService.getAllSubjects().then(
         function(response) {
           $scope.subjects = response.data;
         },
@@ -106,7 +106,6 @@ angular.module('armsAngularApp')
       };
       $scope.changed = function() {
         console.log('startTime' + $scope.appointmentRequest.requestEndTime);
-        //console.log('endTime' + $scope.endTime);
       };
     }
   ]);

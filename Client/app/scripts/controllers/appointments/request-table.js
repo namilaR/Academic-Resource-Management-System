@@ -12,10 +12,10 @@ angular.module('armsAngularApp')
         'DTOptionsBuilder',
         'DTColumnBuilder',
         '$q',
-        'appointmentDataservice',
+        'appointmentDataService',
         'moment',
         '$rootScope',
-        function($scope,DTOptionsBuilder, DTColumnBuilder, $q, appointmentDataservice, moment, $rootScope) {
+        function($scope, DTOptionsBuilder, DTColumnBuilder, $q, appointmentDataService, moment, $rootScope) {
             this.awesomeThings = [
                 'HTML5 Boilerplate',
                 'AngularJS',
@@ -31,7 +31,7 @@ angular.module('armsAngularApp')
              */
             var displayStudentAppointmentTable = function() {
                 sudentTable.dtOptions = DTOptionsBuilder
-                    .fromFnPromise(appointmentDataservice.getPendingRequests().then(function(response) {
+                    .fromFnPromise(appointmentDataService.getPendingRequests().then(function(response) {
                         console.log(response.data)
                         return response.data;
                     }))
@@ -70,7 +70,7 @@ angular.module('armsAngularApp')
             var displayLectureAppointmentTable = function() {
                     console.log(JSON.stringify($rootScope.user));
                 lectureTable.dtOptions = DTOptionsBuilder
-                    .fromFnPromise(appointmentDataservice.getStudentRequests(user).then(function(response) {
+                    .fromFnPromise(appointmentDataService.getStudentRequests(user).then(function(response) {
                         console.log(response.data)
                         return response.data;
                     }))
@@ -111,7 +111,7 @@ angular.module('armsAngularApp')
                 };
 
                 function someClickHandler(info) {
-                    appointmentDataservice.passRequestData(info);
+                    appointmentDataService.passRequestData(info);
                 };
             }
             if ($rootScope.user.role == 'lecture') {

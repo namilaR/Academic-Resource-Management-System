@@ -10,9 +10,9 @@ angular.module('armsAngularApp')
   .controller('AppointmentCtrl', [
     '$scope',
     '$log',
-    'appointmentDataservice',
+    'appointmentDataService',
     'moment',
-    function($scope, $log, appointmentDataservice, moment) {
+    function($scope, $log, appointmentDataService, moment) {
       this.awesomeThings = [
         'HTML5 Boilerplate',
         'AngularJS',
@@ -24,13 +24,13 @@ angular.module('armsAngularApp')
       var data = {};
 
       $scope.$on('requestTableRowClick', function() {
-        console.log(appointmentDataservice.message);
-        data.RequestId = appointmentDataservice.message.id;
-        $scope.pendingRequest.requestTitle = appointmentDataservice.message.requestTitle;
-        $scope.pendingRequest.requestSmallBref = appointmentDataservice.message.requestSmallBref;
-        $scope.pendingRequest.appointmentDate = moment(appointmentDataservice.message.requestDate).toDate();
-        $scope.pendingRequest.appointmentStartTime = moment(appointmentDataservice.message.requestStartTime, 'HH:mm:ss');
-        $scope.pendingRequest.appointmentEndTime = moment(appointmentDataservice.message.requestEndTime, 'HH:mm:ss');
+        console.log(appointmentDataService.message);
+        data.RequestId = appointmentDataService.message.id;
+        $scope.pendingRequest.requestTitle = appointmentDataService.message.requestTitle;
+        $scope.pendingRequest.requestSmallBref = appointmentDataService.message.requestSmallBref;
+        $scope.pendingRequest.appointmentDate = moment(appointmentDataService.message.requestDate).toDate();
+        $scope.pendingRequest.appointmentStartTime = moment(appointmentDataService.message.requestStartTime, 'HH:mm:ss');
+        $scope.pendingRequest.appointmentEndTime = moment(appointmentDataService.message.requestEndTime, 'HH:mm:ss');
       });
 
       $scope.sendAppoinmentData = function() {
@@ -43,10 +43,10 @@ angular.module('armsAngularApp')
         data.status = 1;
         data.RoomId = $scope.pendingRequest.RoomId;
         //invoke post method and pass $scope.pendingRequest as a JSON object
-        appointmentDataservice.sendAppointment(data).then(
+        appointmentDataService.sendAppointment(data).then(
           function(response) {
             console.log(response);
-            appointmentDataservice.refreshTables();
+            appointmentDataService.refreshTables();
             swal({
               title: "Request Sent",
               text: "You request has been successfully send",
@@ -62,7 +62,7 @@ angular.module('armsAngularApp')
       };
 
       //load available room details to select2 component
-      appointmentDataservice.getAvailableRooms().then(
+      appointmentDataService.getAvailableRooms().then(
         function(response) {
           $scope.rooms = response.data;
         },
@@ -78,7 +78,7 @@ angular.module('armsAngularApp')
         $scope.pendingRequest.appointmentDate = new Date();
       };
       $scope.clear = function() {
-        $scope.pendingRequest.appointmentDate = null;
+        $scope.pendingRequest.appointmentDate = null; 
       };
       $scope.dateOptions = {
         formatYear: 'yy',
