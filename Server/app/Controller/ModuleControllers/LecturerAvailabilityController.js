@@ -7,7 +7,9 @@ var Modules = require('../../models/Models');
 var LecturerAvailability = Modules.LecturerAvailability;
 var moment = require('moment');
 
-
+/**
+ * initilize basic day object
+ */
 var initDays = function () {
     return [{
         day: 'Monday',
@@ -39,19 +41,27 @@ var initDays = function () {
         timeSlots: []
     },];
 };
-
+/**
+ * convert AM PM hour to 24type hours
+ * @param  {DATE} time
+ * @return {DATE}
+ */
 function convertTo24Hours(time) {
     return moment(time).format("HH:mm");
 }
-
+/**
+ * convert 24type hour to AM PM hours
+ * @param  {DATE} time
+ * @return {DATE}
+ */
 function _24HoursToJsDateFormat(time) {
     return moment(time, 'HH:mm:ss');
 }
 
 LecturerAvailabilityController = function () {
+    //insert new time slot to database
     this.saveTimeSlot = function (LecturerAvailabilityInstance, res) {
-        ///console.log(LecturerAvailabilityInstance);
-        console.log(convertTo24Hours(LecturerAvailabilityInstance.slot.from));
+        //create new LecturerAvailability instanse and set parameters
         LecturerAvailability.create({
             day: LecturerAvailabilityInstance.dayDetails.day,
             isChecked: LecturerAvailabilityInstance.dayDetails.checked,
@@ -65,8 +75,10 @@ LecturerAvailabilityController = function () {
             res.send(data);
         });
     };
-
+    
+    //return all time slots for given lecture
     this.getMyTimeSlots = function (LecturerAvailabilityInstance, res) {
+        //get all time slots
         LecturerAvailability.findAll({
             where: {
                 status: 1,
@@ -74,13 +86,20 @@ LecturerAvailabilityController = function () {
             }
 
         }).then(function (data) {
+            //fill days array using reytrived data
             var days = [];
             days = initDays();
+            //iterate through days array
             for (var i = 0, len = days.length; i < len; i++) {
+                //iterate through data array
                 for (var j = 0, len2 = data.length; j < len2; j++) {
+                    //if day in days equals day in data then
                     if (days[i].day === data[j].day) {
+                        //day checkbox set enable
                         days[i].checked = data[j].isChecked;
+                        //push new day object to day object time slot property
                         days[i].timeSlots.push({
+                            //convert date values
                             from: _24HoursToJsDateFormat(data[j].fromTime),
                             to: _24HoursToJsDateFormat(data[j].toTime),
                             status: data[j].status,
