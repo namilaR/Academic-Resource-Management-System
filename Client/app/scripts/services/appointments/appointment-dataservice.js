@@ -1,9 +1,9 @@
 'use strict';
 /**
  * @ngdoc service
- * @name armsAngularApp.appointments/appointmentDataservice
+ * @name armsAngularApp.appointments/appointmentDataService
  * @description
- * # appointments/appointmentDataservice
+ * # appointments/appointmentDataService
  * Service in the armsAngularApp.
  */
 angular.module('armsAngularApp')
@@ -14,63 +14,64 @@ angular.module('armsAngularApp')
     function ($http, CONFIG, $rootScope) {
       //get base url
       var baseUrl = CONFIG.BASE_URL;
-      var appointmentDataservice = {};
+      var appointmentDataService = {};
       var message = '';
 
-      appointmentDataservice.getAllLectures = function () {
+
+      appointmentDataService.getAllLectures = function () {
         return $http.get(baseUrl + 'lecturer');
       };
-      appointmentDataservice.getAllSubjects = function () {
+      appointmentDataService.getAllSubjects = function () {
         return $http.get(baseUrl + 'subject');
       };
-      appointmentDataservice.getMyAppointment = function () {
+      appointmentDataService.getMyAppointment = function () {
         return $http.get(baseUrl + 'subject');
       };
 
 
-      appointmentDataservice.sendRequest = function (appointmentRequest) {
+      appointmentDataService.sendRequest = function (appointmentRequest) {
         return $http.post(baseUrl + 'request/create', JSON.stringify(appointmentRequest));
       };
-      appointmentDataservice.getPendingRequests = function () {
+      appointmentDataService.getPendingRequests = function () {
         return $http.get(baseUrl + 'request');
       };
-      appointmentDataservice.getStudentRequests = function (lecturer) {
+      appointmentDataService.getStudentRequests = function (lecturer) {
         console.log(lecturer);
         return $http.get(baseUrl + 'request/get-student-requests', {
           params: lecturer
         });
       };
 
-      appointmentDataservice.getAvailableRooms = function () {
+      appointmentDataService.getAvailableRooms = function () {
         return $http.get(baseUrl + 'appointment/get-available-rooms');
       };
-      appointmentDataservice.sendAppointment = function (appointment) {
+      appointmentDataService.sendAppointment = function (appointment) {
         return $http.post(baseUrl + 'appointment/create', JSON.stringify(appointment));
       };
 
-      appointmentDataservice.getMyAppointmentLecture = function (lecturer) {
+      appointmentDataService.getMyAppointmentLecture = function (lecturer) {
         return $http.get(baseUrl + 'lecturer/get-my-appointments', {
           params: lecturer
         });
       };
 
-      appointmentDataservice.passRequestData = function (msg) {
+      appointmentDataService.passRequestData = function (msg) {
         this.message = msg;
         $rootScope.$broadcast('requestTableRowClick');
 
       };
 
-      appointmentDataservice.refreshTables = function () {
+      appointmentDataService.refreshTables = function () {
         $rootScope.$broadcast('refreshDataTables');
 
       };
-      
+
       /**
        * get given lecture all appointments
        * @param lecturer
        * @returns {HttpPromise}
          */
-      appointmentDataservice.getMyTimeSlots= function (lecturer) {
+      appointmentDataService.getMyTimeSlots= function (lecturer) {
         return $http.get(baseUrl + 'lecturer/get-my-slots', {
           params: lecturer
         });
@@ -81,12 +82,41 @@ angular.module('armsAngularApp')
        * @param timeSlot
        * @returns {HttpPromise}
        */
-      appointmentDataservice.saveTimeSlot = function (timeSlot) {
+      appointmentDataService.saveTimeSlot = function (timeSlot) {
         console.log(timeSlot);
         return $http.post(baseUrl + 'lecturer/save-timeslot', JSON.stringify(timeSlot));
       };
 
+      /**
+       * update given time slot
+       * @param timeSlot
+       * @returns {HttpPromise}
+       */
+      appointmentDataService.updateTimeSlot = function (timeSlot) {
+        return $http.put(baseUrl + 'lecturer/update-timeslot',JSON.stringify(timeSlot));
+      };
 
-      return appointmentDataservice;
+      /**
+       * toggle visibility of given time slot
+       * @param timeSlot
+       * @returns {HttpPromise}
+       */
+      appointmentDataService.toggleTimeSlot = function (timeSlot) {
+        return $http.put(baseUrl + 'lecturer/toggle-timeslot',JSON.stringify(timeSlot));
+      };
+
+      /**
+       * remove given time slot
+       * @param timeSlot
+       * @returns {HttpPromise}
+       */
+      appointmentDataService.deleteTimeSlot = function (timeSlot) {
+        return $http.delete(baseUrl + 'lecturer/delete-timeslot',{
+          params: timeSlot
+        });
+      };
+
+
+      return appointmentDataService;
     }
   ]);

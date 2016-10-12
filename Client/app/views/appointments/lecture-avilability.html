@@ -61,7 +61,7 @@
                             <label for="">{{day.day}}</label>
 
                             <button ng-disabled="!day.checked" type="button" name="button"
-                                    ng-click="addTimeSlot($index)" class="btn btn-sm btn-success pull-right">+time slot
+                                    ng-click="addTimeSlot($index)" class="btn btn-sm btn-default pull-right">+time slot
                             </button>
                         </div>
 
@@ -69,27 +69,32 @@
                             <div class="row time-slot-wrapper" ng-repeat="timeSlot in day.timeSlots">
 
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" size="8" ng-model="timeSlot.from"
+                                    <input ng-disabled="timeSlot.visibility" type="text" class="form-control" size="8" ng-model="timeSlot.from"
                                            name="time" bs-timepicker>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <input type="text" class="form-control" size="8" ng-model="timeSlot.to" name="time"
+                                    <input  ng-disabled="timeSlot.visibility" type="text" class="form-control" size="8" ng-model="timeSlot.to" name="time"
                                            bs-timepicker>
                                 </div>
 
                                 <div class="col-md-4">
                                     <!-- {{$parent.$index}}
                                     {{ $index}} -->
-                                    <button type="button" ng-click="toggleVisibility($parent.$index,$index)"
-                                            name="button" class="btn btn-sm btn-warning">
+                                    <button ng-show="timeSlot.status"  type="button" ng-click="toggleVisibility($parent.$index,$index)"
+                                            name="button" class="btn btn-sm btn-default">
                                         <i ng-show="!timeSlot.visibility" class="fa fa-eye" aria-hidden="true"></i>
                                         <i ng-show="timeSlot.visibility" class="fa fa-eye-slash" aria-hidden="true"></i>
                                     </button>
                                     &nbsp;
-                                    <button type="button" ng-click="saveTimeSlot($parent.$index,$index)" name="button"
+                                    <button ng-show="!timeSlot.status"  type="button" ng-click="saveTimeSlot($parent.$index,$index)" name="button"
+                                            class="btn btn-sm btn-success">
+                                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                    </button>
+                                    &nbsp;
+                                    <button ng-show="timeSlot.status" ng-disabled="timeSlot.visibility"  type="button" ng-click="updateTimeSlot($parent.$index,$index)" name="button"
                                             class="btn btn-sm btn-info">
-                                        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
                                     </button>
                                     &nbsp;
                                     <button type="button" ng-click="removeTimeSlot($parent.$index,$index)" name="button"

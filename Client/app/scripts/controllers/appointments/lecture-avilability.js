@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 
 /**
  * @ngdoc function
@@ -24,13 +24,14 @@ angular.module('armsAngularApp')
       $scope.addTimeSlot = function(index) {
         $scope.days[index].timeSlots.push({});
       };
-      //controle time slot visibility
+      //controll time slot visibility
       $scope.toggleVisibility = function(parentIndex, index) {
         if ($scope.days[parentIndex].timeSlots[index].visibility) {
           $scope.days[parentIndex].timeSlots[index].visibility = false;
         } else {
           $scope.days[parentIndex].timeSlots[index].visibility = true;
         }
+        appointmentDataService.toggleTimeSlot($scope.days[parentIndex].timeSlots[index]);
       };
       //insert new timeslot to database
       $scope.saveTimeSlot = function(parentIndex, index) {
@@ -39,10 +40,28 @@ angular.module('armsAngularApp')
           dayDetails: $scope.days[parentIndex],
           slot: $scope.days[parentIndex].timeSlots[index]
         });
+        $scope.days[parentIndex].timeSlots[index].status = true;
       };
       //remove given timeslot from database
       $scope.removeTimeSlot = function(parentIndex, index) {
-        $scope.days[parentIndex].timeSlots.splice(index, 1);
+        console.log($scope.days[parentIndex].timeSlots[index]);
+        swal({
+          title: "Please Confirm",
+          text: "This message   ",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, delete it!",
+          closeOnConfirm: false
+        }, function() {
+            appointmentDataService.deleteTimeSlot($scope.days[parentIndex].timeSlots[index]);
+            $scope.days[parentIndex].timeSlots.splice(index, 1);
+            swal("Deleted!", "Time slot has been deleted.", "success");
+        });
+      };
+      //update given time slot
+      $scope.updateTimeSlot = function(parentIndex, index) {
+        appointmentDataService.updateTimeSlot($scope.days[parentIndex].timeSlots[index]);
       };
 
     }

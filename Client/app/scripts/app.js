@@ -22,8 +22,7 @@ angular
     'ui.select2',
     'mgcrea.ngStrap'
   ])
-  .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-
+  .config(['$routeProvider', '$locationProvider','$httpProvider', function($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/master/main.html',
@@ -78,11 +77,15 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  }]).run(function($rootScope) {
+  }])
+  .config(function($httpProvider){
+    $httpProvider.defaults.headers.delete = { "Content-Type": "application/json;charset=utf-8" };
+  })
+  .run(function($rootScope) {
     $rootScope.user = {
       id: 3,
       userName: 'student01',
-      role: 'Admin'
+      role: 'lecture'
     };
     $rootScope.$on('$routeChangeSuccess', function(event, currentRoute) {
       switch (currentRoute.templateUrl) {
@@ -93,7 +96,7 @@ angular
           if ($rootScope.user.role === 'Admin') {
             $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini';
           } else {
-            $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav';
+            $rootScope.bodyClass = 'hold-transition skin-blue layout-top-nav';
           }
           break;
       }

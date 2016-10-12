@@ -1,6 +1,6 @@
 /**
  * Created by User on 9/9/2016.
- * Developer : Amila
+ * Developer : Namila Radith
  */
 
 var Modules = require('../../models/Models');
@@ -10,7 +10,7 @@ var moment = require('moment');
 /**
  * initilize basic day object
  */
-var initDays = function () {
+var initDays = function() {
     return [{
         day: 'Monday',
         checked: false,
@@ -39,7 +39,7 @@ var initDays = function () {
         day: 'Sunday',
         checked: false,
         timeSlots: []
-    },];
+    }, ];
 };
 /**
  * convert AM PM hour to 24type hours
@@ -58,9 +58,13 @@ function _24HoursToJsDateFormat(time) {
     return moment(time, 'HH:mm:ss');
 }
 
-LecturerAvailabilityController = function () {
-    //insert new time slot to database
-    this.saveTimeSlot = function (LecturerAvailabilityInstance, res) {
+LecturerAvailabilityController = function() {
+    /**
+     * insert new time slot
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.saveTimeSlot = function(LecturerAvailabilityInstance, res) {
         //create new LecturerAvailability instanse and set parameters
         LecturerAvailability.create({
             day: LecturerAvailabilityInstance.dayDetails.day,
@@ -70,14 +74,18 @@ LecturerAvailabilityController = function () {
             status: 1,
             hide: false,
             LecturerId: LecturerAvailabilityInstance.LecturerId
-        }).then(function (data) {
+        }).then(function(data) {
 
             res.send(data);
         });
     };
-    
-    //return all time slots for given lecture
-    this.getMyTimeSlots = function (LecturerAvailabilityInstance, res) {
+
+    /**
+     * returns all time slots for given lecture
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.getMyTimeSlots = function(LecturerAvailabilityInstance, res) {
         //get all time slots
         LecturerAvailability.findAll({
             where: {
@@ -85,7 +93,7 @@ LecturerAvailabilityController = function () {
                 LecturerId: LecturerAvailabilityInstance.id
             }
 
-        }).then(function (data) {
+        }).then(function(data) {
             //fill days array using reytrived data
             var days = [];
             days = initDays();
@@ -100,6 +108,7 @@ LecturerAvailabilityController = function () {
                         //push new day object to day object time slot property
                         days[i].timeSlots.push({
                             //convert date values
+                            id: data[j].id,
                             from: _24HoursToJsDateFormat(data[j].fromTime),
                             to: _24HoursToJsDateFormat(data[j].toTime),
                             status: data[j].status,
@@ -111,6 +120,61 @@ LecturerAvailabilityController = function () {
 
             res.send(days);
 
+        });
+    };
+    /**
+     * delete given time slot
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.deleteTimeSlot = function(LecturerAvailabilityInstance, res) {
+        //console.log(LecturerAvailabilityInstance);
+        LecturerAvailability.find({
+            where: {
+                id: LecturerAvailabilityInstance.id
+            }
+        }).then(function(data) {
+            if (data) {
+                console.log(data);
+                data.destroy().then(function(result) {
+                    return res.send(result);
+                });
+            }
+            return;
+        });
+    };
+    /**
+     * toggle visibility of given time slot
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.toggleVisibility = function(LecturerAvailabilityInstance, res) {
+        LecturerAvailability.update({
+            hide: LecturerAvailabilityInstance.visibility
+        }, {
+            where: {
+                id: LecturerAvailabilityInstance.id,
+            }
+        }).then(function(data) {
+            res.send(data);
+        });
+    };
+    /**
+     * update given time slot
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.updateTimeSlot = function(LecturerAvailabilityInstance, res) {
+        console.log(LecturerAvailabilityInstance);
+        LecturerAvailability.update({
+            fromTime: convertTo24Hours(LecturerAvailabilityInstance.from),
+            toTime: convertTo24Hours(LecturerAvailabilityInstance.to)
+        }, {
+            where: {
+                id: LecturerAvailabilityInstance.id,
+            }
+        }).then(function(data) {
+            res.send(data);
         });
     };
 };
