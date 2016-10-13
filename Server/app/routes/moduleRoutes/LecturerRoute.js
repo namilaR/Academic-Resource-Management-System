@@ -6,7 +6,7 @@ var express = require('express');
 var router = express.Router();
 var ControllerMap = require('../../Controller/ControllerMap');
 var LecturerController = ControllerMap.LecturerController;
-var LecturerAvailabilityController = ControllerMap.LecturerAvailabilityController;
+var TimeSlotController = ControllerMap.TimeSlotController;
 
 router.get('/', function(req, res, next) {
     LecturerController.get(res);
@@ -18,27 +18,27 @@ router.get('/get-my-appointments', function(req, res, next) {
 });
 
 router.get('/get-my-slots', function(req, res, next) {
-    LecturerAvailabilityController.getMyTimeSlots(req.query, res);
+    TimeSlotController.getMyTimeSlots(req.query, res);
 
 });
 
 router.post('/save-timeslot', function(req, res, next) {
-    LecturerAvailabilityController.saveTimeSlot(req.body, res);
+    TimeSlotController.saveTimeSlot(req.body, res);
 
 });
 
 router.put('/update-timeslot', function(req, res, next) {
-    LecturerAvailabilityController.updateTimeSlot(req.body, res);
+    TimeSlotController.updateTimeSlot(req.body, res);
 
 });
 
 router.delete('/delete-timeslot', function(req, res, next) {
-    LecturerAvailabilityController.deleteTimeSlot(req.query, res);
+    TimeSlotController.deleteTimeSlot(req.query, res);
 
 });
 
 router.put('/toggle-timeslot', function(req, res, next) {
-    LecturerAvailabilityController.toggleVisibility(req.body, res);
+    TimeSlotController.toggleVisibility(req.body, res);
 });
 
 

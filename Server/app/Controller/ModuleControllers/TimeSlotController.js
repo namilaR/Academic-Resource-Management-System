@@ -4,7 +4,7 @@
  */
 
 var Modules = require('../../models/Models');
-var LecturerAvailability = Modules.LecturerAvailability;
+var TimeSlot = Modules.TimeSlot;
 var moment = require('moment');
 
 /**
@@ -58,22 +58,22 @@ function _24HoursToJsDateFormat(time) {
     return moment(time, 'HH:mm:ss');
 }
 
-LecturerAvailabilityController = function() {
+TimeSlotController = function() {
     /**
      * insert new time slot
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
-    this.saveTimeSlot = function(LecturerAvailabilityInstance, res) {
-        //create new LecturerAvailability instanse and set parameters
-        LecturerAvailability.create({
-            day: LecturerAvailabilityInstance.dayDetails.day,
-            isChecked: LecturerAvailabilityInstance.dayDetails.checked,
-            fromTime: convertTo24Hours(LecturerAvailabilityInstance.slot.from),
-            toTime: convertTo24Hours(LecturerAvailabilityInstance.slot.to),
+    this.saveTimeSlot = function(TimeSlotInstance, res) {
+        //create new TimeSlot instanse and set parameters
+        TimeSlot.create({
+            day: TimeSlotInstance.dayDetails.day,
+            isChecked: TimeSlotInstance.dayDetails.checked,
+            fromTime: convertTo24Hours(TimeSlotInstance.slot.from),
+            toTime: convertTo24Hours(TimeSlotInstance.slot.to),
             status: 1,
             hide: false,
-            LecturerId: LecturerAvailabilityInstance.LecturerId
+            LecturerId: TimeSlotInstance.LecturerId
         }).then(function(data) {
 
             res.send(data);
@@ -85,12 +85,12 @@ LecturerAvailabilityController = function() {
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
-    this.getMyTimeSlots = function(LecturerAvailabilityInstance, res) {
+    this.getMyTimeSlots = function(TimeSlotInstance, res) {
         //get all time slots
-        LecturerAvailability.findAll({
+        TimeSlot.findAll({
             where: {
                 status: 1,
-                LecturerId: LecturerAvailabilityInstance.id
+                LecturerId: TimeSlotInstance.id
             }
 
         }).then(function(data) {
@@ -127,11 +127,11 @@ LecturerAvailabilityController = function() {
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
-    this.deleteTimeSlot = function(LecturerAvailabilityInstance, res) {
-        //console.log(LecturerAvailabilityInstance);
-        LecturerAvailability.find({
+    this.deleteTimeSlot = function(TimeSlotInstance, res) {
+        //console.log(TimeSlotInstance);
+        TimeSlot.find({
             where: {
-                id: LecturerAvailabilityInstance.id
+                id: TimeSlotInstance.id
             }
         }).then(function(data) {
             if (data) {
@@ -148,12 +148,12 @@ LecturerAvailabilityController = function() {
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
-    this.toggleVisibility = function(LecturerAvailabilityInstance, res) {
-        LecturerAvailability.update({
-            hide: LecturerAvailabilityInstance.visibility
+    this.toggleVisibility = function(TimeSlotInstance, res) {
+        TimeSlot.update({
+            hide: TimeSlotInstance.visibility
         }, {
             where: {
-                id: LecturerAvailabilityInstance.id,
+                id: TimeSlotInstance.id,
             }
         }).then(function(data) {
             res.send(data);
@@ -164,18 +164,18 @@ LecturerAvailabilityController = function() {
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
-    this.updateTimeSlot = function(LecturerAvailabilityInstance, res) {
-        console.log(LecturerAvailabilityInstance);
-        LecturerAvailability.update({
-            fromTime: convertTo24Hours(LecturerAvailabilityInstance.from),
-            toTime: convertTo24Hours(LecturerAvailabilityInstance.to)
+    this.updateTimeSlot = function(TimeSlotInstance, res) {
+        console.log(TimeSlotInstance);
+        TimeSlot.update({
+            fromTime: convertTo24Hours(TimeSlotInstance.from),
+            toTime: convertTo24Hours(TimeSlotInstance.to)
         }, {
             where: {
-                id: LecturerAvailabilityInstance.id,
+                id: TimeSlotInstance.id,
             }
         }).then(function(data) {
             res.send(data);
         });
     };
 };
-module.exports = new LecturerAvailabilityController();
+module.exports = new TimeSlotController();

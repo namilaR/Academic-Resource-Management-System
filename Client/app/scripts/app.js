@@ -85,7 +85,7 @@ angular
     $rootScope.user = {
       id: 3,
       userName: 'student01',
-      role: 'lecture'
+      role: 'student'
     };
     $rootScope.$on('$routeChangeSuccess', function(event, currentRoute) {
       switch (currentRoute.templateUrl) {
