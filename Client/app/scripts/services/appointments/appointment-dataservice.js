@@ -116,6 +116,18 @@ angular.module('armsAngularApp')
         });
       };
 
+      /**
+       * get free time slots for given lecturer
+       * @param timeSlot
+       * @returns {HttpPromise}
+       */
+      appointmentDataService.getAvailableTimeSlots = function (lecturer) {
+        console.log(lecturer);
+        return $http.get(baseUrl + 'lecturer/available-timeslot',{
+          params: lecturer
+        });
+      };
+
 
       return appointmentDataService;
     }

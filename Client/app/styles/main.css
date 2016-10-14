@@ -39,3 +39,11 @@
   max-width: 80px;
   text-align: right;
 }
+
+.btn-time-slot {
+  margin: 10px;
+}
+
+.text-white {
+  color: white; 
+}

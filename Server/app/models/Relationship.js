@@ -68,8 +68,8 @@ var Relationship = function() {
     Models.Student.hasMany(Models.Appointment);
     Models.Appointment.belongsTo(Models.Student);
 
-    Models.Lecturer.hasMany(Models.Appointment);
-    Models.Appointment.belongsTo(Models.Lecturer);
+    Models.TimeSlot.hasMany(Models.Appointment);
+    Models.Appointment.belongsTo(Models.TimeSlot);
 
     Models.Lecturer.hasMany(Models.TimeSlot);
     Models.TimeSlot.belongsTo(Models.Lecturer);

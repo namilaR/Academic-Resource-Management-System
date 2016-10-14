@@ -8,11 +8,12 @@
  */
 angular.module('armsAngularApp')
   .controller('AppointmentCtrl', [
+    '$rootScope',
     '$scope',
     '$log',
     'appointmentDataService',
     'moment',
-    function($scope, $log, appointmentDataService, moment) {
+    function($rootScope,$scope, $log, appointmentDataService, moment) {
       this.awesomeThings = [
         'HTML5 Boilerplate',
         'AngularJS',
@@ -71,45 +72,22 @@ angular.module('armsAngularApp')
         }
       );
 
-      /*********************************
-          ANGULAR UI DATEPICKER CONFIGS
-       *********************************/
-      $scope.today = function() {
-        $scope.pendingRequest.appointmentDate = new Date();
+      $scope.dataChange = function(){
+        appointmentDataService.getAvailableTimeSlots({id:this.appointmentRequest.LecturerId,date:this.selectedDate}).then(
+          function(response) {
+            console.log(response);
+            $scope.availableTimeSlots = response.data;
+          },
+          function(error) {
+            console.error(error);
+          });
       };
-      $scope.clear = function() {
-        $scope.pendingRequest.appointmentDate = null; 
-      };
-      $scope.dateOptions = {
-        formatYear: 'yy',
-        maxDate: new Date(2020, 5, 22),
-        minDate: new Date(),
-        startingDay: 1
-      };
-      $scope.open2 = function() {
-        $scope.popup2.opened = true;
-      };
-      $scope.setDate = function(year, month, day) {
-        $scope.pendingRequest.appointmentDate = new Date(year, month, day);
-        console.log($scope.pendingRequest.appointmentDate);
-      };
-      $scope.popup2 = {
-        opened: false
-      };
-      /*********************************
-          ANGULAR UI TIMEPICKER CONFIGS
-       *********************************/
 
-      $scope.hstep = 1;
-      $scope.mstep = 1;
-      $scope.ismeridian = true;
-      $scope.toggleMode = function() {
-        $scope.ismeridian = !$scope.ismeridian;
+      $scope.selectTimeSlot = function(timeSlot) {
+        $scope.pendingRequest.selectedTimeSlot = timeSlot;
+        console.log(timeSlot);
       };
-      $scope.changed = function() {
-        console.log('startTime' + $scope.pendingRequest.appointmentEndTime);
-        //console.log('endTime' + $scope.endTime);
-      };
+
 
     }
   ]);

@@ -2,10 +2,11 @@
  * Created by User on 9/9/2016.
  * Developer : Namila Radith
  */
-
+var Sequelize = require('../../models/Connection.js');
 var Modules = require('../../models/Models');
 var TimeSlot = Modules.TimeSlot;
 var moment = require('moment');
+
 
 /**
  * initilize basic day object
@@ -41,6 +42,8 @@ var initDays = function() {
         timeSlots: []
     }, ];
 };
+
+
 /**
  * convert AM PM hour to 24type hours
  * @param  {DATE} time
@@ -50,12 +53,55 @@ function convertTo24Hours(time) {
     return moment(time).format("HH:mm");
 }
 /**
- * convert 24type hour to AM PM hours
+ * convert 24type hour to JS format
  * @param  {DATE} time
  * @return {DATE}
  */
 function _24HoursToJsDateFormat(time) {
     return moment(time, 'HH:mm:ss');
+}
+
+/**
+ * convert 24type hour to AM PM
+ * @param  {DATE} time
+ * @return {DATE}
+ */
+function _24HoursToAmPm(time) {
+    return moment(time, 'HH:mm:ss').format("hh:mm A");
+}
+
+/**
+ * convert JS date to SQL date
+ * @param  {DATE} time
+ * @return {DATE}
+ */
+function JSDateToSQLDate(date) {
+    return moment(date).format("YYYY-MM-DD");
+}
+
+/**
+ * get day from JS date
+ * @param  {DATE} time
+ * @return {DATE}
+ */
+function getDay(date) {
+    var number = moment(date).day();
+    switch(number) {
+      case 0:
+        return 'Sunday';
+      case 1:
+        return 'Monday';
+      case 2:
+        return 'Tuesday';
+      case 3:
+        return 'Wednesday';
+      case 4:
+        return 'Thursday';
+      case 5:
+        return 'Friday';
+      case 6:
+        return 'Saturday';
+    }
 }
 
 TimeSlotController = function() {
@@ -85,12 +131,12 @@ TimeSlotController = function() {
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
-    this.getMyTimeSlots = function(TimeSlotInstance, res) {
+    this.getMyTimeSlots = function(LectureInstance, res) {
         //get all time slots
         TimeSlot.findAll({
             where: {
                 status: 1,
-                LecturerId: TimeSlotInstance.id
+                LecturerId: LectureInstance.id
             }
 
         }).then(function(data) {
@@ -176,6 +222,38 @@ TimeSlotController = function() {
         }).then(function(data) {
             res.send(data);
         });
+    };
+
+    this.getAvailableTimeSlots = function(DataInstance, res) {
+      TimeSlot.findAll({
+        where: {
+            status: 1,
+            LecturerId: DataInstance.id,
+            day: getDay(DataInstance.date),
+            id:{
+              $notIn:[Sequelize.literal ("SELECT a.TimeSlotId FROM appointment a WHERE a.appointmentDate >= '"+JSDateToSQLDate(DataInstance.date)+"'")]
+            }
+        }
+      })
+      .then(function(data){
+        var timeSlots = [];
+        for (var i = 0, len2 = data.length; i < len2; i++) {
+          timeSlots.push({
+            id: data[i].id,
+            day: data[i].day,
+            fromTime: _24HoursToAmPm(data[i].fromTime),
+            toTime: _24HoursToAmPm(data[i].toTime),
+            status: data[i].status,
+            hide: data[i].hide,
+            isChecked: data[i].isChecked,
+            createdAt: data[i].createdAt,
+            updatedAt: data[i].updatedAt,
+            deletedAt: data[i].deletedAt,
+            LecturerId: data[i].LecturerId
+          });
+        }
+        res.send(timeSlots);
+      });
     };
 };
 module.exports = new TimeSlotController();

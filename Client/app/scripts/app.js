@@ -16,7 +16,6 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.bootstrap',
     'datatables',
     'datatables.bootstrap',
     'ui.select2',

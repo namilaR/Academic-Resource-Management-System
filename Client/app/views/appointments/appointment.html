@@ -39,28 +39,25 @@
                   </select>
 									<p ng-show="(appointmentRequestForm.lecture.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Lecture is required.</p>
 								</div>
+								<div class="form-group" ng-class="{ 'has-error' : (appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted )}">
+									<label for="enterRequestTitle">Date</label>
+										<input type="text" bs-datepicker data-autoclose="1" data-date-format="dd-MM-yyyy" type="text" class="form-control" ng-model="selectedDate" name="date" ng-change="dataChange()">										
+									<p ng-show="(appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Date is required.</p>
+								</div>
 								<div class="form-group">
 									<label for="enterRequestTitle">Available Time Slots</label>
-									<select ui-select2 ng-model="appointmentRequest.SubjectId" name="subject" id="selectSubject" theme="select2" class="form-control select2" data-placeholder="Pick a subject" required>
-											<option value=""></option>
-											<option ng-repeat="subject in subjects" value="{{subject.id}}">{{subject.subjectName}}</option>
-									</select>
+									<div class="row">
+										<div class="col-md-12">
+											<a ng-repeat=" timeSlot in availableTimeSlots" ng-class="{'btn-success text-white' : pendingRequest.selectedTimeSlot.id == timeSlot.id }" ng-click="selectTimeSlot(timeSlot)" class="btn btn-time-slot btn-default"><strong>{{timeSlot.day}}</strong><br>{{timeSlot.fromTime}}-{{timeSlot.toTime}}</a>
+										</div>
+									</div>
+
 								</div>
 								<div class="form-group" ng-class="{ 'has-error' : (appointmentRequestForm.requestTitle.$invalid && !appointmentRequestForm.requestTitle.$pristine) || (appointmentRequestForm.requestTitle.$invalid && appointmentRequestForm.$submitted )}">
 									<label for="enterRequestTitle">Request Title</label>
 									<input type="text" ng-model="appointmentRequest.requestTitle" name="requestTitle" class="form-control" id="enterRequestTitle" placeholder="Reason for appointment" required>
 									<p ng-show="(appointmentRequestForm.requestTitle.$invalid && !appointmentRequestForm.requestTitle.$pristine) || (appointmentRequestForm.requestTitle.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Request title required.</p>
 								</div>
-								<!-- <div class="form-group" ng-class="{ 'has-error' : (appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted )}">
-									<label for="enterRequestTitle">Date</label>
-									<p class="input-group">
-										<input type="text" required name="date" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="appointmentRequest.requestDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
-										<span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span> {{datePicker}}
-									</p>
-									<p ng-show="(appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Date is required.</p>
-								</div> -->
 								<div class="form-group" ng-class="{ 'has-error' : (appointmentRequestForm.brief.$invalid && !appointmentRequestForm.brief.$pristine) || (appointmentRequestForm.brief.$invalid && appointmentRequestForm.$submitted )}">
 									<label for="enterRequestBrief">Small Brief</label>
 									<textarea ng-model="appointmentRequest.requestSmallBref" name="brief" required id="enterRequestBrief" placeholder="Small description" class="form-control" rows="8" cols="40"></textarea>

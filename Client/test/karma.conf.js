@@ -30,7 +30,6 @@ module.exports = function(config) {
       'bower_components/angular-sanitize/angular-sanitize.js',
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/iCheck/icheck.min.js',
-      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/datatables.net/js/jquery.dataTables.js',
       'bower_components/angular-datatables/dist/angular-datatables.js',
       'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js',
