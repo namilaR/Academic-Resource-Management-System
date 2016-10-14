@@ -44,14 +44,21 @@ angular
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
-      .when('/appointments/appointment', {
+      .when('/l/appointments/appointment', {
         templateUrl: 'views/appointments/appointment.html',
         controller: 'AppointmentCtrl',
         controllerAs: 'appointment',
         bindToController: 'true'
 
       })
-      .when('/appointments/my-availability', {
+      .when('/s/appointments/appointment', {
+        templateUrl: 'views/appointments/appointment-request.html',
+        controller: 'AppointmentRequestsCtrl',
+        controllerAs: 'appointmentRequest',
+        bindToController: 'true'
+
+      })
+      .when('/l/appointments/my-availability', {
         templateUrl: 'views/appointments/lecture-avilability.html',
         controller: 'LectureAvilabilityCtrl',
         controllerAs: 'lectureAvailability',

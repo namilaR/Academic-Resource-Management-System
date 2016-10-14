@@ -37,9 +37,6 @@ angular.module('armsAngularApp')
       $scope.sendAppoinmentData = function() {
         //convert date to SQL format
         data.appointmentDate = moment($scope.pendingRequest.appointmentDate).format("YYYY-MM-DD");
-        //convert time to SQL format
-        data.appointmentStartTime = moment($scope.pendingRequest.appointmentStartTime).format("HH:mm");
-        data.appointmentEndTime = moment($scope.pendingRequest.appointmentEndTime).format("HH:mm");
         //set status to 1
         data.status = 1;
         data.RoomId = $scope.pendingRequest.RoomId;
@@ -72,21 +69,7 @@ angular.module('armsAngularApp')
         }
       );
 
-      $scope.dataChange = function(){
-        appointmentDataService.getAvailableTimeSlots({id:this.appointmentRequest.LecturerId,date:this.selectedDate}).then(
-          function(response) {
-            console.log(response);
-            $scope.availableTimeSlots = response.data;
-          },
-          function(error) {
-            console.error(error);
-          });
-      };
 
-      $scope.selectTimeSlot = function(timeSlot) {
-        $scope.pendingRequest.selectedTimeSlot = timeSlot;
-        console.log(timeSlot);
-      };
 
 
     }

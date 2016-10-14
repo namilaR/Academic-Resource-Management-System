@@ -69,43 +69,22 @@ angular.module('armsAngularApp')
           console.error(error);
         }
       );
-      /*********************************
-          ANGULAR UI DATEPICKER CONFIGS
-       *********************************/
-      $scope.today = function() {
-        $scope.appointmentRequest.requestDate = new Date();
+
+      $scope.dataChange = function(){
+        appointmentDataService.getAvailableTimeSlots({id:this.appointmentRequest.LecturerId,date:this.selectedDate}).then(
+          function(response) {
+            console.log(response);
+            $scope.availableTimeSlots = response.data;
+          },
+          function(error) {
+            console.error(error);
+          });
       };
-      $scope.clear = function() {
-        $scope.appointmentRequest.requestDate = null;
+
+      $scope.selectTimeSlot = function(timeSlot) {
+        $scope.appointmentRequest.selectedTimeSlot = timeSlot;
+        console.log(timeSlot);
       };
-      $scope.dateOptions = {
-        formatYear: 'yy',
-        maxDate: new Date(2020, 5, 22),
-        minDate: new Date(),
-        startingDay: 1
-      };
-      $scope.open2 = function() {
-        $scope.popup2.opened = true;
-      };
-      $scope.setDate = function(year, month, day) {
-        $scope.appointmentRequest.requestDate = new Date(year, month, day);
-        console.log($scope.appointmentRequest.requestDate);
-      };
-      $scope.popup2 = {
-        opened: false
-      };
-      /*********************************
-          ANGULAR UI TIMEPICKER CONFIGS
-       *********************************/
-      $scope.appointmentRequest.requestStartTime = $scope.appointmentRequest.requestEndTime = new Date();
-      $scope.hstep = 1;
-      $scope.mstep = 1;
-      $scope.ismeridian = true;
-      $scope.toggleMode = function() {
-        $scope.ismeridian = !$scope.ismeridian;
-      };
-      $scope.changed = function() {
-        console.log('startTime' + $scope.appointmentRequest.requestEndTime);
-      };
+
     }
   ]);

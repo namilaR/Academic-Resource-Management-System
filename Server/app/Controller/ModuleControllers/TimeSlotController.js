@@ -223,12 +223,17 @@ TimeSlotController = function() {
             res.send(data);
         });
     };
-
+    /**
+     * list all free TimeSlots for given date and lecture
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
     this.getAvailableTimeSlots = function(DataInstance, res) {
       TimeSlot.findAll({
         where: {
             status: 1,
             LecturerId: DataInstance.id,
+            hide: 0,
             day: getDay(DataInstance.date),
             id:{
               $notIn:[Sequelize.literal ("SELECT a.TimeSlotId FROM appointment a WHERE a.appointmentDate >= '"+JSDateToSQLDate(DataInstance.date)+"'")]
