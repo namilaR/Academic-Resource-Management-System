@@ -4,6 +4,7 @@ var Sequelize = require('sequelize');
 var Appointment = Modules.Appointment;
 var TimeSlot = Modules.TimeSlot;
 var Student = Modules.Student;
+var Room = Modules.Room;
 
 /**
  * convert JS date to SQL date
@@ -59,8 +60,7 @@ AppointmentController = function() {
     Appointment.find({
       where: {
           status: 1,
-          //id: AppoimnetInstance.id,
-          id: 18,
+          id: AppoimnetInstance.id,
         },
         include: [
           {
@@ -96,6 +96,68 @@ AppointmentController = function() {
     })
     .then(function(data){
       res.send(data);
+    });
+  };
+
+  this.getMyAllApprovedAppoinments= function(LectureInstance, res){
+    Appointment.findAll({
+      where: {
+          status: 1,
+          approved : 1,
+          TimeSlotId:{
+            $in:[Sequelize.literal ("SELECT timeSlot.id 	FROM timeSlot WHERE timeSlot.LecturerId = '"+LectureInstance.id+"'")]
+          }
+        },
+        include: [
+          {
+            model: TimeSlot,
+            where: { id: Sequelize.col('Appointment.TimeSlotId') }
+          },
+          {
+            model: Student,
+            where: { id: Sequelize.col('Appointment.StudentId') }
+          },
+          {
+            model: Room,
+            where: { id: Sequelize.col('Appointment.RoomId') }
+          }
+      ]
+
+    })
+    .then(function(data){
+      res.send(data);
+    });
+  };
+
+  this.getAllAvailableRooms = function(AppoinmentInstance, res){
+    console.log(AppoinmentInstance);
+    var timeSlot = JSON.parse(AppoinmentInstance.timeSlot);
+    console.log(Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate));
+    Room.findAll({
+      where: {
+          status: 1,
+          id:{
+            $notIn:[Sequelize.literal ("SELECT a.RoomId	FROM appointment a	WHERE a.TimeSlotId = '"+timeSlot.id+"' AND a.appointmentDate = '"+Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate)+"' AND a.RoomId IS NOT NULL")]
+          }
+        }
+
+    })
+    .then(function(data){
+      res.send(data);
+    });
+  };
+
+  this.makeAppoinment = function(AppoinmentInstance, res){
+    //var room = JSON.parse(AppoinmentInstance.selectedRoom);
+    Appointment.update({
+        RoomId: AppoinmentInstance.selectedRoom.id,
+        approved: 1
+    }, {
+        where: {
+            id: AppoinmentInstance.id,
+        }
+    }).then(function(data) {
+        res.send(data);
     });
   };
 

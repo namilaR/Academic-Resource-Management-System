@@ -44,6 +44,16 @@ angular.module('armsAngularApp')
         });
       };
       /**
+       * get given lecture all appointments
+       * @param lecturer
+       * @returns {HttpPromise}
+         */
+      appointmentDataService.getMyAppointmentsLecture = function (lecture) {
+        return $http.get(baseUrl + 'appointment//l-get-my-appointments', {
+          params: lecture
+        });
+      };
+      /**
        * send appoinment request to server
        * @param {appointmentRequest}
        * @returns {HttpPromise}
@@ -72,6 +82,17 @@ angular.module('armsAngularApp')
           params: appoinment
         });
       };
+      /**
+       * get available rooms
+       * @param {appoinment}
+       * @returns {HttpPromise}
+         */
+      appointmentDataService.getAvailableRooms= function (appoinment) {
+        console.log(appoinment);
+        return $http.get(baseUrl + 'appointment/get-available-rooms', {
+          params: appoinment
+        });
+      };
 
 
       appointmentDataService.getStudentRequests = function (lecturer) {
@@ -81,11 +102,10 @@ angular.module('armsAngularApp')
         });
       };
 
-      appointmentDataService.getAvailableRooms = function () {
-        return $http.get(baseUrl + 'appointment/get-available-rooms');
-      };
-      appointmentDataService.sendAppointment = function (appointment) {
-        return $http.post(baseUrl + 'appointment/create', JSON.stringify(appointment));
+
+      appointmentDataService.placeAppoinment = function (appointment) {
+        console.log(appointment);
+        return $http.put(baseUrl + 'appointment/make-appoinment', JSON.stringify(appointment));
       };
 
       appointmentDataService.getMyAppointmentLecture = function (lecturer) {

@@ -40,8 +40,8 @@ angular.module('armsAngularApp')
         DTColumnBuilder.newColumn('appointmentTitle').withTitle('Title'),
         DTColumnBuilder.newColumn('approved').withTitle('Status').renderWith(function(data, type, full) {
           var st;
-          if (full.approved == 'true') {
-            return '<span class="label label-success">Pending</span>';
+          if (full.approved == true) {
+            return '<span class="label label-success">Approved</span>';
           } else {
             return '<span class="label label-warning">Pending</span>';
           }

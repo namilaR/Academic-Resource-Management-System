@@ -13,6 +13,12 @@ router.get('/get-my-appointments', function(req, res, next) {
     AppointmentController.getMyAllAppoinments(req.query, res);
 
 });
+
+router.get('/l-get-my-appointments', function(req, res, next) {
+    AppointmentController.getMyAllApprovedAppoinments(req.query, res);
+
+});
+
 router.get('/get-my-pending-appointments', function(req, res, next) {
     AppointmentController.getMyAllPendingAppoinments(req.query, res);
 
@@ -23,8 +29,18 @@ router.get('/get-a-pending-appointment', function(req, res, next) {
 
 });
 
+router.get('/get-available-rooms', function(req, res, next) {
+    AppointmentController.getAllAvailableRooms(req.query, res);
+
+});
+
 router.post('/save-appointment-request', function(req, res, next) {
     AppointmentController.saveAppoinmentRequest(req.body, res);
+
+});
+
+router.put('/make-appoinment', function(req, res, next) {
+    AppointmentController.makeAppoinment(req.body, res);
 
 });
 
