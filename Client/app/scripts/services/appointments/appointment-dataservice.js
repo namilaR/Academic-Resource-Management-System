@@ -17,24 +17,63 @@ angular.module('armsAngularApp')
       var appointmentDataService = {};
       var message = '';
 
-
+      /**
+       * load all lectures
+       * @param
+       * @returns {HttpPromise}
+         */
       appointmentDataService.getAllLectures = function () {
         return $http.get(baseUrl + 'lecturer');
       };
+      /**
+       * load all subjects
+       * @param
+       * @returns {HttpPromise}
+         */
       appointmentDataService.getAllSubjects = function () {
         return $http.get(baseUrl + 'subject');
       };
-      appointmentDataService.getMyAppointment = function () {
-        return $http.get(baseUrl + 'subject');
+      /**
+       * get given lecture all appointments
+       * @param lecturer
+       * @returns {HttpPromise}
+         */
+      appointmentDataService.getMyAppointments = function (student) {
+        return $http.get(baseUrl + 'appointment/get-my-appointments', {
+          params: student
+        });
       };
-
-
+      /**
+       * send appoinment request to server
+       * @param {appointmentRequest}
+       * @returns {HttpPromise}
+         */
       appointmentDataService.sendRequest = function (appointmentRequest) {
-        return $http.post(baseUrl + 'request/create', JSON.stringify(appointmentRequest));
+        return $http.post(baseUrl + 'appointment/save-appointment-request', JSON.stringify(appointmentRequest));
       };
-      appointmentDataService.getPendingRequests = function () {
-        return $http.get(baseUrl + 'request');
+      /**
+       * load all Pending appointment requests
+       * @param {lecturer}
+       * @returns {HttpPromise}
+         */
+      appointmentDataService.getPendingRequests = function (lecturer) {
+        return $http.get(baseUrl + 'appointment/get-my-pending-appointments', {
+          params: lecturer
+        });
       };
+
+      /**
+       * get an pending appoinment
+       * @param {appoinment}
+       * @returns {HttpPromise}
+         */
+      appointmentDataService.getAPendingAppoinment= function (appoinment) {
+        return $http.get(baseUrl + 'appointment/get-a-pending-appointment', {
+          params: appoinment
+        });
+      };
+
+
       appointmentDataService.getStudentRequests = function (lecturer) {
         console.log(lecturer);
         return $http.get(baseUrl + 'request/get-student-requests', {

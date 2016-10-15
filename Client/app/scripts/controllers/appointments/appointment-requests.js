@@ -8,30 +8,51 @@
  */
 angular.module('armsAngularApp')
   .controller('AppointmentRequestsCtrl', [
+    '$rootScope',
     '$scope',
     '$log',
     'appointmentDataService',
     'moment',
-    function($scope, $log, appointmentDataService, moment) {
+    function($rootScope,$scope, $log, appointmentDataService, moment) {
       $scope.subjects = [];
       $scope.lectures = [];
       $scope.appointmentRequest = {};
       console.log("called");
+      $scope.called = false;
+
+      var resetEverything = function() {
+        $scope.called = false;
+        $scope.appointmentRequest = {};
+        $scope.availableTimeSlots = '';
+        //load all lecture details to select2 component
+        appointmentDataService.getAllLectures().then(
+          function(response) {
+            $scope.lectures = response.data;
+          },
+          function(error) {
+            console.error(error);
+          }
+        );
+        //load all lecture details to select2 component
+        appointmentDataService.getAllSubjects().then(
+          function(response) {
+            $scope.subjects = response.data;
+          },
+          function(error) {
+            console.error(error);
+          }
+        );
+      };
       //send request data to server
       $scope.submitAppointmentRequestForm = function(isValid) {
           console.log($scope.appointmentRequestForm);
           if (isValid) {
-            //convert date to SQL format
-            $scope.appointmentRequest.requestDate = moment($scope.appointmentRequest.requestDate).format("YYYY-MM-DD");
-            //convert time to SQL format
-            $scope.appointmentRequest.requestStartTime = moment($scope.appointmentRequest.requestStartTime).format("HH:mm");
-            $scope.appointmentRequest.requestEndTime = moment($scope.appointmentRequest.requestEndTime).format("HH:mm");
-            //set status to 1
-            $scope.appointmentRequest.status = 1;
+            $scope.appointmentRequest.student = $rootScope.user;
             //invoke post method and pass $scope.appointmentRequest as a JSON object
             appointmentDataService.sendRequest($scope.appointmentRequest).then(
               function(response) {
                 console.log(response);
+                appointmentDataService.refreshTables();
                 swal({
                   title: "Request Sent",
                   text: "You request has been successfully send",
@@ -44,14 +65,19 @@ angular.module('armsAngularApp')
               }
             );
             console.log($scope.appointmentRequest);
-            //reset statue
-            if (true) {
-              $scope.appointmentRequest = {};
-              $scope.appointmentRequestForm.$setPristine();
-            }
+            resetEverything ();
+            $scope.appointmentRequestForm.$setPristine();
+
+
           }
         };
-        //load all lecture details to select2 component
+
+        $scope.reload = function(){
+          appointmentDataService.refreshTables();
+        }
+
+
+      //load all lecture details to select2 component
       appointmentDataService.getAllLectures().then(
         function(response) {
           $scope.lectures = response.data;
@@ -71,9 +97,10 @@ angular.module('armsAngularApp')
       );
 
       $scope.dataChange = function(){
-        appointmentDataService.getAvailableTimeSlots({id:this.appointmentRequest.LecturerId,date:this.selectedDate}).then(
+        appointmentDataService.getAvailableTimeSlots({id:this.appointmentRequest.LecturerId,date:this.appointmentRequest.selectedDate}).then(
           function(response) {
             console.log(response);
+            $scope.called = true;
             $scope.availableTimeSlots = response.data;
           },
           function(error) {
@@ -85,6 +112,8 @@ angular.module('armsAngularApp')
         $scope.appointmentRequest.selectedTimeSlot = timeSlot;
         console.log(timeSlot);
       };
+
+        console.log(appointmentDataService);
 
     }
   ]);

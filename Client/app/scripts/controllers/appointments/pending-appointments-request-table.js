@@ -2,13 +2,13 @@
 
 /**
  * @ngdoc function
- * @name armsAngularApp.controller:AppointmentsRequestTableCtrl
+ * @name armsAngularApp.controller:PendingAppointmentsRequestTableCtrl
  * @description
- * # AppointmentsRequestTableCtrl
+ * # PendingAppointmentsRequestTableCtrl
  * Controller of the armsAngularApp
  */
 angular.module('armsAngularApp')
-  .controller('RequestTableCtrl', [
+  .controller('PendingAppointmentsRequestTableCtrl', [
     '$rootScope',
     '$scope',
     'appointmentDataService',
@@ -26,7 +26,8 @@ angular.module('armsAngularApp')
           return promiseFunc();
         })
         // Add Bootstrap compatibility
-        .withBootstrap();
+        .withBootstrap()
+        .withOption('rowCallback', rowCallback);
       vm.dtColumns = [
         DTColumnBuilder.newColumn('appointmentDate').withTitle('Date').renderWith(function(data, type, full) {
           return moment(full.appointmentDate).format("MMM-DD");
@@ -53,7 +54,8 @@ angular.module('armsAngularApp')
       vm.dtInstance = {};
 
       function actionsHtml(data, type, full, meta) {
-        return '<button class="btn btn-sm btn-danger" ng-click="showCase.delete(showCase.persons[])" )"="">' +
+        return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"> view</button>'+
+        '<button class="btn btn-sm btn-danger" ng-click="showCase.delete(showCase.persons[])" )"="">' +
           '   Cancel' +
           '</button>';
       }
@@ -66,7 +68,7 @@ angular.module('armsAngularApp')
 
       function promiseFunc() {
         var deferred = $q.defer();
-        appointmentDataService.getMyAppointments(user).then(function(response) {
+        appointmentDataService.getPendingRequests(user).then(function(response) {
           console.log(response.data);
           deferred.resolve(response.data);
         });
@@ -82,10 +84,25 @@ angular.module('armsAngularApp')
         console.log(json);
       }
 
+      function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
+        $('td', nRow).unbind('click');
+        $('td', nRow).bind('click', function() {
+          $scope.$apply(function() {
+            someClickHandler(aData);
+          });
+        });
+        return nRow;
+      };
+
+      function someClickHandler(info) {
+        console.log(info);
+        appointmentDataService.passRequestData(info);
+      };
+
       $scope.$on('refreshDataTables', function() {
         console.log('refreshDataTables');
           vm.dtInstance.reloadData();
       });
-
     }
   ]);

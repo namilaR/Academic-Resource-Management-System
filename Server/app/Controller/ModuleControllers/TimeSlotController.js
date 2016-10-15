@@ -4,8 +4,10 @@
  */
 var Sequelize = require('../../models/Connection.js');
 var Modules = require('../../models/Models');
+var Helper = require('../../models/Helper');
+var ControllerMap = require('../ControllerMap');
 var TimeSlot = Modules.TimeSlot;
-var moment = require('moment');
+
 
 
 /**
@@ -42,68 +44,6 @@ var initDays = function() {
         timeSlots: []
     }, ];
 };
-
-
-/**
- * convert AM PM hour to 24type hours
- * @param  {DATE} time
- * @return {DATE}
- */
-function convertTo24Hours(time) {
-    return moment(time).format("HH:mm");
-}
-/**
- * convert 24type hour to JS format
- * @param  {DATE} time
- * @return {DATE}
- */
-function _24HoursToJsDateFormat(time) {
-    return moment(time, 'HH:mm:ss');
-}
-
-/**
- * convert 24type hour to AM PM
- * @param  {DATE} time
- * @return {DATE}
- */
-function _24HoursToAmPm(time) {
-    return moment(time, 'HH:mm:ss').format("hh:mm A");
-}
-
-/**
- * convert JS date to SQL date
- * @param  {DATE} time
- * @return {DATE}
- */
-function JSDateToSQLDate(date) {
-    return moment(date).format("YYYY-MM-DD");
-}
-
-/**
- * get day from JS date
- * @param  {DATE} time
- * @return {DATE}
- */
-function getDay(date) {
-    var number = moment(date).day();
-    switch(number) {
-      case 0:
-        return 'Sunday';
-      case 1:
-        return 'Monday';
-      case 2:
-        return 'Tuesday';
-      case 3:
-        return 'Wednesday';
-      case 4:
-        return 'Thursday';
-      case 5:
-        return 'Friday';
-      case 6:
-        return 'Saturday';
-    }
-}
-
 TimeSlotController = function() {
     /**
      * insert new time slot
@@ -115,8 +55,8 @@ TimeSlotController = function() {
         TimeSlot.create({
             day: TimeSlotInstance.dayDetails.day,
             isChecked: TimeSlotInstance.dayDetails.checked,
-            fromTime: convertTo24Hours(TimeSlotInstance.slot.from),
-            toTime: convertTo24Hours(TimeSlotInstance.slot.to),
+            fromTime: Helper.convertTo24Hours(TimeSlotInstance.slot.from),
+            toTime: Helper.convertTo24Hours(TimeSlotInstance.slot.to),
             status: 1,
             hide: false,
             LecturerId: TimeSlotInstance.LecturerId
@@ -155,8 +95,8 @@ TimeSlotController = function() {
                         days[i].timeSlots.push({
                             //convert date values
                             id: data[j].id,
-                            from: _24HoursToJsDateFormat(data[j].fromTime),
-                            to: _24HoursToJsDateFormat(data[j].toTime),
+                            from: Helper._24HoursToJsDateFormat(data[j].fromTime),
+                            to: Helper._24HoursToJsDateFormat(data[j].toTime),
                             status: data[j].status,
                             visibility: data[j].hide,
                         });
@@ -213,8 +153,8 @@ TimeSlotController = function() {
     this.updateTimeSlot = function(TimeSlotInstance, res) {
         console.log(TimeSlotInstance);
         TimeSlot.update({
-            fromTime: convertTo24Hours(TimeSlotInstance.from),
-            toTime: convertTo24Hours(TimeSlotInstance.to)
+            fromTime: Helper.convertTo24Hours(TimeSlotInstance.from),
+            toTime: Helper.convertTo24Hours(TimeSlotInstance.to)
         }, {
             where: {
                 id: TimeSlotInstance.id,
@@ -234,9 +174,9 @@ TimeSlotController = function() {
             status: 1,
             LecturerId: DataInstance.id,
             hide: 0,
-            day: getDay(DataInstance.date),
+            day: Helper.getDay(DataInstance.date),
             id:{
-              $notIn:[Sequelize.literal ("SELECT a.TimeSlotId FROM appointment a WHERE a.appointmentDate >= '"+JSDateToSQLDate(DataInstance.date)+"'")]
+              $notIn:[Sequelize.literal ("SELECT a.TimeSlotId FROM appointment a WHERE a.appointmentDate >= '"+ Helper.JSDateToSQLDate(DataInstance.date)+"'")]
             }
         }
       })
@@ -246,8 +186,8 @@ TimeSlotController = function() {
           timeSlots.push({
             id: data[i].id,
             day: data[i].day,
-            fromTime: _24HoursToAmPm(data[i].fromTime),
-            toTime: _24HoursToAmPm(data[i].toTime),
+            fromTime: Helper._24HoursToAmPm(data[i].fromTime),
+            toTime: Helper._24HoursToAmPm(data[i].toTime),
             status: data[i].status,
             hide: data[i].hide,
             isChecked: data[i].isChecked,

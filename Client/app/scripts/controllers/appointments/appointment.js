@@ -25,13 +25,22 @@ angular.module('armsAngularApp')
       var data = {};
 
       $scope.$on('requestTableRowClick', function() {
-        console.log(appointmentDataService.message);
-        data.RequestId = appointmentDataService.message.id;
-        $scope.pendingRequest.requestTitle = appointmentDataService.message.requestTitle;
-        $scope.pendingRequest.requestSmallBref = appointmentDataService.message.requestSmallBref;
-        $scope.pendingRequest.appointmentDate = moment(appointmentDataService.message.requestDate).toDate();
-        $scope.pendingRequest.appointmentStartTime = moment(appointmentDataService.message.requestStartTime, 'HH:mm:ss');
-        $scope.pendingRequest.appointmentEndTime = moment(appointmentDataService.message.requestEndTime, 'HH:mm:ss');
+        $scope.pendingRequest = {};
+        appointmentDataService.getAPendingAppoinment(appointmentDataService.message).then(
+          function(response){
+            var data = response.data;
+            console.log();
+            $scope.pendingRequest.requestTitle = data.appointmentTitle;
+            $scope.pendingRequest.requestSmallBref = data.appointmentSmallBref;
+            $scope.pendingRequest.appointmentDate = moment(data.appointmentDate).toDate();
+            $scope.pendingRequest.appointmentDay = data.TimeSlot.day;
+            $scope.pendingRequest.fromTime = moment(data.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A");
+            $scope.pendingRequest.toTime = moment(data.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
+            $scope.pendingRequest.Student = data.Student;
+          }
+        );
+
+
       });
 
       $scope.sendAppoinmentData = function() {

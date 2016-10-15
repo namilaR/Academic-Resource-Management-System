@@ -11,6 +11,7 @@ var FacultyRoute = require('./moduleRoutes/FacultyRoute');
 var SubjectRoute = require('./moduleRoutes/SubjectRoute');
 var RequestRoute = require('./moduleRoutes/RequestRoute');
 var QuestionRoute = require('./moduleRoutes/QuestionRoute');
+var Appointment = require('./moduleRoutes/AppointmentRoute');
 
 router.use('/student/', StudentRoute);
 router.use('/userType/', UserTypeRoute);
@@ -19,5 +20,8 @@ router.use('/subject/', SubjectRoute);
 router.use('/faculty/', FacultyRoute);
 router.use('/request/', FacultyRoute);
 router.use('/question/', QuestionRoute);
+router.use('/appointment/', Appointment);
+
+
 
 module.exports = router;
