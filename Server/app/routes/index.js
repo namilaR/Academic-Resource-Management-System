@@ -14,7 +14,8 @@ var FacultyRoute = require('./moduleRoutes/FacultyRoute');
 var SubjectRoute = require('./moduleRoutes/SubjectRoute');
 var RequestRoute = require('./moduleRoutes/RequestRoute');
 var AppointmentRoute = require('./moduleRoutes/AppointmentRoute');
-
+// route for api authentication
+var ApiAuthenticationRoute = require('./moduleRoutes/authentication/ApiAuthenticationRoute');
 
 router.use('/student/', StudentRoute);
 router.use('/user-role/', UserRoleRoute);
@@ -24,6 +25,8 @@ router.use('/subject/', SubjectRoute);
 router.use('/faculty/', FacultyRoute);
 router.use('/request/', RequestRoute);
 router.use('/appointment/', AppointmentRoute);
+router.use('/api/authentication/', ApiAuthenticationRoute);
+
 
 
 module.exports = router;

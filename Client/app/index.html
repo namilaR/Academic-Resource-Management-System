@@ -91,13 +91,18 @@
         <script src="scripts/admin_lte_app.js"></script>
     <!-- endbuild -->
    
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->       
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+
         <script src="scripts/app.js"></script>
+        <script src="scripts/env_vars.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/login.js"></script>
         <script src="scripts/directives/icheck.js"></script>
         <script src="scripts/directives/master/navbar-user.js"></script>
+        <script src="scripts/directives/master/navbar-user-hod-list.js"></script>
+        <script src="scripts/directives/master/navbar-user-student-list.js"></script>
+        <script src="scripts/directives/master/navbar-user-lecturer-list.js"></script>
         <script src="scripts/directives/master/navbar.js"></script>
         <script src="scripts/controllers/master/navbar-user.js"></script>
         <script src="scripts/controllers/master/sidebar.js"></script>
@@ -109,9 +114,12 @@
         <script src="scripts/services/faculty/facultyService.js"></script>
         <script src="scripts/controllers/role/test.js"></script>
         <script src="scripts/controllers/role/roletable.js"></script>
-<<<<<<< HEAD
+
 
         <!-- Start User Management -->
+        <script src="scripts/services/user_authentication_services.js"></script>
+        <script src="scripts/controllers/auth.js"></script>
+
         <script src="scripts/controllers/user_management/UserController.js"></script>
         <script src="scripts/directives/user_management/UserDirective.js"></script>
 
@@ -119,8 +127,10 @@
         <script src="scripts/directives/user_management/UserTypeDirective.js"></script>
         <!-- End User Management -->
 
+        <!-- Feedback Management -->
+        <script src="scripts/controllers/feedback_management/FeedBackSession.js"></script>
+        <!-- Feedback Management -->
 
-=======
         <script src="scripts/controllers/appointments/appointment.js"></script>
         <script src="scripts/controllers/appointments/request-table.js"></script>
         <script src="scripts/services/appointments/appointment-dataservice.js"></script>
@@ -128,7 +138,7 @@
         <script src="scripts/controllers/faculty/main.js"></script>
         <script src="scripts/controllers/appointments/appointment-requests.js"></script>
         <script src="scripts/controllers/appointments/appointment-table.js"></script>
->>>>>>> c21583d41cae845414f3f25dfc84113ab3b679fe
+
         <!-- endbuild -->
 </body>
 </html>

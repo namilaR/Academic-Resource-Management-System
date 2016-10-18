@@ -13,17 +13,7 @@ var LecturerController = ControllerMap.LecturerController;
 //var HodController = ControllerMap.HodController;
 
 router.post('/add-new-user', function(req, res, next) {
-
     UserController.create(req.body, res);
-
-    if (req.type == 'Student'){
-        StudentController.create(req.body, res);
-    }else if(req.type == 'Lecturer'){
-        LecturerController.create(req.body, res);
-    }else if(req.type == 'HOD'){
-        //HodController.create(req.body, res);
-    }
-
 });
 
 router.get('/get-all-users', function(req, res, next) {

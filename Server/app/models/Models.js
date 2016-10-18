@@ -26,7 +26,7 @@ Models.User = require('./entity/User');
 Models.Lecturer = require('./entity/Lecturer');
 Models.Student = require('./entity/Student');
 Models.Hod = require('./entity/Hod');
-
+Models.QuestionTemplate = require('./entity/QuestionTemplate');
 
 
 module.exports = Models;

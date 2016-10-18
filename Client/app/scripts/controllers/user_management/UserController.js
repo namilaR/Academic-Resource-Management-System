@@ -22,9 +22,10 @@ angular.module('armsAngularApp')
             $scope.authorized = true;
             $scope.dtColumns = [
                 DTColumnBuilder.newColumn('id').withTitle('ID'),
-                DTColumnBuilder.newColumn('userRoleId').withTitle('Role'),
+                DTColumnBuilder.newColumn('userRole.userRoleName').withTitle('Role'),
+                DTColumnBuilder.newColumn('userRole.userRoleName').withTitle('Department'),
                 DTColumnBuilder.newColumn('userUserName').withTitle('User Name'),
-                DTColumnBuilder.newColumn('userFullName').withTitle('Full Name'),
+                DTColumnBuilder.newColumn('userFullname').withTitle('Full Name'),
                 DTColumnBuilder.newColumn('userEmail').withTitle('Email'),
                 DTColumnBuilder.newColumn(null).withTitle('Edit').notSortable()
                     .renderWith(function(data, type, full, meta) {
@@ -120,11 +121,14 @@ angular.module('armsAngularApp')
 
           var selected_type = $scope.data.selectedOption.name;
           $scope.submitData = [
-                {"full_name" : $scope.full_name},
-                {"user_name" : $scope.user_name},
-                {"password" : $scope.password},
-                {"email" : $scope.email},
-                {"type" : selected_type}
+              {
+                  "full_name": $scope.full_name,
+                  "user_name": $scope.user_name,
+                  "password": $scope.password,
+                  "email": $scope.email,
+                  "type": selected_type
+
+              }
           ];
           if( selected_type == 'Student' ){
             $scope.submitData.push(

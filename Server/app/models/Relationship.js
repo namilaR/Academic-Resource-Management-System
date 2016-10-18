@@ -105,10 +105,16 @@ var Relationship = function() {
 
     Models.FeedBackSession.belongsTo(Models.Batch)
 
+    Models.QuestionTemplate.belongsToMany(Models.Question, {
+       through: 'QuestionTemplateQuestion'
+    });
+    Models.Question.belongsToMany(Models.QuestionTemplate, {
+        through: 'QuestionTemplateQuestion'
+    });
+
+
+
     Models.Room.belongsTo(Models.Faculty)
-
-
-
 
     connection
         .sync()
