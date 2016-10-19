@@ -17,7 +17,6 @@ angular.module('armsAngularApp')
       $scope.subjects = [];
       $scope.lectures = [];
       $scope.appointmentRequest = {};
-      console.log("called");
       $scope.called = false;
 
       var resetEverything = function() {
@@ -47,7 +46,7 @@ angular.module('armsAngularApp')
       $scope.submitAppointmentRequestForm = function(isValid) {
           console.log($scope.appointmentRequestForm);
           if (isValid) {
-            $scope.appointmentRequest.student = user_role;
+            $scope.appointmentRequest.student = $rootScope.user;
             //invoke post method and pass $scope.appointmentRequest as a JSON object
             appointmentDataService.sendRequest($scope.appointmentRequest).then(
               function(response) {
@@ -81,6 +80,8 @@ angular.module('armsAngularApp')
       appointmentDataService.getAllLectures().then(
         function(response) {
           $scope.lectures = response.data;
+          console.log("All Lecturers");
+          console.log(response.data);
         },
         function(error) {
           console.error(error);

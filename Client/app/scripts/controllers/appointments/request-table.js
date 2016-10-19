@@ -18,7 +18,7 @@ angular.module('armsAngularApp')
     'moment',
     function($rootScope, $scope, appointmentDataService, DTOptionsBuilder, DTColumnBuilder, $q, moment) {
       var vm = this;
-      var user = user_role;
+      var user = $rootScope.user;
       console.log(appointmentDataService);
 
       vm.dtOptions = DTOptionsBuilder
