@@ -36,7 +36,7 @@ angular.module('armsAngularApp')
       //insert new timeslot to database
       $scope.saveTimeSlot = function(parentIndex, index) {
         appointmentDataService.saveTimeSlot({
-          LecturerId: $rootScope.user.id,
+          userId: $rootScope.user.userId,
           dayDetails: $scope.days[parentIndex],
           slot: $scope.days[parentIndex].timeSlots[index]
         });

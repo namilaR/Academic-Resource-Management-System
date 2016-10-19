@@ -8,32 +8,46 @@ var connection = require('./Connection');
 var Relationship = function() {
 
 
-    Models.UserType.hasMany(Models.User);
-    Models.User.belongsTo(Models.UserType);
 
-    Models.User.hasMany(Models.Hod);
-    Models.Hod.belongsTo(Models.User);
+    /**added by Kasun*/
 
-    Models.Hod.hasMany(Models.FeedBackSession);
-    Models.FeedBackSession.belongsTo(Models.Hod);
+    //User Type Relationship
 
-    Models.FeedBackSession.hasMany(Models.Feedback);
-    Models.Feedback.belongsTo(Models.FeedBackSession);
+    Models.UserRole.hasMany(Models.User)
+    Models.User.belongsTo(Models.UserRole)
 
-    Models.User.hasMany(Models.Lecturer);
-    Models.Lecturer.belongsTo(Models.User);
+    //User Management Relationship
 
-    Models.User.hasMany(Models.Student);
-    Models.Student.belongsTo(Models.User);
+    Models.User.hasMany(Models.Hod)
+    Models.User.hasMany(Models.Student)
+    Models.User.hasMany(Models.Lecturer)
 
-    Models.Subject.hasMany(Models.FeedBackSession);
-    Models.FeedBackSession.belongsTo(Models.Subject);
+    Models.Hod.belongsTo(Models.User)
+    Models.Student.belongsTo(Models.User)
+    Models.Lecturer.belongsTo(Models.User)
 
-    Models.Question.hasMany(Models.Feedback);
-    Models.Feedback.belongsTo(Models.Question);
+    Models.Hod.belongsTo(Models.Department)
 
-    Models.Center.belongsTo(Models.Subject);
-    Models.Subject.hasMany(Models.Center);
+
+
+
+
+
+
+    Models.Hod.hasMany(Models.FeedBackSession)
+    Models.FeedBackSession.belongsTo(Models.Hod)
+
+    Models.FeedBackSession.hasMany(Models.Feedback)
+    Models.Feedback.belongsTo(Models.FeedBackSession)
+
+    Models.Subject.hasMany(Models.FeedBackSession)
+    Models.FeedBackSession.belongsTo(Models.Subject)
+
+    Models.Question.hasMany(Models.Feedback)
+    Models.Feedback.belongsTo(Models.Question)
+
+    Models.Center.belongsTo(Models.Subject)
+    Models.Subject.hasMany(Models.Center)
 
     Models.Faculty.belongsToMany(Models.Center, {
         through: 'FacultyCenter'
@@ -57,6 +71,9 @@ var Relationship = function() {
 
     Models.Batch.hasMany(Models.Student);
     Models.Student.belongsTo(Models.Batch);
+
+    Models.Batch.hasMany(Models.Student)
+    Models.Student.belongsTo(Models.Batch)
 
     Models.Lecturer.belongsToMany(Models.Batch, {
         through: 'LecturerBatch'
@@ -83,17 +100,29 @@ var Relationship = function() {
     Models.Appointment.belongsTo(Models.Room);
 
     /**added by pasindu*/
-    Models.User.hasMany(Models.Student);
-    Models.Student.belongsTo(Models.User);
 
-    Models.User.hasMany(Models.Hod);
-    Models.Hod.belongsTo(Models.User);
 
-    Models.User.hasMany(Models.Lecturer);
-    Models.Lecturer.belongsTo(Models.User);
+    Models.Lecturer.hasMany(Models.FeedBackSession)
+    Models.FeedBackSession.belongsTo(Models.Lecturer)
 
-    //  Models.QuestionTemplate.hasMany(Models.Question);
-    //  Models.Question.belongsTo(Models.QuestionTemplate);
+    Models.Subject.belongsToMany(Models.Lecturer, {
+        through: 'SubjectLecturer'
+    })
+    Models.Lecturer.belongsToMany(Models.Subject, {
+        through: 'SubjectLecturer'
+    })
+
+    Models.FeedBackSession.belongsTo(Models.Subject)
+
+    //Models.Request.belongsTo(Models.Subject)
+
+    Models.FeedBackSession.belongsTo(Models.Center)
+
+    Models.FeedBackSession.belongsTo(Models.Faculty)
+
+    Models.FeedBackSession.belongsTo(Models.Department)
+
+    Models.FeedBackSession.belongsTo(Models.Batch)
 
 
 
@@ -124,7 +153,7 @@ var Relationship = function() {
 
     Models.FeedBackSession.belongsTo(Models.Subject);
 
-   // Models.Request.belongsTo(Models.Subject);
+    Models.Room.belongsTo(Models.Faculty)
 
     Models.FeedBackSession.belongsTo(Models.Center);
 
@@ -135,6 +164,8 @@ var Relationship = function() {
     Models.FeedBackSession.belongsTo(Models.Batch);
 
     Models.Room.belongsTo(Models.Faculty);
+
+
 
     Models.Hod.belongsTo(Models.Department);
 
@@ -147,6 +178,6 @@ var Relationship = function() {
         }, function(err) {
             console.log('An error occurred while creating the table:', err);
         });
-};
+}
 
 module.exports = new Relationship();
