@@ -22,20 +22,26 @@ AppointmentController = function() {
    * @return {RESPONSE}
    */
   this.saveAppoinmentRequest = function (AppoinmnInstance, res){
-    Appointment.create({
-      appointmentDate:Helper.JSDateToSQLDate(AppoinmnInstance.selectedDate),
-      appointmentTitle:AppoinmnInstance.requestTitle,
-      appointmentSmallBref:AppoinmnInstance.requestSmallBref,
+    Student.findOne({
       status: 1,
-      approved: 0,
-      reShedule:0,
-      cancel:0,
-      StudentId: AppoinmnInstance.student.id,
-      TimeSlotId:AppoinmnInstance.selectedTimeSlot.id
-    }).then(function(data) {
+      UserId: AppoinmnInstance.userId
+    }).then(function(data){
+      Appointment.create({
+        appointmentDate:Helper.JSDateToSQLDate(AppoinmnInstance.selectedDate),
+        appointmentTitle:AppoinmnInstance.requestTitle,
+        appointmentSmallBref:AppoinmnInstance.requestSmallBref,
+        status: 1,
+        approved: 0,
+        reShedule:0,
+        cancel:0,
+        StudentId: data.id,
+        TimeSlotId:AppoinmnInstance.selectedTimeSlot.id
+      }).then(function(data) {
 
-        res.send(data);
+          res.send(data);
+      });
     });
+
   };
 
   this.getMyAllAppoinments = function(StudentInstance, res){

@@ -46,6 +46,7 @@ angular.module('armsAngularApp')
       $scope.submitAppointmentRequestForm = function(isValid) {
           console.log($scope.appointmentRequestForm);
           if (isValid) {
+            //get logged in user
             $scope.appointmentRequest.student = $rootScope.user;
             //invoke post method and pass $scope.appointmentRequest as a JSON object
             appointmentDataService.sendRequest($scope.appointmentRequest).then(
