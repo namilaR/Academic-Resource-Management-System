@@ -12,9 +12,9 @@
 
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
-        <div nav-bar-user-hod-list ng-show="user_role == 'HOD'"></div>
-        <div nav-bar-user-student-list ng-show="user_role == 'Student'"></div>
-        <div nav-bar-user-lecturer-list ng-show="user_role == 'Lecturer'"></div>
+        <div nav-bar-user-hod-list ng-if="user_role == 'HOD'"></div>
+        <div nav-bar-user-student-list ng-if="user_role == 'Student'"></div>
+        <div nav-bar-user-lecturer-list ng-if="user_role == 'Lecturer'"></div>
       </div>
     </form>
 

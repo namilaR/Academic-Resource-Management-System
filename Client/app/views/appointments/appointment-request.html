@@ -63,7 +63,7 @@
                   <label for="selectLecture">Lecture</label>
                   <select ui-select2="{ allowClear: true}" ng-model="appointmentRequest.LecturerId" name="lecture" id="selectLecture" theme="select2" class="form-control select2" data-placeholder="Pick a lecture" required>
                     <option value=""></option>
-                    <option ng-repeat="lecture in lectures" value="{{lecture.id}}">{{lecture.User.userFullname}}</option>
+                    <option ng-repeat="lecture in lectures" value="{{lecture.id}}">{{lecture.User.userFullnamecd }}</option>
                   </select>
                   <p ng-show="(appointmentRequestForm.lecture.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Lecture is required.</p>
                 </div>
