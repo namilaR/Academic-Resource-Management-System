@@ -115,7 +115,27 @@ angular.module('armsAngularApp')
         console.log(timeSlot);
       };
 
-        console.log(appointmentDataService);
+      $scope.$on('requestTableRowClick', function() {
+        $scope.appoinment = {};
+        appointmentDataService.getAppointmentMoreDetails(appointmentDataService.message).then(
+          function(response){
+            var data = response.data;
+            $scope.appoinment.id = data.id;
+            $scope.appoinment.Lecturer = data.TimeSlot.Lecturer;
+            $scope.appoinment.Student = data.Student;
+            $scope.appoinment.appointmentDate = moment(data.appointmentDate).toDate();
+            $scope.appoinment.appointmentDay = data.TimeSlot.day;
+            $scope.appoinment.fromTime = moment(data.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A");
+            $scope.appoinment.toTime = moment(data.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
+            $scope.appoinment.TimeSlot = data.TimeSlot;
+            $scope.appoinment.room = data.Room;
+            console.log(data.TimeSlot.toTime);
+
+
+          }
+        );
+      });
+        //console.log(appointmentDataService);
 
     }
   ]);

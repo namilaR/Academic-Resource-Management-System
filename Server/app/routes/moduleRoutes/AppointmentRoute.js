@@ -24,6 +24,11 @@ router.get('/get-my-pending-appointments', function(req, res, next) {
 
 });
 
+router.get('/get-a-appointment', function(req, res, next) {
+    AppointmentController.getAppointmentMoreDetails(req.query, res);
+
+});
+
 router.get('/get-a-pending-appointment', function(req, res, next) {
     AppointmentController.getAnPendingAppoinment(req.query, res);
 

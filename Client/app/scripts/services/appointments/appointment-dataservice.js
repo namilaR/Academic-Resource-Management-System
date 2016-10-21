@@ -48,6 +48,16 @@ angular.module('armsAngularApp')
        * @param lecturer
        * @returns {HttpPromise}
          */
+      appointmentDataService.getAppointmentMoreDetails = function (appoinment) {
+        return $http.get(baseUrl + 'appointment/get-a-appointment', {
+          params: appoinment
+        });
+      };
+      /**
+       * get given lecture all appointments
+       * @param lecturer
+       * @returns {HttpPromise}
+         */
       appointmentDataService.getMyAppointmentsLecture = function (lecture) {
         return $http.get(baseUrl + 'appointment//l-get-my-appointments', {
           params: lecture
@@ -115,9 +125,9 @@ angular.module('armsAngularApp')
       };
 
       appointmentDataService.passRequestData = function (msg) {
+        this.message = '';
         this.message = msg;
         $rootScope.$broadcast('requestTableRowClick');
-
       };
 
       appointmentDataService.refreshTables = function () {
