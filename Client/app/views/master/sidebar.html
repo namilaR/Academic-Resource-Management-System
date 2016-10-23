@@ -31,16 +31,7 @@
                 </ul>
             </li>
             <li class="treeview">
-                <a href="">
-                    <i class="fa fa-building-o"></i> <span>Faculty Management</span>
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="#/faculty/main"><i class="fa fa-circle-o"></i>Faculty</a></li>
-                    <li><a href="#/department"><i class="fa fa-circle-o"></i>Department</a></li>
-                </ul>
+                <a href="#/faculty/main"><i class="fa fa-building-o"></i>Faculty</a></li>
             </li>
             <li class="treeview">
                 <a href="">
@@ -51,9 +42,19 @@
                 </a>
                 <ul class="treeview-menu">
                   <li><a href=""><i class="fa fa-circle-o"></i>Add New User</a></li>
-                  <li ng-class="{active : pathPara2 == 'create-u-role'}"><a ng-href="#/manage-users/create-u-role"><i class="fa fa-circle-o"></i>Create New User Role </a></li>
+                  <li><a ng-href="#/manage-users/create-u-role"><i class="fa fa-circle-o"></i>Create New User Role </a></li>
                 </ul>
-          </li>
+            </li>
+            <li class="treeview">
+                <a href="#/admin/subjects">
+                    <i class="fa fa-book"></i> <span>Subject Management</span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="#/admin/center">
+                    <i class="fa fa-building-o"></i> <span>Center Management</span>
+                </a>
+            </li>
         </ul>
   </section>
   <!-- /.sidebar -->

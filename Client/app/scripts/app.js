@@ -21,7 +21,7 @@ angular
         'datatables.bootstrap',
         'ui.select2'
     ])
-    .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+    .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
         $routeProvider
             .when('/', {
@@ -50,31 +50,41 @@ angular
                 controller: 'AppointmentCtrl',
                 controllerAs: 'appointment'
             })
-			.when('/faculty/main', {
-				templateUrl: 'views/faculty/main.html',
-				controller: 'FacultyMainCtrl',
-				controllerAs: 'facultyController',
-			})
+            .when('/faculty/main', {
+                templateUrl: 'views/faculty/main.html',
+                controller: 'FacultyMainCtrl',
+                controllerAs: 'facultyController',
+            })
+            .when('/admin/subjects', {
+                templateUrl: 'views/subjects/subjects.html',
+                controller: 'SubjectsCtrl',
+                controllerAs: 'subjects'
+            })
+            .when('/admin/center', {
+                templateUrl: 'views/center/center.html',
+                controller: 'CenterCenterCtrl',
+                controllerAs: 'Center/Center'
+            })
             .otherwise({
                 redirectTo: '/'
             });
-    }]).run(function($rootScope) {
-        $rootScope.role = 'student';
-        $rootScope.$on('$routeChangeSuccess', function(event, currentRoute) {
+    }]).run(function ($rootScope) {
+        $rootScope.role = 'Admin';
+        $rootScope.$on('$routeChangeSuccess', function (event, currentRoute) {
             switch (currentRoute.templateUrl) {
                 case 'views/login.html':
                     $rootScope.bodyClass = 'login-page';
                     break;
                 default:
-                    if($rootScope.role == 'Admin'){
-                       $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini'; 
+                    if ($rootScope.role == 'Admin') {
+                        $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini';
                     }
                     else {
-                        $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav'; 
+                        $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav';
                     }
                     break;
             }
-            
+
         });
     }).constant('CONFIG', {
         'APP_NAME': 'Acadamic Resource Management',

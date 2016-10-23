@@ -32,14 +32,14 @@ var Relationship = function() {
     Models.Question.hasMany(Models.Feedback)
     Models.Feedback.belongsTo(Models.Question)
 
-    Models.Center.belongsTo(Models.Subject)
-    Models.Subject.hasMany(Models.Center)
+    Models.Center.belongsToMany(Models.Subject, {through: 'CenterSubject'})
+    Models.Subject.belongsToMany(Models.Center, {through: 'CenterSubject'})
 
-    Models.Faculty.belongsToMany(Models.Center,{through: 'FacultyCenter'})
-    Models.Center.belongsToMany(Models.Faculty,{through: 'FacultyCenter'})
+    Models.Faculty.belongsToMany(Models.Center, {through: 'FacultyCenter'})
+    Models.Center.belongsToMany(Models.Faculty, {through: 'FacultyCenter'})
 
-    Models.Department.belongsToMany(Models.Faculty,{through: 'DepartmentFaculty'})
-    Models.Faculty.belongsToMany(Models.Department,{through: 'DepartmentFaculty'})
+    Models.Department.belongsToMany(Models.Faculty, {through: 'DepartmentFaculty'})
+    Models.Faculty.belongsToMany(Models.Department, {through: 'DepartmentFaculty'})
 
     Models.Department.hasMany(Models.Batch)
     Models.Batch.belongsTo(Models.Department)
@@ -47,7 +47,7 @@ var Relationship = function() {
     Models.Batch.hasMany(Models.Student)
     Models.Student.belongsTo(Models.Batch)
 
-    Models.Lecturer.belongsToMany(Models.Batch,{through: 'LecturerBatch'})
+    Models.Lecturer.belongsToMany(Models.Batch, {through: 'LecturerBatch'})
     Models.Batch.belongsToMany(Models.Lecturer, {through: 'LecturerBatch'})
 
     Models.Student.hasMany(Models.Request)
