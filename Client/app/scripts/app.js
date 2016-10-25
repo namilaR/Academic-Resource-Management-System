@@ -20,11 +20,10 @@ angular
     'datatables',
     'datatables.bootstrap',
     'ui.select2',
-    // 'ui.bootstrap.datepicker',
-    // 'ui.bootstrap.datetimepicker'
+    'ui.bootstrap.datetimepicker',
+    'toggle-switch'
   ])
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-
     $routeProvider
       .when('/', {
         templateUrl: 'views/master/main.html',
@@ -50,12 +49,9 @@ angular
       .when('/appointments/appointment', {
         templateUrl: 'views/appointments/appointment.html',
         controller: 'AppointmentCtrl',
-        controllerAs: 'appointment'
-      })
-      .when('/faculty/main', {
-        templateUrl: 'views/faculty/main.html',
-        controller: 'FacultyMainCtrl',
-        controllerAs: 'facultyController',
+        controllerAs: 'appointment',
+        bindToController: 'true'
+
       })
       .when('/admin/questions', {
         templateUrl: 'views/questions/questions.html',
@@ -64,21 +60,42 @@ angular
       })
       .when('/hod/feedbackSession', {
         templateUrl: 'views/feedbackSession/feedbackSession.html',
-        controller: 'QuestionsCtrl',
-        controllerAs: 'questions'
+        controller: 'FeedbackFeedbackCtrl',
+        controllerAs: 'feedback'
+      })
+      .when('/admin/questionTemplate', {
+        templateUrl: 'views/QuestionTemplate/questionTemplate.html',
+        controller: 'QuestionTemplateCtrl',
+        controllerAs: 'questionTemplate'
+      })
+       .when('/admin/quiz', {
+            templateUrl: 'views/quiz/quiz.html',
+            controller: 'QuizCtrl',
+            controllerAs: 'QuizCtrl'
+        })
+      .when(' /faculty/main', {
+        templateUrl: 'views/faculty/main.html',
+        controller: 'FacultyMainCtrl',
+        controllerAs: 'facultyController'
       })
       .otherwise({
         redirectTo: '/'
       });
   }]).run(function($rootScope) {
-    $rootScope.role = 'Admin';
+    $rootScope.user = {
+      id: 3,
+      userName: 'student01',
+      //role: 'Admin'
+      role: 'lecture'
+        //role: 'student'
+    };
     $rootScope.$on('$routeChangeSuccess', function(event, currentRoute) {
       switch (currentRoute.templateUrl) {
         case 'views/login.html':
           $rootScope.bodyClass = 'login-page';
           break;
         default:
-          if ($rootScope.role === 'Admin') {
+          if ($rootScope.user.role == 'Admin') {
             $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini';
           } else {
             $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav';
@@ -93,4 +110,5 @@ angular
     'GOOGLE_ANALYTICS_ID': '',
     'BASE_URL': 'http://localhost:8002/',
     'SYSTEM_LANGUAGE': ''
-  });
+  })
+  .constant("moment", moment);

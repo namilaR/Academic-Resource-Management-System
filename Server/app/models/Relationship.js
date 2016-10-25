@@ -75,10 +75,7 @@ var Relationship = function() {
     Models.Room.belongsTo(Models.Lecturer);
 
 
-
     Models.Appointment.belongsTo(Models.Request);
-
-
 
     Models.Appointment.belongsTo(Models.Room);
 
@@ -92,10 +89,6 @@ var Relationship = function() {
     Models.User.hasMany(Models.Lecturer);
     Models.Lecturer.belongsTo(Models.User);
 
-    //  Models.QuestionTemplate.hasMany(Models.Question);
-    //  Models.Question.belongsTo(Models.QuestionTemplate);
-
-
 
     Models.QuestionTemplate.belongsToMany(Models.Question, {
         through: 'QuestionTemplateQuestion'
@@ -103,14 +96,7 @@ var Relationship = function() {
     Models.Question.belongsToMany(Models.QuestionTemplate, {
         through: 'QuestionTemplateQuestion'
     });
-
-
-
-
-
-
-
-
+    
 
     Models.Lecturer.hasMany(Models.FeedBackSession);
     Models.FeedBackSession.belongsTo(Models.Lecturer);
@@ -137,8 +123,6 @@ var Relationship = function() {
     Models.Room.belongsTo(Models.Faculty);
 
     Models.Hod.belongsTo(Models.Department);
-
-
 
     connection
         .sync()

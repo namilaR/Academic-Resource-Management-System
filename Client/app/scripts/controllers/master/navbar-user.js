@@ -14,6 +14,7 @@ angular.module('armsAngularApp')
       'AngularJS',
       'Karma'
     ];
+ angular.module('armsAngularApp', ['toggle-switch']);
 
     //get current url path
     var url = $location.path();

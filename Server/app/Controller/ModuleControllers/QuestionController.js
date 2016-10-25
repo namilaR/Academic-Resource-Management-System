@@ -1,5 +1,7 @@
 var Modules = require('../../models/Models');
 var Question = Modules.Question;
+var FeedBackTypes = Modules.FeedBackTypes;
+var QuestionTemplate = Modules.QuestionTemplate;
 
 QuestionController = function() {
     this.create = function(questionInstance, response) {
@@ -12,6 +14,23 @@ QuestionController = function() {
         Question.findAll().then(function(data) {
             res.send(data);
         });
+    };
+
+
+    this.getAvailableQuiz = function(res) {
+
+        Question.findAll().then(function(ques) {
+            var aa = [];
+            for (var i in ques) {
+                aa.push({
+                    qus: ques[i],
+                    ans: {}
+                });
+            }
+            res.send(aa);
+        });
+
+
     };
 
 
@@ -42,6 +61,39 @@ QuestionController = function() {
             });
         });
     };
+
+
+
+    this.getAllQuestionsInTemplate = function(RequestInstance, res) {
+        console.log(RequestInstance);
+        QuestionTemplate.findAll({
+            where: {
+                status: 1
+            },
+            include: [{
+                model: Room,
+                where: {
+                    id: Sequelize.col('Appointment.RoomId')
+                }
+            }, {
+                model: Request,
+                where: {
+                    //id: Sequelize.col('Appointment.RequestId'),
+                    LecturerId: RequestInstance.id,
+                }
+            }]
+        }).then(function(data) {
+            res.send(data);
+
+        });
+    };
+
+
+
+
+
+
+
 };
 
 module.exports = new QuestionController();

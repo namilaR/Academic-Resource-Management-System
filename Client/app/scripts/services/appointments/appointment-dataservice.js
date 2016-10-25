@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * @ngdoc service
  * @name armsAngularApp.appointments/appointmentDataservice
@@ -11,27 +10,58 @@ angular.module('armsAngularApp')
     .service('appointmentDataservice', [
         '$http',
         'CONFIG',
-        function($http, CONFIG) {
+        '$rootScope',
+        function($http, CONFIG,$rootScope) {
             //get base url
             var baseUrl = CONFIG.BASE_URL;
             var appointmentDataservice = {};
+            var message = '';
 
             appointmentDataservice.getAllLectures = function() {
                 return $http.get(baseUrl + 'lecturer');
             };
-
             appointmentDataservice.getAllSubjects = function() {
                 return $http.get(baseUrl + 'subject');
             };
-
             appointmentDataservice.getMyAppointment = function() {
                 return $http.get(baseUrl + 'subject');
             };
+            appointmentDataservice.sendRequest = function(appointmentRequest) {
+                return $http.post(baseUrl + 'request/create',JSON.stringify(appointmentRequest));
+            };            
+            appointmentDataservice.getPendingRequests = function() {
+                return $http.get(baseUrl + 'request')
+            };
+            appointmentDataservice.getStudentRequests = function(lecturer) {
+                console.log(lecturer);
+                return $http.get(baseUrl + 'request/get-student-requests',{
+                    params: lecturer
+                })
+            };
 
-            appointmentDataservice.sendRequest = function() {
-                return $http.post(baseUrl + 'request/create')
-            }
+            appointmentDataservice.getAvailableRooms = function() {
+                return $http.get(baseUrl + 'appointment/get-available-rooms')
+            };
+            appointmentDataservice.sendAppointment = function(appointment) {
+                return $http.post(baseUrl + 'appointment/create',JSON.stringify(appointment));
+            }; 
 
+            appointmentDataservice.getMyAppointmentLecture = function(lecturer) {
+                return $http.get(baseUrl + 'lecturer/get-my-appointments',{
+                    params: lecturer
+                });
+            }; 
+
+            appointmentDataservice.passRequestData = function(msg) {
+                this.message = msg;
+                $rootScope.$broadcast('requestTableRowClick');
+                
+            };            
+
+            appointmentDataservice.refreshTables = function() {
+                $rootScope.$broadcast('refreshDataTables');
+                
+            };
 
 
             return appointmentDataservice;

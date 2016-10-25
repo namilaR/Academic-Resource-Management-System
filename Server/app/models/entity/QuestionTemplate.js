@@ -11,4 +11,5 @@ var QuestionTemplate = connection.define('QuestionTemplate', {
     paranoid: true
 });
 
+
 module.exports = QuestionTemplate;

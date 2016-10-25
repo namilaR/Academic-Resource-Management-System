@@ -34,9 +34,10 @@
       <div class="box-body">
         <form action="" method="get" accept-charset="utf-8">
 
-          <div class="form-group col-sm-12">
-            <datetimepicker data-ng-model="data.date"></datetimepicker>
-            <label class="col-sm-1 col-sm-offset-2">Start Date</label>
+          <!-- <div class="form-group col-sm-12"> -->
+          <!-- <datetimepicker data-ng-model="data.date"></datetimepicker>
+
+            <!-- <label class="col-sm-1 col-sm-offset-2">Start Date</label>
             <div class="dropdown col-sm-5">
               <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
                 <div class="input-group"><input type="text" class="form-control" data-ng-model="data.dateDropDownInput">
@@ -65,8 +66,68 @@
                 <datetimepicker data-ng-model="data.dateDropDownInput" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
               </ul>
             </div>
+          </div> -->
+          <!--
+            <div class="form-group" ng-class="{ 'has-error' : (appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted )}">
+              <label for="enterRequestTitle">Date</label>
+              <p class="input-group">
+                <input type="text" required name="date" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="appointmentRequest.requestDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close"/>
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default" ng-click="open2()">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                  </button>
+                </span>
+                {{datePicker}}
+              </p>
+              <p ng-show="(appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Date is required.</p>
+            </div>
+            <div class="form-group">
+              <label for="enterRequestTitle">Time</label>
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="text-italic">From</label>
+                  {{startTime}}
+                  <div uib-timepicker ng-model="appointmentRequest.requestStartTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                </div>
+                <div class="col-md-6">
+                  <label class="text-italic">To</label>
+                  <div uib-timepicker ng-model="appointmentRequest.requestEndTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                </div>
+              </div>
+            </div> -->
+          -->
+          <div class="dropdown">
+            <label>Start date</label>
+            <a class="dropdown-toggle" id="dropdown2" role="button" data-toggle="dropdown" data-target="#" href="#">
+              <div class="input-group"><input type="text" class="form-control" data-ng-model="data.dateDropDownInput"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+              </div>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <datetimepicker data-ng-model="data.dateDropDownInput" data-datetimepicker-config="{ dropdownSelector: '#dropdown2' }"/>
+            </ul>
           </div>
 
+          <div class="dropdown form-group">
+            <label>End Date</label>
+            <a class="dropdown-toggle" id="dropdownEnd" role="button" data-toggle="dropdown" data-target="#" href="#">
+              <div class="input-group date">
+                <input type="text" class="form-control" data-ng-model="dateRangeEnd">
+                <span class="input-group-addon">
+                  <i class="glyphicon glyphicon-calendar"></i>
+                </span>
+              </div>
+            </a>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <datetimepicker
+                data-ng-model="dateRangeEnd"
+                data-datetimepicker-config="{ dropdownSelector: '#dropdownEnd', renderOn: 'start-date-changed' }"
+                data-on-set-time="endDateOnSetTime()"
+                data-before-render="endDateBeforeRender($view, $dates, $leftDate, $upDate, $rightDate)"></datetimepicker>
+            </ul>
+
+
+
+          </div>
           <div class="form-group col-sm-12">
             <label class="control-label col-sm-2 col-sm-offset-2">Lecturer</label>
             <div class="col-sm-5"></div>
