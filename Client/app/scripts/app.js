@@ -108,11 +108,6 @@ angular
         controllerAs: 'appointment',
         bindToController: 'true'
       })
-      .when('/faculty/main', {
-        templateUrl: 'views/faculty/main.html',
-        controller: 'FacultyMainCtrl',
-        controllerAs: 'facultyController',
-      })
       .when('/admin/questions', {
         templateUrl: 'views/questions/questions.html',
         controller: 'QuestionsCtrl',
@@ -123,6 +118,21 @@ angular
         controller: 'QuestionsCtrl',
         controllerAs: 'questions'
       })
+      .when('/faculty/main', {
+        templateUrl: 'views/faculty/main.html',
+        controller: 'FacultyMainCtrl',
+        controllerAs: 'facultyController',
+      })
+           .when('/admin/subjects', {
+                templateUrl: 'views/subjects/subjects.html',
+                controller: 'SubjectsCtrl',
+                controllerAs: 'subjects'
+            })
+            .when('/admin/center', {
+                templateUrl: 'views/center/center.html',
+                controller: 'CenterCenterCtrl',
+                controllerAs: 'Center/Center'
+            })
       .otherwise({
         redirectTo: '/'
       });

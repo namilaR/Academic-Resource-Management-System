@@ -12,6 +12,7 @@ var SubjectRoute = require('./moduleRoutes/SubjectRoute');
 var RequestRoute = require('./moduleRoutes/RequestRoute');
 var QuestionRoute = require('./moduleRoutes/QuestionRoute');
 var Appointment = require('./moduleRoutes/AppointmentRoute');
+var CenterRoute = require('./moduleRoutes/CenterRoute');
 
 
 router.use('/student/', StudentRoute);
@@ -22,6 +23,7 @@ router.use('/faculty/', FacultyRoute);
 router.use('/request/', FacultyRoute);
 router.use('/question/', QuestionRoute);
 router.use('/appointment/', Appointment);
+router.use('/center/', CenterRoute);
 
 
 

@@ -15,6 +15,7 @@ Controllers.FacultyController = require('./ModuleControllers/FacultyController')
 Controllers.QuestionController = require('./ModuleControllers/QuestionController');
 Controllers.AppointmentController = require('./ModuleControllers/AppointmentController');
 Controllers.RoomController = require('./ModuleControllers/RoomController');
+Controllers.CenterController = require('./ModuleControllers/CenterController');
 
 
 

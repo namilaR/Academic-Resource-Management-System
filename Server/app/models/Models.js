@@ -5,6 +5,7 @@
  */
 var Models = {};
 
+Models.Connection = require('./Connection');
 Models.Lecturer = require('./entity/Lecturer');
 Models.TimeSlot = require('./entity/TimeSlot');
 Models.User = require('./entity/User');
