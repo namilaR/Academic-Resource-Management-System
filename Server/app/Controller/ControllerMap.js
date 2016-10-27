@@ -17,5 +17,9 @@ Controllers.QuestionController = require('./ModuleControllers/QuestionController
 Controllers.AppointmentController = require('./ModuleControllers/AppointmentController');
 Controllers.RoomController = require('./ModuleControllers/RoomController');
 Controllers.UserAuthenticateController = require('./ModuleControllers/UserAuthenticateController');
+Controllers.CenterController = require('./ModuleControllers/CenterController');
+
+
+
 
 module.exports = Controllers;

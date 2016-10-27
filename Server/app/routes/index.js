@@ -17,6 +17,8 @@ var QuestionRoute = require('./moduleRoutes/QuestionRoute');
 var Appointment = require('./moduleRoutes/AppointmentRoute');
 // route for api authentication
 var ApiAuthenticationRoute = require('./moduleRoutes/authentication/ApiAuthenticationRoute');
+var CenterRoute = require('./moduleRoutes/CenterRoute');
+
 
 
 router.use('/student/', StudentRoute);
@@ -29,6 +31,8 @@ router.use('/request/', FacultyRoute);
 router.use('/question/', QuestionRoute);
 router.use('/appointment/', Appointment);
 router.use('/api/authentication/', ApiAuthenticationRoute);
+router.use('/center/', CenterRoute);
+
 
 
 
