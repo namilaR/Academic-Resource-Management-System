@@ -1,15 +1,13 @@
 /**
- * Created by User on 9/6/2016.
- * Develop: Amila
+ * Created by User on 9/18/2016.
+ * Develop: Kasun
  * Model: Lecturer
  */
 var Sequelize = require('sequelize');
 var connection  = require('./../Connection');
 
 var Lecturer = connection.define('Lecturer',{
-    lecturerFullName: Sequelize.STRING,
-    status: Sequelize.BOOLEAN,
-    lecturerId:Sequelize.STRING
+    status: Sequelize.BOOLEAN
 },{
     tableName: 'lecturer',
     updatedAt: 'updatedAt',

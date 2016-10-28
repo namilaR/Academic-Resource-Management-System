@@ -1,0 +1,165 @@
+<div side-bar ></div>
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <div class="container">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Create New User</h1>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="box box-orange">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <a data-target="#addnewtype" data-toggle="modal" class="btn btn btn-primary " data-toggle="dropdown" role="menu">Add New User</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="addnewtype" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header orange">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div ng-controller="UserCtrl">
+                                        <form name="userForm" ng-submit="submitUserRoleForm()" novalidate>
+                                            <div class="row">
+                                                <div class="col-md-12 text-center">
+                                                    <h3>Create New User</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 text-center">
+                                                    <div class="form-group">
+                                                        <label class="control-label ">User Role</label>
+                                                        <div class="">
+                                                            <select name="user_type" id="user_type" class="form-control"
+                                                                    ng-options="option.name for option in data.availableOptions track by option.id"
+                                                                    ng-model="data.selectedOption" ng-change="GetValue()" required>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="" ng-style="" style="">
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="form-group" >
+                                                            <label class="control-label">Full Name</label>
+                                                            <div class="">
+                                                                <input type="text" class="form-control" ng-model="full_name" name="full_name" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6 text-center">
+                                                        <div class="form-group"  >
+                                                            <label class="control-label ">User Name</label>
+                                                            <div class="">
+                                                                <input type="text" class="form-control" ng-model="user_name" name="user_name" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-center">
+                                                        <div class="form-group"  >
+                                                            <label class="control-label ">Password</label>
+                                                            <div class="">
+                                                                <input type="text" class="form-control" ng-model="password" name="password" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="form-group" >
+                                                            <label class="control-label ">Email</label>
+                                                            <div class="">
+                                                                <input type="text" class="form-control" ng-model="email" name="email" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="student_type" ng-style="student_type_style" style="display:none">
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="form-group"  >
+                                                            <label class="control-label ">Batch</label>
+                                                            <div class="">
+                                                                <input type="text" class="form-control" ng-model="student_batch" name="student_batch" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="lecturer_type" ng-style="lecturer_type_style" style="display:none">
+
+                                            </div>
+                                            <div class="row" id="hod_type"  ng-style="hod_type_style" style="display:none">
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="form-group"  >
+                                                            <label class="control-label ">Department</label>
+                                                            <div class="">
+                                                                <input type="text" class="form-control" ng-model="hod_department" name="hod_department" required>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-info pull-right" value="Create" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="box box-orange">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Users list</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <div ng-controller="UserTableCtrl">
+                        <table datatable dt-options="dtOptions" dt-instance="dtInstance" dt-columns="dtColumns"></table>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+
+                </div>
+                <!-- /.box-footer -->
+
+            </div>
+
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /.content-wrapper -->
+<div footer></div>

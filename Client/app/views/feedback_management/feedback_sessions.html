@@ -1,0 +1,92 @@
+  <div nav-bar-user></div>
+  <!-- Full Width Column -->
+  <div class="content-wrapper">
+    <div class="container">
+
+    <section class="content-header">
+      <h1>
+        <i class="fa fa-certificate"></i>
+        Feedback Sessions
+        <small>Feedback sessions page for any management level purposes of feedback sessions</small>
+      </h1>
+    </section>
+
+
+    <!-- Main content -->
+    <section class="content">
+
+
+      <div class="box box-orange">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <a data-target="#addnewusertype" data-toggle="modal" class="btn btn btn-primary " data-toggle="dropdown" role="menu">Create new FeedBack Session</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="addnewusertype" >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header orange">
+              <div class="row">
+                <div class="col-md-12">
+                  <div ng-controller="UserTypeCtrl">
+                    <form name="feedbacksessionForm" ng-submit="submitUserRoleForm(feedbacksessionForm.$valid)" novalidate>
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <h3>Create New FeedBack Session</h3>
+                        </div>
+                      </div>
+                      <div class="row">
+
+                        <div class="col-md-6 text-center">
+                          <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted )}">
+                            <label class="control-label ">Year</label>
+                            <div class="">
+                              <input type="text" class="form-control" ng-model="userType" name="userType" required>
+                              <p ng-show="(feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 text-center">
+                          <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted )}">
+                            <label class="control-label ">Batch</label>
+                            <div class="">
+                              <input type="text" class="form-control" ng-model="userType" name="userType" required>
+                              <p ng-show="(feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <input type="submit" class="btn btn-info pull-right" value="Create" >
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+    <!-- /.content -->
+
+  </div>
+  <!-- /.container-->
+</div>
+<!-- /.content-wrapper -->
+  <div footer></div>

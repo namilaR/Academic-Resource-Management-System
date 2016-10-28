@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * @ngdoc function
  * @name armsAngularApp.controller:AppointmentsAppointmentCtrl
@@ -8,94 +7,90 @@
  * Controller of the armsAngularApp
  */
 angular.module('armsAngularApp')
-    .controller('AppointmentCtrl', [
-        '$scope',
-        '$log',
-        'appointmentDataservice',
-        function($scope,$log, appointmentDataservice) {
-            this.awesomeThings = [
-                'HTML5 Boilerplate',
-                'AngularJS',
-                'Karma'
-            ];
+  .controller('AppointmentCtrl', [
+    '$rootScope',
+    '$scope',
+    '$log',
+    'appointmentDataService',
+    'moment',
+    function($rootScope,$scope, $log, appointmentDataService, moment) {
+      this.awesomeThings = [
+        'HTML5 Boilerplate',
+        'AngularJS',
+        'Karma'
+      ];
+      $scope.pendingRequest = {};
+      $scope.appointment = {};
+      $scope.rooms = [];
+      var data = {};
 
-            $scope.subjects = [];
-            $scope.lectures = [];
-            $scope.appointmentRequest= {};
+      $scope.$on('requestTableRowClick', function() {
+        $scope.pendingRequest = {};
+        appointmentDataService.getAPendingAppoinment(appointmentDataService.message).then(
+          function(response){
+            var data = response.data;
+            console.log();
+            $scope.pendingRequest.id = data.id;
+            $scope.pendingRequest.requestTitle = data.appointmentTitle;
+            $scope.pendingRequest.requestSmallBref = data.appointmentSmallBref;
+            $scope.pendingRequest.appointmentDate = moment(data.appointmentDate).toDate();
+            $scope.pendingRequest.appointmentDay = data.TimeSlot.day;
+            $scope.pendingRequest.fromTime = moment(data.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A");
+            $scope.pendingRequest.toTime = moment(data.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
+            $scope.pendingRequest.Student = data.Student;
+            $scope.pendingRequest.timeSlot = data.TimeSlot;
 
-            $scope.submitAppointmentRequestForm = function(isValid) {
-                 if (isValid) {
-                    console.log($scope.appointmentRequest);
-                    $scope.appointmentRequest = {};
-                    $scope.appointmentRequestForm.$setPristine();
-                 }
+            appointmentDataService.getAvailableRooms($scope.pendingRequest).then(
+              function(response){
+                $scope.rooms = response.data;
+              }
+            );
+          }
+        );
+
+
+      });
+
+      $scope.placeAppoinment  = function() {
+          appointmentDataService.placeAppoinment($scope.pendingRequest).then(
+            function(d){
+              console.log(d);
+              appointmentDataService.refreshTables();
+              angular.element("#myModal").modal('hide');
             }
+          );
+      };
+      // $scope.sendAppoinmentData = function() {
+      //   //convert date to SQL format
+      //   data.appointmentDate = moment($scope.pendingRequest.appointmentDate).format("YYYY-MM-DD");
+      //   //set status to 1
+      //   data.status = 1;
+      //   data.RoomId = $scope.pendingRequest.RoomId;
+      //   //invoke post method and pass $scope.pendingRequest as a JSON object
+      //   appointmentDataService.sendAppointment(data).then(
+      //     function(response) {
+      //       console.log(response);
+      //       appointmentDataService.refreshTables();
+      //       swal({
+      //         title: "Request Sent",
+      //         text: "You request has been successfully send",
+      //         type: "success",
+      //         timer: 2500
+      //       });
+      //
+      //     },
+      //     function(error) {
+      //       console.error(error);
+      //     }
+      //   );
+      // };
 
-
-            appointmentDataservice.getAllLectures().then(
-                function(response) {
-                    $scope.lectures = response.data;
-                },
-                function(error) {
-                    console.error(error);
-                }
-            );
-
-            appointmentDataservice.getAllSubjects().then(
-                function(response) {
-                    $scope.subjects = response.data;
-                },
-                function(error) {
-                    console.error(error);
-                }
-            );
-
-
-            /*********************************
-                ANGULAR UI DATEPICKER CONFIGS
-             *********************************/
-            $scope.today = function() {
-                $scope.appointmentRequest.date = new Date();
-            };
-
-            $scope.clear = function() {
-                $scope.appointmentRequest.date = null;
-            };
-            $scope.dateOptions = {
-
-                formatYear: 'yy',
-                maxDate: new Date(2020, 5, 22),
-                minDate: new Date(),
-                startingDay: 1
-            };
-            $scope.open2 = function() {
-                $scope.popup2.opened = true;
-            };
-            $scope.setDate = function(year, month, day) {
-                $scope.appointmentRequest.date = new Date(year, month, day);
-            };
-            $scope.popup2 = {
-                opened: false
-            };
-
-            /*********************************
-                ANGULAR UI TIMEPICKER CONFIGS
-             *********************************/
-            $scope.appointmentRequest.startTime = $scope.appointmentRequest.endTime  = new Date()
-            $scope.hstep = 1;
-            $scope.mstep = 1;
-            $scope.ismeridian = true;
-            $scope.toggleMode = function() {
-              $scope.ismeridian = ! $scope.ismeridian;
-            };
-            $scope.changed = function () {
-              $log.log('Time changed to: ' + $scope.appointmentRequest.startTime + ' ' + $scope.appointmentRequest.endTime);
-            };
+      $scope.selectRoom = function(room) {
+        $scope.pendingRequest.selectedRoom = room;
+        console.log(room);
+      };
 
 
 
-
-
-
-        }
-    ]);
+    }
+  ]);
