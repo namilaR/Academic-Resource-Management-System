@@ -13,13 +13,15 @@ angular
     'ngAnimate',
     'ngCookies',
     'ngResource',
+     'ui.bootstrap',
     'ngRoute',
     'ngSanitize',
     'ngTouch',
     'datatables',
     'datatables.bootstrap',
     'ui.select2',
-    'mgcrea.ngStrap'
+    'mgcrea.ngStrap',
+    'checklist-model'
   ])
   .config(['$routeProvider', '$locationProvider', '$httpProvider', function($routeProvider, $locationProvider) {
     $routeProvider
@@ -119,10 +121,10 @@ angular
         controller: 'QuestionsCtrl',
         controllerAs: 'questions'
       })
-      .when('/faculty/main', {
+      .when('/control-panel/faculty/main', {
         templateUrl: 'views/faculty/main.html',
         controller: 'FacultyMainCtrl',
-        controllerAs: 'facultyController',
+        controllerAs: 'facultyController'
       })
      .when('/control-panel/admin/subjects', {
           templateUrl: 'views/subjects/subjects.html',

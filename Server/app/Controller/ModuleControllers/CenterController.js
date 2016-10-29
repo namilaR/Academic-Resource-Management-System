@@ -47,6 +47,28 @@ CenterController = function() {
             }
         });
     }
+
+    this.updateCenters = function(center, res) {
+        return Center.find({
+            where: {
+                id: center.center.id
+            }
+        }).then(function(instance) {
+            if(instance) {
+                return instance.update({
+                    centerName: instance.centerName
+                }).then(function(updatedInstance) {
+                    return updatedInstance.setSubjects(center.center.subject).then(function(data) {
+                        if(data) {
+                            return res.send(data);
+                        } else {
+                            return res.send({'status': 500, 'message' : 'please try to add data again'})
+                        }
+                    });
+                })
+            }
+        })
+    }
 }
 
 module.exports = new CenterController();
