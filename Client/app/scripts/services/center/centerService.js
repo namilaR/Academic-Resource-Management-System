@@ -30,5 +30,15 @@ angular.module('armsAngularApp')
                 return response;
             })
         }
+
+        centerService.updateCenter = function (center) {
+            return $http({
+                method: 'put',
+                url: baseUrl + 'center',
+                data: { center: center}
+            }).then(function (response) {
+                return response;
+            })
+        }
         return centerService;
     }]);

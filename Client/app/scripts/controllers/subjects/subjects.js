@@ -25,18 +25,19 @@ angular.module('armsAngularApp')
 
     /*
      * function that handles the service side of create a subject
+     * @subjectInjstance = subject instance that include subject object
      */
     function createSubject(subjectInstance) {
      	subjectService.insertNewSubject(subjectInstance).then(function (res) {
-        if (res.status === 200) {
-          swal('success', "insert new subject", 'success');
-          getAllSubjects();
-          $scope.subjectName = '';
-          $scope.subjectCode = '';
-          $scope.subjectCredit = '';
-        } else {
-          swal('Error', 'Not inserted record', 'error');
-        }
+            if (res.status === 200) {
+              swal('success', "insert new subject", 'success');
+              getAllSubjects();
+              $scope.subjectName = '';
+              $scope.subjectCode = '';
+              $scope.subjectCredit = '';
+            } else {
+              swal('Error', 'Not inserted record', 'error');
+            }
      	});
     }
 
@@ -82,6 +83,10 @@ angular.module('armsAngularApp')
 
     /*
      * update subject
+     * @subjectId = id of the subject
+     * @subjectName = name of the subject
+     * @subjectCode = code of the subject
+     * @subjectCredit = credit of the subject that given by lecturer
      */
     $scope.updateSubject = function (subjectId, subjectName, subjectCode, subjectCredit) {
       var updateItems = {};
@@ -93,6 +98,9 @@ angular.module('armsAngularApp')
     }
     getAllSubjects();
 
+    /*
+     * @updateItems = updated instance
+     */
     $scope.open = function (updateItems) {
       var modalInstance = $uibModal.open({
         animation: true,
@@ -114,6 +122,12 @@ angular.module('armsAngularApp').controller('ModalInstanceCtrl', ['$scope', '$ro
   $scope.updateSubjectCode = items.subjectCode;
   $scope.updateSubjectCredit = items.subjectCredit;
 
+  /*
+   * for update the subject
+   * @subjectName = name of the subject
+   * @subjectCode = code of the subject
+   * @subjectCredit = credit of the subject that given by lecturer
+   */
   $scope.updateSubjectForm = function (subjectName, subjectCode, subjectCredit) {
     var subject = {};
     subject.subjectId = items.subjectId;

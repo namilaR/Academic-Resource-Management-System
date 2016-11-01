@@ -13,5 +13,9 @@ router.get('/', function(req, res, next) {
 
 router.delete('/:id', function(req, res, next) {
     CenterController.removeCenters(req.params.id, res);
+});
+
+router.put('/', function(req, res, next) {
+    CenterController.updateCenters(req.body, res);
 })
 module.exports = router;

@@ -97,6 +97,7 @@ angular.module('armsAngularApp')
                     handleFacultyUpdates(facultyId, inputValue);
                 });
         };
+
         /*
          * handle create faculty form submiting
          */
@@ -109,7 +110,6 @@ angular.module('armsAngularApp')
         };
 
         function getFacultyData() {
-            //invloke api service
             facultyService.getAllFacultyDetails().then(function (response) {
                 $scope.allFaculty = response.data;
                 return response.data;

@@ -28,15 +28,8 @@ var Relationship = function() {
 
     Models.Hod.belongsTo(Models.Department)
 
-
-
-
-
-
-
     Models.Center.belongsToMany(Models.Subject, {through: 'CenterSubject'})
     Models.Subject.belongsToMany(Models.Center, {through: 'CenterSubject'})
-
 
     Models.Faculty.belongsToMany(Models.Center, {through: 'FacultyCenter'})
     Models.Center.belongsToMany(Models.Faculty, {through: 'FacultyCenter'})
@@ -53,15 +46,11 @@ var Relationship = function() {
     Models.Department.hasMany(Models.Batch);
     Models.Batch.belongsTo(Models.Department);
 
-
     Models.Batch.hasMany(Models.Student);
     Models.Student.belongsTo(Models.Batch);
     
     Models.Lecturer.belongsToMany(Models.Batch, {through: 'LecturerBatch'})
     Models.Batch.belongsToMany(Models.Lecturer, {through: 'LecturerBatch'})
-
-
-
 
     Models.Student.hasMany(Models.Appointment);
     Models.Appointment.belongsTo(Models.Student);
@@ -72,17 +61,10 @@ var Relationship = function() {
     Models.Lecturer.hasMany(Models.TimeSlot);
     Models.TimeSlot.belongsTo(Models.Lecturer);
 
-
-
     //Models.Appointment.belongsTo(Models.Request);
-
-
-
     Models.Appointment.belongsTo(Models.Room);
 
     /**added by pasindu*/
-
-
     Models.Lecturer.hasMany(Models.FeedBackSession)
     Models.FeedBackSession.belongsTo(Models.Lecturer)
 
@@ -105,22 +87,12 @@ var Relationship = function() {
 
     Models.FeedBackSession.belongsTo(Models.Batch)
 
-
-
     Models.QuestionTemplate.belongsToMany(Models.Question, {
         through: 'QuestionTemplateQuestion'
     });
     Models.Question.belongsToMany(Models.QuestionTemplate, {
         through: 'QuestionTemplateQuestion'
     });
-
-
-
-
-
-
-
-
 
     Models.Lecturer.hasMany(Models.FeedBackSession);
     Models.FeedBackSession.belongsTo(Models.Lecturer);
@@ -146,11 +118,7 @@ var Relationship = function() {
 
     Models.Room.belongsTo(Models.Faculty);
 
-
-
     Models.Hod.belongsTo(Models.Department);
-
-
 
     connection
         .sync()
