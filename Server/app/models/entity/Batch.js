@@ -10,6 +10,7 @@ var Batch = connection.define('Batch',{
     /*this can be week end or week day*/
     batchWeek : Sequelize.STRING,
     batchName : Sequelize.STRING,
+    timeTable:Sequelize.STRING,
     status: Sequelize.BOOLEAN
 },{
     tableName: 'batch',

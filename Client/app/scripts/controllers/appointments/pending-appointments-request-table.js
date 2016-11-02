@@ -54,10 +54,7 @@ angular.module('armsAngularApp')
       vm.dtInstance = {};
 
       function actionsHtml(data, type, full, meta) {
-        return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"> view</button>'+
-        '<button class="btn btn-sm btn-danger" ng-click="showCase.delete(showCase.persons[])" )"="">' +
-          '   Cancel' +
-          '</button>';
+        return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"> more details</button>';
       }
 
       $scope.reload = function() {

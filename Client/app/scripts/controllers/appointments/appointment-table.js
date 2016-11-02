@@ -25,6 +25,7 @@ angular.module('armsAngularApp')
           return promiseFunc();
         })
         // Add Bootstrap compatibility
+        .withOption('rowCallback', rowCallback)
         .withBootstrap();
       vm.dtColumns = [
         DTColumnBuilder.newColumn('appointmentDate').withTitle('Date').renderWith(function(data, type, full) {
@@ -52,9 +53,7 @@ angular.module('armsAngularApp')
       vm.dtInstance = {};
 
       function actionsHtml(data, type, full, meta) {
-        return '<button class="btn btn-sm btn-danger" ng-click="showCase.delete(showCase.persons[])" )"="">' +
-          '   Cancel' +
-          '</button>';
+        return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal2"> more details</button>';
       }
 
       $scope.reload = function() {
@@ -85,6 +84,26 @@ angular.module('armsAngularApp')
         console.log('refreshDataTables');
           vm.dtInstance.reloadData();
       });
+
+      function callback(json) {
+        console.log(json);
+      }
+
+      function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
+        $('td', nRow).unbind('click');
+        $('td', nRow).bind('click', function() {
+          $scope.$apply(function() {
+            someClickHandler(aData);
+          });
+        });
+        return nRow;
+      };
+
+      function someClickHandler(info) {
+        console.log(info);
+        appointmentDataService.passAppoinmentData(info);
+      };
 
     }
   ]);
