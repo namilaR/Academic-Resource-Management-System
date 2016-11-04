@@ -45,6 +45,10 @@ router.get('/available-timeslot', function(req, res, next) {
     TimeSlotController.getAvailableTimeSlots(req.query, res);
 });
 
+router.get('/more-available-timeslot', function(req, res, next) {
+    TimeSlotController.getMoreAvailableTimeSlots(req.query, res);
+});
+
 
 
 router.post('/', function(req, res, next) {

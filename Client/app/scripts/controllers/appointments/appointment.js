@@ -23,6 +23,7 @@ angular.module('armsAngularApp')
             $scope.pendingRequest = {};
             $scope.appointment = {};
             $scope.rooms = [];
+            $scope.availableTimeSlots = [];
             var data = {};
 
             $scope.$on('requestTableRowClick', function() {
@@ -30,8 +31,9 @@ angular.module('armsAngularApp')
                 appointmentDataService.getAPendingAppoinment(appointmentDataService.message).then(
                     function(response) {
                         var data = response.data;
-                        console.log();
+                        console.log(data);
                         $scope.pendingRequest.id = data.id;
+                        $scope.pendingRequest.lecturerId = data.TimeSlot.LecturerId;
                         $scope.pendingRequest.requestTitle = data.appointmentTitle;
                         $scope.pendingRequest.requestSmallBref = data.appointmentSmallBref;
                         $scope.pendingRequest.appointmentDate = moment(data.appointmentDate).toDate();
@@ -81,13 +83,47 @@ angular.module('armsAngularApp')
                 );
             });
 
+            $scope.getMoreAvailableTimeSlots = function(){
+              appointmentDataService.getMoreAvailableTimeSlots($scope.pendingRequest).then(
+                function(response){
+                  $scope.availableTimeSlots = [];
+                  $scope.availableTimeSlots = response.data;
+                  console.log(response.data);
+                }
+              );
+            };
+
             $scope.selectRoom = function(room) {
                 $scope.pendingRequest.selectedRoom = room;
                 console.log(room);
             };
 
-            $scope.showTimeTable = function(){
-              window.open(CONFIG.BASE_URL+$scope.pendingRequest.Student.Batch.timeTable,'_blank');
+            $scope.selectTimeSlot = function(timeSlot) {
+              $scope.pendingRequest.timeSlot = timeSlot;
+              appointmentDataService.getAvailableRooms($scope.pendingRequest).then(
+                  function(response) {
+                      $scope.rooms = [];
+                      $scope.rooms = response.data;
+                  }
+              );
+              console.log(timeSlot);
+            };
+
+            $scope.clearTimeSlots = function(){
+              $scope.pendingRequest.TimeSlot = '';
+              $scope.pendingRequest.room = '';
+              $scope.rooms = [];
+              $scope.availableTimeSlots = [];
+            };
+
+            //load time table in new tab
+            $scope.showTimeTable = function(operation){
+              if (operation == 'make') {
+                 window.open(CONFIG.BASE_URL+$scope.pendingRequest.Student.Batch.timeTable,'_blank');
+              } else {
+                 window.open(CONFIG.BASE_URL+$scope.appoinment.Student.Batch.timeTable,'_blank');
+              }
+             
             };
 
 

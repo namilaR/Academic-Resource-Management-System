@@ -121,7 +121,7 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <label class="control-label  ">
-                                        <a href="" ng-click="showTimeTable('make')">{{pendingRequest.Student.Batch.timeTable}}</a>
+                                        <a href="" ng-click="showTimeTable('make')">Click here !</a>
                                     </label>
                                 </div>
                             </div>
@@ -156,7 +156,8 @@
                                     <label for="inputEmail3" class=" control-label  ">Appointment Date</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <input type="text" bs-datepicker data-min-date="today" data-autoclose="1" data-date-format="dd-MM-yyyy" type="text" class="form-control" ng-model="pendingRequest.appointmentDate" name="date" ng-change="dataChange()">
+                               <!--  <label class=" control-label" >{{pendingRequest.appointmentDate}}</label> -->
+                                    <input  type="text" bs-datepicker data-min-date="today" data-autoclose="1" data-date-format="dd-MM-yyyy" type="text" class="form-control" ng-model="pendingRequest.appointmentDate" name="date" ng-change="clearTimeSlots()">
                                     <p ng-show="(appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Date is required.</p>
                                 </div>
                             </div>
@@ -165,12 +166,14 @@
                                     <label for="enterRequestTitle" class="control-label  ">Time Slot</label>
                                 </div>
                                 <div class="col-sm-8">
-                                    <!-- <a ng-repeat=" timeSlot in availableTimeSlots" ng-class="{'btn-success text-white' : appointmentRequest.selectedTimeSlot.id == timeSlot.id }" ng-click="selectTimeSlot(timeSlot)" class="btn btn-time-slot btn-default">
-                        <strong>{{timeSlot.day}}</strong><br>{{timeSlot.fromTime}}-{{timeSlot.toTime}}</a> -->
-                                    <a class="btn btn-time-slot btn-default">
+                                <label class="control-label  ">{{pendingRequest.fromTime}}&nbsp;-&nbsp;{{pendingRequest.toTime}}&nbsp;({{pendingRequest.appointmentDay}})</label>&nbsp;<a ng-click="getMoreAvailableTimeSlots ()" href="">more time slots</a>  
+                                    <a ng-repeat=" timeSlot in availableTimeSlots" ng-class="{'btn-success text-white' : pendingRequest.timeSlot.id == timeSlot.id }" ng-click="selectTimeSlot(timeSlot)" class="btn btn-time-slot btn-default">
+                                      <strong>{{timeSlot.day}}</strong><br>{{timeSlot.fromTime}}-{{timeSlot.toTime}}
+                                    </a>
+<!--                                     <a class="btn btn-time-slot btn-default">
                                         <strong>{{pendingRequest.appointmentDay}}</strong>
                                         <br>{{pendingRequest.fromTime}}-{{pendingRequest.toTime}}
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -180,12 +183,13 @@
                                 <div class="col-sm-8">
                                     <a ng-repeat=" room in rooms" ng-class="{'btn-success text-white' : pendingRequest.selectedRoom.id == room.id }" ng-click="selectRoom(room)" class="btn btn-time-slot btn-default">
                                         <strong>{{room.id}}</strong>
-                                        <br>{{room.roomName}}</a>
+                                        <br>{{room.roomName}}
+                                    </a>                                    
                                 </div>
                             </div>
                             <div class="form-group row">
                               <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label  ">Reason for Cancel</label>
+                                  <label for="enterRequestTitle" class="control-label  ">Note for Student</label>
                               </div>
                               <div class="col-sm-8">
                                 <textarea class="form-control" ng-model="resonForCancel" rows="8" cols="40"></textarea>
@@ -196,8 +200,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button ng-disabled="resonForCancel" type="submit" class="btn btn-success pull-right">Make Appointment</button>
-                    <button ng-disabled="!resonForCancel" type="button" class="btn btn-danger pull-right">Cancel Appointment</button>
+                    <button type="submit" class="btn btn-success pull-right">Make Appointment</button>
                 </div>
             </form>
         </div>

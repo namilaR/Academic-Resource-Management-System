@@ -201,6 +201,17 @@ angular.module('armsAngularApp')
                 return $http.get(baseUrl + 'lecturer/available-timeslot', {
                     params: lecturer
                 });
+            };            
+            /**
+             * get more free time slots for given lecturer
+             * @param timeSlot
+             * @returns {HttpPromise}
+             */
+            appointmentDataService.getMoreAvailableTimeSlots = function(lecturer) {
+                console.log(lecturer);
+                return $http.get(baseUrl + 'lecturer/more-available-timeslot', {
+                    params: lecturer
+                });
             };
 
 

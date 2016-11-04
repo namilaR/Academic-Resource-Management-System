@@ -256,8 +256,6 @@ AppointmentController = function() {
                 where: {
                     status: 1,
                     id: {
-                        //$notIn: [Sequelize.literal("SELECT a.RoomId   FROM appointment a  WHERE a.TimeSlotId = '" + timeSlot.id + "' AND a.appointmentDate = '" + Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate) + "' AND a.RoomId IS NOT NULL")]
-                        //$notIn: [Sequelize.literal("SELECT a.RoomId   FROM appointment a  WHERE a.TimeSlotId = '" + timeSlot.id + "' AND a.appointmentDate = '" + Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate) + "' AND a.RoomId IS NOT NULL")]
                         $notIn: [
                             Sequelize.literal(
                                 "   SELECT appointment.RoomId\n" +
@@ -283,6 +281,8 @@ AppointmentController = function() {
         //var room = JSON.parse(AppoinmentInstance.selectedRoom);
         Appointment.update({
             RoomId: AppoinmentInstance.selectedRoom.id,
+            appointmentDate : Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate),
+            TimeSlotId: AppoinmentInstance.timeSlot.id,
             approved: 1
         }, {
             where: {
