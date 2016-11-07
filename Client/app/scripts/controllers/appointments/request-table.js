@@ -32,12 +32,11 @@ angular.module('armsAngularApp')
         DTColumnBuilder.newColumn('appointmentDate').withTitle('Date').renderWith(function(data, type, full) {
           return moment(full.appointmentDate).format("MMM-DD");
         }),
-        DTColumnBuilder.newColumn('TimeSlot.fromTime').withTitle('Start Time').renderWith(function(data, type, full) {
-          return moment(full.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A");
+        DTColumnBuilder.newColumn(null).withTitle('Time Slot').renderWith(function(data, type, full) {
+          return moment(full.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A")+' - '+ moment(full.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
         }),
-        DTColumnBuilder.newColumn('TimeSlot.toTime').withTitle('End Time').renderWith(function(data, type, full) {
-          return moment(full.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
-        }),
+        DTColumnBuilder.newColumn('appointmentTitle').withTitle('Title'),
+        DTColumnBuilder.newColumn('appointmentNotes').withTitle('Notes'),
         DTColumnBuilder.newColumn('appointmentTitle').withTitle('Title'),
         DTColumnBuilder.newColumn('approved').withTitle('Status').renderWith(function(data, type, full) {
           var st;
@@ -55,7 +54,8 @@ angular.module('armsAngularApp')
 
       function actionsHtml(data, type, full, meta) {
         if(full.approved == true) {
-          return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"> more details</button>';
+          return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"> more details</button>'+
+                 '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>';
         } else {
           return '';
         }

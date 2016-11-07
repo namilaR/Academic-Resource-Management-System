@@ -224,11 +224,12 @@ TimeSlotController = function() {
      * @return {RESPONSE}
      */
     this.getMoreAvailableTimeSlots = function(DataInstance, res) {
-
+            console.log(DataInstance);
+ 
             TimeSlot.findAll({
                     where: {
                         status: 1,
-                        LecturerId: DataInstance.lecturerId,
+                        LecturerId: DataInstance.LecturerId,
                         hide: 0,
                         day: Helper.getDay(DataInstance.appointmentDate),
                         id: {

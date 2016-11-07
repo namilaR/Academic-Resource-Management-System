@@ -28,6 +28,7 @@ angular.module('armsAngularApp')
 
             $scope.$on('requestTableRowClick', function() {
                 $scope.pendingRequest = {};
+                console.log(appointmentDataService.message);
                 appointmentDataService.getAPendingAppoinment(appointmentDataService.message).then(
                     function(response) {
                         var data = response.data;
@@ -55,6 +56,7 @@ angular.module('armsAngularApp')
             });
 
             $scope.placeAppoinment = function() {
+                $scope.pendingRequest.appointmentNotes = $scope.appointmentNotes;
                 appointmentDataService.placeAppoinment($scope.pendingRequest).then(
                     function(d) {
                         console.log(d);

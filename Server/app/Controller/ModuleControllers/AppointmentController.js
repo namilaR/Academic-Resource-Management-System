@@ -282,6 +282,7 @@ AppointmentController = function() {
         Appointment.update({
             RoomId: AppoinmentInstance.selectedRoom.id,
             appointmentDate : Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate),
+            appointmentNotes : AppoinmentInstance.appointmentNotes,
             TimeSlotId: AppoinmentInstance.timeSlot.id,
             approved: 1
         }, {

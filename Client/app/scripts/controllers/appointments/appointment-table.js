@@ -20,6 +20,50 @@ angular.module('armsAngularApp')
       var vm = this;
       var user = $rootScope.user;
       console.log(appointmentDataService);
+
+      function promiseFunc() {
+        var deferred = $q.defer();
+        appointmentDataService.getMyAppointmentsLecture(user).then(function(response) {
+          console.log(response.data);
+          deferred.resolve(response.data);
+        });
+        return deferred.promise;
+      }
+
+      function callback(json) {
+        console.log(json);
+      }
+
+      function reloadData() {
+        var resetPaging = true;
+        vm.dtInstance.reloadData(callback, resetPaging);
+      }
+
+      $scope.$on('refreshDataTables', function() {
+        console.log('refreshDataTables');
+          vm.dtInstance.reloadData();
+      });
+
+      function someClickHandler(info) {
+        console.log(info);
+        appointmentDataService.passAppoinmentData(info);
+      }
+
+
+      function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
+        $('td', nRow).unbind('click');
+        $('td', nRow).bind('click', function() {
+          $scope.$apply(function() {
+            someClickHandler(aData);
+          });
+        });
+        return nRow;
+      }
+
+
+
+
       vm.dtOptions = DTOptionsBuilder
         .fromFnPromise(function() {
           return promiseFunc();
@@ -31,13 +75,19 @@ angular.module('armsAngularApp')
         DTColumnBuilder.newColumn('appointmentDate').withTitle('Date').renderWith(function(data, type, full) {
           return moment(full.appointmentDate).format("MMM-DD");
         }),
-        DTColumnBuilder.newColumn('TimeSlot.fromTime').withTitle('Start Time').renderWith(function(data, type, full) {
-          return moment(full.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A");
-        }),
-        DTColumnBuilder.newColumn('TimeSlot.toTime').withTitle('End Time').renderWith(function(data, type, full) {
-          return moment(full.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
+        DTColumnBuilder.newColumn(null).withTitle('Time Slot').renderWith(function(data, type, full) {
+          return moment(full.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A")+' - '+ moment(full.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
         }),
         DTColumnBuilder.newColumn('appointmentTitle').withTitle('Title'),
+        DTColumnBuilder.newColumn('appointmentNotes').withTitle('Notes'),
+        DTColumnBuilder.newColumn(null).withTitle('Venue').renderWith(function(data, type, full) {
+          var st;
+          if (full.Room !== 'undefined' ) {
+              return full.Room.roomName;
+          } else {
+            return 'N/A';
+          }
+        }),
         DTColumnBuilder.newColumn('approved').withTitle('Status').renderWith(function(data, type, full) {
           var st;
           if (full.approved == true) {
@@ -62,48 +112,6 @@ angular.module('armsAngularApp')
       };
 
 
-      function promiseFunc() {
-        var deferred = $q.defer();
-        appointmentDataService.getMyAppointmentsLecture(user).then(function(response) {
-          console.log(response.data);
-          deferred.resolve(response.data);
-        });
-        return deferred.promise;
-      };
-
-      function reloadData() {
-        var resetPaging = true;
-        vm.dtInstance.reloadData(callback, resetPaging);
-      }
-
-      function callback(json) {
-        console.log(json);
-      }
-
-      $scope.$on('refreshDataTables', function() {
-        console.log('refreshDataTables');
-          vm.dtInstance.reloadData();
-      });
-
-      function callback(json) {
-        console.log(json);
-      }
-
-      function rowCallback(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        // Unbind first in order to avoid any duplicate handler (see https://github.com/l-lin/angular-datatables/issues/87)
-        $('td', nRow).unbind('click');
-        $('td', nRow).bind('click', function() {
-          $scope.$apply(function() {
-            someClickHandler(aData);
-          });
-        });
-        return nRow;
-      };
-
-      function someClickHandler(info) {
-        console.log(info);
-        appointmentDataService.passAppoinmentData(info);
-      };
 
     }
   ]);

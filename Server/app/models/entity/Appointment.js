@@ -8,8 +8,7 @@ var connection  = require('./../Connection');
 
 var Appointment = connection.define('Appointment',{
     appointmentDate : Sequelize.DATEONLY,
-    appointmentStartTime : Sequelize.TIME,
-    appointmentEndTime : Sequelize.TIME,
+    appointmentNotes : Sequelize.STRING,
     appointmentTitle : Sequelize.STRING,
     appointmentSmallBref : Sequelize.STRING,
     appointmentComment: Sequelize.STRING,
