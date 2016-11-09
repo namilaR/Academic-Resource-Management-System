@@ -43,6 +43,8 @@ angular.module('armsAngularApp')
           var st;
           if (full.approved == 'true') {
             return '<span class="label label-success">Pending</span>';
+          } else if (full.reShedule == true) {
+              return '<span class="label label-info">On Reshedule</span>';
           } else {
             return '<span class="label label-warning">Pending</span>';
           }

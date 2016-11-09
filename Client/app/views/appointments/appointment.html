@@ -79,7 +79,9 @@
         <!-- ./main content  -->
     </div>
     <!-- /.container-->
+    <reshedule-modal-lecture role="{{user_role}}"></reshedule-modal-lecture>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -187,14 +189,25 @@
                                     </a>                                    
                                 </div>
                             </div>
+
                             <div class="form-group row">
                               <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label  ">Note for Student</label>
+                                  <label for="enterRequestTitle" class="control-label  ">Note from Student</label>                                  
                               </div>
                               <div class="col-sm-8">
-                                <textarea class="form-control" ng-model="appointmentNotes" rows="8" cols="40"></textarea>
+                                <span>{{pendingRequest.appointmentNoteStudent}}</span>
                               </div>
-                            </div>
+                            </div>     
+
+                            <div class="form-group row">
+                              <div class="col-sm-4">
+                                  <label for="enterRequestTitle" class="control-label  ">Note for Student</label>                                  
+                              </div>
+                              <div class="col-sm-8">
+                                <textarea class="form-control" ng-model="appointmentNoteLecturer" rows="8" cols="40"></textarea>
+                              </div>
+                            </div>                           
+
                         </div>
                     </div>
                 </div>
@@ -295,4 +308,5 @@
         </div>
     </div>
 </div>
+
 <div footer></div>

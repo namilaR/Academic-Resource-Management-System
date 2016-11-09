@@ -49,6 +49,32 @@ AppointmentController = function() {
 
     };
     /**
+     * save new appointment request
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.saveAppoinmentRescheduleRequest = function(AppoinmentInstance, res) {
+        var approvedStatus = 0;
+        if (AppoinmentInstance.userRole == 'Lecturer') {
+             approvedStatus = 1;
+        }
+        
+        Appointment.update({           
+            appointmentDate : Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate),
+            appointmentNoteStudent : AppoinmentInstance.appointmentNoteStudent,
+            TimeSlotId: AppoinmentInstance.TimeSlot.id,
+            reShedule: 1,
+            approved: approvedStatus
+        }, {
+            where: {
+                id: AppoinmentInstance.id,
+            }
+        }).then(function(data) {
+            res.send(data);
+        });
+
+    };
+    /**
      * returns all appoinments by the student
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
@@ -282,7 +308,7 @@ AppointmentController = function() {
         Appointment.update({
             RoomId: AppoinmentInstance.selectedRoom.id,
             appointmentDate : Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate),
-            appointmentNotes : AppoinmentInstance.appointmentNotes,
+            appointmentNoteLecturer : AppoinmentInstance.appointmentNoteLecturer,
             TimeSlotId: AppoinmentInstance.timeSlot.id,
             approved: 1
         }, {

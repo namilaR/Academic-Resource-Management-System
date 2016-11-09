@@ -12,7 +12,9 @@ angular.module('armsAngularApp')
     return {
       templateUrl: 'views/appointments/reshedule-modal.html',
       restrict: 'E',
-      scope: {},
+      scope: {
+      	  role: '@'
+      },
       controller:'AppointmentRequestsCtrl',
       link: function postLink(scope, element, attrs) {
         

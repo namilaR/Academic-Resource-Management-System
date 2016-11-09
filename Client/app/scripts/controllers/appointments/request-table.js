@@ -36,12 +36,14 @@ angular.module('armsAngularApp')
           return moment(full.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A")+' - '+ moment(full.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
         }),
         DTColumnBuilder.newColumn('appointmentTitle').withTitle('Title'),
-        DTColumnBuilder.newColumn('appointmentNotes').withTitle('Notes'),
+        DTColumnBuilder.newColumn('appointmentNoteLecturer').withTitle('Notes'),
         DTColumnBuilder.newColumn('appointmentTitle').withTitle('Title'),
         DTColumnBuilder.newColumn('approved').withTitle('Status').renderWith(function(data, type, full) {
           var st;
           if (full.approved == true) {
             return '<span class="label label-success">Approved</span>';
+          } else if (full.reShedule == true) {
+              return '<span class="label label-info">On Reshedule</span>';
           } else {
             return '<span class="label label-warning">Pending</span>';
           }

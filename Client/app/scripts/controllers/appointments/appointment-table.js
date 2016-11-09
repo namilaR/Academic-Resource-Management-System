@@ -91,10 +91,13 @@ angular.module('armsAngularApp')
         DTColumnBuilder.newColumn('approved').withTitle('Status').renderWith(function(data, type, full) {
           var st;
           if (full.approved == true) {
-            return '<span class="label label-success">Approved</span>';
+             return '<span class="label label-success">Approved</span>';
+          } else if (full.reShedule == true) {
+              return '<span class="label label-info">On Reshedule</span>';
           } else {
-            return '<span class="label label-warning">Pending</span>';
+              return '<span class="label label-warning">Pending</span>';
           }
+
         }),
         DTColumnBuilder.newColumn(null).withTitle('Action').notSortable().renderWith(actionsHtml)
       ];
@@ -103,7 +106,8 @@ angular.module('armsAngularApp')
       vm.dtInstance = {};
 
       function actionsHtml(data, type, full, meta) {
-        return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal2"> more details</button>';
+        return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal2"> more details</button>'+
+         '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>';
       }
 
       $scope.reload = function() {

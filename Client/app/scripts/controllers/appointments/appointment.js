@@ -22,6 +22,8 @@ angular.module('armsAngularApp')
             ];
             $scope.pendingRequest = {};
             $scope.appointment = {};
+            $scope.appoinment = {};
+            $scope.appointmentData = {};
             $scope.rooms = [];
             $scope.availableTimeSlots = [];
             var data = {};
@@ -43,6 +45,8 @@ angular.module('armsAngularApp')
                         $scope.pendingRequest.toTime = moment(data.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
                         $scope.pendingRequest.Student = data.Student;
                         $scope.pendingRequest.timeSlot = data.TimeSlot;
+                        $scope.pendingRequest.appointmentNoteStudent = data.appointmentNoteStudent;
+                        console.log(data);
 
                         appointmentDataService.getAvailableRooms($scope.pendingRequest).then(
                             function(response) {
@@ -56,7 +60,7 @@ angular.module('armsAngularApp')
             });
 
             $scope.placeAppoinment = function() {
-                $scope.pendingRequest.appointmentNotes = $scope.appointmentNotes;
+                $scope.pendingRequest.appointmentNoteLecturer = $scope.appointmentNoteLecturer;                
                 appointmentDataService.placeAppoinment($scope.pendingRequest).then(
                     function(d) {
                         console.log(d);
@@ -80,13 +84,32 @@ angular.module('armsAngularApp')
                         $scope.appoinment.toTime = moment(data.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
                         $scope.appoinment.TimeSlot = data.TimeSlot;
                         $scope.appoinment.room = data.Room;
-                        console.log(data.TimeSlot.toTime);
+                        $scope.appointmentData = data;
+                        $scope.getMoreAvailableTimeSlots2 ();                       
+                        console.log($scope.appointmentData);
                     }
                 );
             });
 
+            $scope.submitAppoinmentReshedule = function () {
+              appointmentDataService.sendRescheduleRequest($scope.appointmentData).then(function (response) {
+                 angular.element("#resheduleModal").modal('hide');             
+                swal({
+                    title: "Request Sent",
+                    text: "You reschedule request has been successfully send",
+                    type: "success",
+                    timer: 2000
+                });
+              }, function (error) {
+                /* body... */
+              });
+            };
+
             $scope.getMoreAvailableTimeSlots = function(){
-              appointmentDataService.getMoreAvailableTimeSlots($scope.pendingRequest).then(
+              appointmentDataService.getMoreAvailableTimeSlots({
+                    appointmentDate: $scope.pendingRequest.appointmentDate,
+                    LecturerId: $scope.pendingRequest.timeSlot.LecturerId,
+                }).then(
                 function(response){
                   $scope.availableTimeSlots = [];
                   $scope.availableTimeSlots = response.data;
@@ -95,13 +118,33 @@ angular.module('armsAngularApp')
               );
             };
 
+            $scope.getMoreAvailableTimeSlots2 = function(){
+              appointmentDataService.getMoreAvailableTimeSlots({
+                    appointmentDate: $scope.appointmentData.appointmentDate,
+                    LecturerId: $scope.appointmentData.TimeSlot.LecturerId,
+                }).then(
+                function(response){
+                  $scope.availableTimeSlots = [];
+                  $scope.availableTimeSlots = response.data;
+                  console.log(response.data);
+                }
+              );
+            };
+
+            $scope._24hoursToAmPm = function(time) {
+                return moment(time, 'HH:mm:ss').format("hh:mm A");
+            };
+
+
             $scope.selectRoom = function(room) {
                 $scope.pendingRequest.selectedRoom = room;
+                $scope.appointmentData.Room = room;
                 console.log(room);
             };
 
             $scope.selectTimeSlot = function(timeSlot) {
               $scope.pendingRequest.timeSlot = timeSlot;
+              $scope.appointmentData.TimeSlot = timeSlot;
               appointmentDataService.getAvailableRooms($scope.pendingRequest).then(
                   function(response) {
                       $scope.rooms = [];

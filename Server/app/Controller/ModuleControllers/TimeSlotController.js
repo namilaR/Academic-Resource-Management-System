@@ -12,7 +12,7 @@ var TimeSlot = Modules.TimeSlot;
 
 
 /**
- * initilize basic day object
+* initilize basic day object 
  */
 var initDays = function() {
     return [{

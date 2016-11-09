@@ -8,7 +8,9 @@ var connection  = require('./../Connection');
 
 var Appointment = connection.define('Appointment',{
     appointmentDate : Sequelize.DATEONLY,
-    appointmentNotes : Sequelize.STRING,
+    appointmentNoteStudent : Sequelize.STRING,
+    appointmentNoteLecturer : Sequelize.STRING,
+    appointmentCancleNote : Sequelize.STRING,
     appointmentTitle : Sequelize.STRING,
     appointmentSmallBref : Sequelize.STRING,
     appointmentComment: Sequelize.STRING,
@@ -23,4 +25,4 @@ var Appointment = connection.define('Appointment',{
     paranoid: true
 });
 
-module.exports = Appointment;
+module.exports = Appointment;  

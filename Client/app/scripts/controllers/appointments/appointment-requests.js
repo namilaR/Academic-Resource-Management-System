@@ -73,6 +73,20 @@ angular.module('armsAngularApp')
                 }
             };
 
+            $scope.submitAppoinmentReshedule = function() {
+              appointmentDataService.sendRescheduleRequest($scope.appointmentData).then(function (response) {
+                 angular.element("#resheduleModal").modal('hide');             
+                swal({
+                    title: "Request Sent",
+                    text: "You reschedule request has been successfully send",
+                    type: "success",
+                    timer: 2000
+                });
+              }, function (error) {
+                /* body... */
+              });
+            };
+
             $scope.reload = function() {
                 appointmentDataService.refreshTables();
             };
@@ -113,7 +127,7 @@ angular.module('armsAngularApp')
 
             $scope.selectTimeSlot = function(timeSlot) {
                 $scope.appointmentRequest.selectedTimeSlot = timeSlot;
-                $scope.appointmentData.timeSlot = timeSlot;
+                $scope.appointmentData.TimeSlot = timeSlot;
                 console.log(timeSlot);
             };
 
