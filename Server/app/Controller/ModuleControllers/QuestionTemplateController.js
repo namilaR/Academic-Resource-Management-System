@@ -11,7 +11,8 @@ QuestionTemplateController = function() {
 
     this.create = function(questionInstance, response) {
         QuestionTemplate.create({
-            templateName: questionInstance.templateName
+            templateName: questionInstance.templateName,
+            status:0
         }).then(function(template) {
             var ques = [];
             for (var val in questionInstance.questions) {
@@ -72,6 +73,16 @@ QuestionTemplateController = function() {
                 status: true
             }
         }).then(function(data) {
+           if(data===null){
+               return QuestionTemplate.update({
+                   status: true
+               }, {
+                   where: {
+                       id: questionID
+                   }
+               });
+
+           }
             return QuestionTemplate.update({
                 status: false
             }, {
@@ -94,20 +105,24 @@ QuestionTemplateController = function() {
         });
     };
 
-    this.updateTemplate = function(tempId, res) {
+    this.updateTemplate = function(tempId,req,res) {  
+        var ques = [];
+        req.questions.forEach(function(value) {
+            if(value.STATUS>0){
+                var que = Question.build(value);
+                ques.push(que);
+            }
+        });
 
         QuestionTemplate.find({
             where: {
                 id: tempId
             }
         }).then(function(result) {
-
-            QuestionTemplate = result;
-            QuestionTemplate.getQuestions().then(function(associatedquestions) {
-                var questionObj = {};
-                questionObj.templateName = result.templateName;
-                questionObj.questions = associatedquestions;
-                return res.send(questionObj);
+            return result.setQuestions(ques).then(function(aa) {
+                if(aa){
+                    return res.send(aa);
+                }
             });
         });
 
@@ -115,7 +130,7 @@ QuestionTemplateController = function() {
 
     this.loadQuestionTemplateQuestions = function(tempId, res) {
         connection.query(
-            'SELECT question.id, question.question, CASE WHEN selected.QuestionId = question.id THEN "1" ELSE "0" END AS STATUS FROM question LEFT JOIN ( SELECT questiontemplatequestion.QuestionId FROM questiontemplatequestion WHERE questiontemplatequestion.QuestionTemplateId = ? ) selected ON question.id = selected.QuestionId ORDER BY question.id', {
+            'SELECT question.id, question.question, CASE WHEN selected.QuestionId = question.id THEN  true ELSE false END AS STATUS FROM question LEFT JOIN ( SELECT questiontemplatequestion.QuestionId FROM questiontemplatequestion WHERE questiontemplatequestion.QuestionTemplateId = ? ) selected ON question.id = selected.QuestionId ORDER BY question.id', {
                 replacements: [tempId],
                 type: connection.QueryTypes.SELECT
             }

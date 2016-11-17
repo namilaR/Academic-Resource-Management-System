@@ -28,9 +28,10 @@ router.put('/', function(req, res, next) {
 });
 
 
-router.get('/updateTemplate/:id', function(req, res, next) {
-    QuestionTemplateController.updateTemplate(req.params.id, res);
+router.post('/updateTemplate/:id', function(req, res, next) {
+    QuestionTemplateController.updateTemplate(req.params.id,req.body, res);
 });
+
 router.get('/loadQuestionTemplateQuestions/:id', function(req, res, next) {
     QuestionTemplateController.loadQuestionTemplateQuestions(req.params.id, res);
 });

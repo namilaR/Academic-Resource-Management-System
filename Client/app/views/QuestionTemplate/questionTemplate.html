@@ -44,7 +44,8 @@
                                 <button class="btn-warning" ng-click="deleteQuestionTemplate(questionTemplate.id ,questionTemplate.templateName)">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <button class="btn-success" ng-click="getQuestionTemplateSelectedQuestions(questionTemplate.id);loadSelectedQuestions(questionTemplate.id)" data-target="#updateTemplate" data-toggle="modal">
+                                <button class="btn-success" 
+                                ng-click="loadSelectedQuestions(questionTemplate.id)" data-target="#updateTemplate" data-toggle="modal">
                                     <i class="fa fa-pencil"></i>
                                 </button>
                             </td>
@@ -112,11 +113,13 @@
                         <div class="modal-header orange">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <form name="questionTemplateForm" ng-submit="changeQuestionTemplate(questionTemplateForm.$valid)" novalidate>
+                                    <form name="questionTemplateForm" 
+                                    ng-submit="changeQuestionTemplate(questionTemplateForm.$valid)" novalidate>
                                         <div class="box box-orange">
                                             <div class="box-header with-border">
                                                 <h3 class="box-title">Update Question Template</h3>
                                             </div>
+                                            <input type="hidden" name="template_id" ng-model="selectedTemplateID">
                                             <div class="box-body">
                                                 <div>
                                                     <table class="table table-condensed">
@@ -127,12 +130,16 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <tr ng-repeat="questionTemplateQuestion in allQuestionTemplateQuestions">
-                                                            <td ng-if="questionTemplateQuestion.STATUS == '1' ">
-                                                                <input ng-click=""  type="checkbox" value="" checked = 'checked'>
-                                                            </td>
-                                                            <td ng-if="questionTemplateQuestion.STATUS == '0' ">
-                                                                <input ng-click=""  type="checkbox" value="" >
+                                                        <tr
+                                                         ng-repeat="questionTemplateQuestion in allQuestionTemplateQuestions">
+                                                            <td>
+                                                                <input  
+                                                                    type="checkbox" 
+                                                                    ng-model="questionTemplateQuestion.STATUS" 
+                                                                    ng-checked ='questionTemplateQuestion.STATUS>0'
+                                                                    ng-false-value="0"
+                                                                    ng-true-value="1"
+                                                                >
                                                             </td>
                                                             <td>{{questionTemplateQuestion.question}}</td>
                                                         </tr>
@@ -142,7 +149,9 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
-                                                            <input type="submit" class="btn btn-info pull-right" value="Update" >
+                                                            <input type="submit" class="btn btn-info pull-right"
+                                                             value="Update" 
+                                                             >
                                                         </div>
                                                     </div>
                                                 </div>

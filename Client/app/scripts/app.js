@@ -68,15 +68,20 @@ angular
         controller: 'QuestionTemplateCtrl',
         controllerAs: 'questionTemplate'
       })
-       .when('/admin/quiz', {
-            templateUrl: 'views/quiz/quiz.html',
-            controller: 'QuizCtrl',
-            controllerAs: 'QuizCtrl'
-        })
+      .when('/admin/quiz', {
+          templateUrl: 'views/quiz/quiz.html',
+          controller: 'QuizCtrl',
+          controllerAs: 'QuizCtrl'
+      })
       .when(' /faculty/main', {
         templateUrl: 'views/faculty/main.html',
         controller: 'FacultyMainCtrl',
         controllerAs: 'facultyController'
+      })
+      .when('/admin/reports/chart', {
+        templateUrl: 'views/reports/chart.html',
+        controller: 'ReportCtrl',
+        controllerAs: 'reports'
       })
       .otherwise({
         redirectTo: '/'

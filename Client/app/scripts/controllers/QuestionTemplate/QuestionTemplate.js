@@ -8,23 +8,24 @@
  * Controller of the armsAngularApp
  */
 angular.module('armsAngularApp')
-  .controller('QuestionTemplateCtrl', ['$scope', '$http', '$rootScope', 'DTOptionsBuilder', 'DTColumnBuilder', '$q','$compile', function($scope, $http, $rootScope, DTOptionsBuilder, DTColumnBuilder, $q,$compile) {
+  .controller('QuestionTemplateCtrl', ['$scope', '$http', '$rootScope', 'DTOptionsBuilder', 'DTColumnBuilder', '$q', '$compile', function($scope, $http, $rootScope, DTOptionsBuilder, DTColumnBuilder, $q, $compile) {
     this.awesomeThings = [
       '$scope',
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
-    
+
     var get_all_questions_api = 'http://localhost:8002/question/';
     var save_question_template_api = 'http://localhost:8002/questiontemplate/';
     var get_question_template_api = 'http://localhost:8002/questionTemplate/';
     var activate_question_template_api = 'http://localhost:8002/questiontemplate/activateQuestionTemplate/';
-    var update_question_template_api = 'http://localhost:8002/questiontemplate/updateTemplate/';
+    var update_question_template_api = 'http://localhost:8002/questionTemplate/updateTemplate/';
     var load_question_template_questions_api = 'http://localhost:8002/questiontemplate/loadQuestionTemplateQuestions/';
 
 
     $scope.questions = [];
+    $scope.allQuestionTemplateQuestions = [];
 
 
     /*****  start creating data tables ****/
@@ -33,7 +34,7 @@ angular.module('armsAngularApp')
       $scope.dtColumns = [
         DTColumnBuilder.newColumn(null).withTitle('Edit').notSortable()
         .renderWith(function(data, type, full, meta) {
-          return '<input ng-click="toggleSelection('+data.id+')"  type="checkbox" value="' + data.id + '">';
+          return '<input ng-click="toggleSelection(' + data.id + ')"  type="checkbox" value="' + data.id + '">';
         }),
         DTColumnBuilder.newColumn('question').withTitle('Question')
       ];
@@ -57,7 +58,9 @@ angular.module('armsAngularApp')
 
     $scope.toggleSelection = function toggleSelection(value) {
       var idx = $scope.questions.indexOf(value);
-      idx>-1?$scope.questions.splice(idx,1):$scope.questions.push({"id":value});
+      idx > -1 ? $scope.questions.splice(idx, 1) : $scope.questions.push({
+        "id": value
+      })
     };
     /*****  end creating data tables ****/
 
@@ -82,138 +85,145 @@ angular.module('armsAngularApp')
 
 
 
-/**** question template submission   *****/
-    $scope.submitQuestionTemplateForm = function(isValid) {
-        if (isValid) {
-            $scope.submit_data = {
-                "templateName":$scope.templateName,
-                "questions": $scope.questions
-            }
+    /**** question template submission   *****/
 
-            createNewQuestionTemplate($scope.submit_data);
-            $scope.QuestionTemplate = '';
-            $scope.questionTemplateForm.$setPristine();
-        }
+    function createNewQuestionTemplate(questionTemplateInstance) {
+      $http.post(save_question_template_api, questionTemplateInstance).then((function(data) {
+        console.log(data);
+      }));
+    }
+
+
+    $scope.submitQuestionTemplateForm = function(isValid) {
+      if (isValid) {
+        $scope.submit_data = {
+          "templateName": $scope.templateName,
+          "questions": $scope.questions
+        };
+
+        createNewQuestionTemplate($scope.submit_data);
+        $scope.QuestionTemplate = '';
+        $scope.questionTemplateForm.$setPristine();
+      }
     };
 
 
-    function createNewQuestionTemplate(questionTemplateInstance) {
-        $http.post(save_question_template_api, questionTemplateInstance).then((function(data) {
-            console.log(data);
-        }));
+
+
+    /****** question template updating     *****/
+    //
+    // function updatingQuestionTemplate(questionTemplateInstance){
+    //
+    //
+    // }
+
+
+
+
+    //load Question Template to data table
+    function getQuestionTemplateData() {
+      //            QuestionTemplateService.getAllQuestionTemplates().then(function(res){
+      //
+      //                $scope.allQuestionTemplates = res.data ;
+      //                return res.data;
+      //            })
+      $http.get(get_question_template_api).then((function(res) {
+        $scope.allQuestionTemplates = res.data;
+        return res.data;
+      }));
+
     }
 
-        /****** question template updating     *****/
-
-    function updatingQuestionTemplate(questionTemplateInstance){
-
-
-        }
+    getQuestionTemplateData();
 
 
 
+    /**delete question template**/
 
-        //load Question Template to data table
-        function getQuestionTemplateData(){
-//            QuestionTemplateService.getAllQuestionTemplates().then(function(res){
-//
-//                $scope.allQuestionTemplates = res.data ;
-//                return res.data;
-//            })
-            $http.get(get_question_template_api).then((function(res) {
-                $scope.allQuestionTemplates = res.data ;
-                return res.data;
-            }));
+    $scope.deleteQuestionTemplate = function(questionTemplateId, templateName) {
+      swal({
+        title: "Are you sure to delete this template" + templateName,
+        text: "After you delete this you have to add it again if you want",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: true
+      }, function() {
+        $http.deleteQuestionTemplate(questionTemplateId).then(function(response) {
 
-        }
+          if (response.status === 200) {
+            swal('success', 'Delete Template', "success");
+            getQuestionTemplateData();
+          } else {
+            swal('Error', 'Not Deleted record', 'error');
+          }
+        });
 
+      });
+    };
+
+
+    $scope.test = function(template_id) {
+      console.log($scope.allQuestionTemplates[template_id]);
+      $http({
+        method: 'get',
+        url: activate_question_template_api + template_id,
+        params: template_id
+      }).then(function(res) {
+        console.log(res);
+        $scope.allQuestionTemplates = [];
         getQuestionTemplateData();
+      });
+
+      //           $http.get(activate_question_template_api+template_id).then((function(res) {
+      //               $scope.allQuestionTemplates = res.data ;
+      //               return res.data;
+      //           }));
 
 
+    };
 
-        //delete question template
-        $scope.deleteQuestionTemplate = function(questionTemplateId ,templateName) {
+
+    $scope.loadSelectedQuestions = function(templateID) {
+      $http.get(load_question_template_questions_api + templateID).then((function(res) {
+        $scope.allQuestionTemplateQuestions = res.data;
+        $scope.selectedTemplateID = templateID;
+        return res.data;
+      }));
+    };
+
+
+    $scope.getQuestionTemplateSelectedQuestions = function(templateID) {
+      $http({
+        method: 'get',
+        url: update_question_template_api + templateID,
+        params: templateID
+      }).then(function(res) {
+        res.data.questions.forEach(function(data) {
+          $scope.questions.push(data);
+        });
+      });
+    };
+
+
+    /*** updating question template***/
+    $scope.changeQuestionTemplate = function(isValid) {    
+      if (isValid) {
+        $http.post(update_question_template_api + $scope.selectedTemplateID, {questions:$scope.allQuestionTemplateQuestions}).then(function (res) {
+          if(res.status===200){
             swal({
-                title: "Are you sure to delete this template" + templateName,
-                text: "After you delete this you have to add it again if you want",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: true
-            }, function () {
-                $http.deleteQuestionTemplate(questionTemplateId).then(function (response) {
-
-                    if (response.status === 200) {
-                        swal('success', 'Delete Template', "success");
-                        getQuestionTemplateData();
-                    } else {
-                        swal('Error', 'Not Deleted record', 'error');
-                    }
-                });
-
+              title: "HUREEQH",
+              text: "ggdfgfddgdg",
+              type: 'success',
+              showCancelButton: true
             });
-        };
 
-
-       $scope.test = function(template_id){
-            console.log($scope.allQuestionTemplates[template_id]);
-           $http({
-               method: 'get',
-               url: activate_question_template_api+template_id,
-               params: template_id
-           }).then(function(res) {
-               console.log(res);
-               $scope.allQuestionTemplates = [];
-               getQuestionTemplateData();
-           });
-
-//           $http.get(activate_question_template_api+template_id).then((function(res) {
-//               $scope.allQuestionTemplates = res.data ;
-//               return res.data;
-//           }));
-
-
-       };
-
-
-           $scope.loadSelectedQuestions = function(templateID){
-                $http.get(load_question_template_questions_api + templateID).then((function(res) {
-                    $scope.allQuestionTemplateQuestions = res.data ;
-                    return res.data;
-                }));
-            }
-
-
-
-
-            $scope.getQuestionTemplateSelectedQuestions = function(templateID) {
-            $http({
-                method: 'get',
-                url: update_question_template_api + templateID,
-                params: templateID
-            }).then(function(res) {
-                res.data.questions.forEach(function(data) {
-                    $scope.questions.push(data);
-                });
-            });
-        }
-
-
-        /*** updating question template***/
-
-        $scope.changeQuestionTemplate = function(isValid) {
-            if (isValid) {
-                $scope.submit_data = {
-                    "templateName":$scope.templateName,
-                    "questions": $scope.questions
-                }
-
-                createNewQuestionTemplate($scope.submit_data);
-                $scope.QuestionTemplate = '';
-                $scope.questionTemplateForm.$setPristine();
-            }
-        };
+            $('#updateTemplate').modal('hide');
+          }
+        });
+      }
+    };
 
 
   }]);

@@ -15,5 +15,6 @@ Controllers.QuestionController = require('./ModuleControllers/QuestionController
 Controllers.AppointmentController = require('./ModuleControllers/AppointmentController');
 Controllers.QuestionTemplateController = require('./ModuleControllers/QuestionTemplateController');
 Controllers.FeedbackController = require('./ModuleControllers/FeedbackController');
+Controllers.ReportController = require('./ModuleControllers/ReportController');
 
 module.exports = Controllers;
