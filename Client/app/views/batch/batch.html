@@ -1,0 +1,121 @@
+<div side-bar></div>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-users "></i>
+            Batch
+            <small>Admin Batch page for any management level purposes of Batches</small>
+        </h1>
+    </section>
+    <section class="content">
+        <!-- Default box -->
+        <div class="box box-orange form-horizontal">
+            <form class="box-body" ng-submit="createBatch()">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-plus"></i>
+                        Add Batch <span ng-bind="batchName"></span>
+                    </h3>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-3">
+                        <label class="pull-right">Batch Name</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="batchName" required="true" placeholder="new batch name eg:Curtin Software Enginering"
+                               ng-model="batchName" required="true">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-3">
+                        <label class="pull-right">Batch Year</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="batchYear">
+                            <option disabled selected value> select batch </option>
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-3">
+                        <label class="pull-right">Semester</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="batchSemester">
+                            <option disabled selected value> select semester </option>
+                            <option value="1">1st Semester</option>
+                            <option value="2">2nd Semester</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-3">
+                        <label class="pull-right">Type</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="batchType">
+                            <option disabled selected value> select type </option>
+                            <option value="regular">Regular</option>
+                            <option value="marchintake">March in take</option>
+                            <option value="juneintake">June in take</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-3">
+                        <label class="pull-right">Center</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="batchCenter">
+                            <option disabled selected value> select center</option>
+                            <option ng-repeat="center in centers" value="{{center.id}}" required="true">{{center.centerName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-3">
+                        <label class="pull-right">Faculty</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="batchFaculty" ng-change="loadParticularDepartments()">
+                            <option disabled selected value> select Faculty </option>
+                            <option ng-repeat="faculty in faculties" value="{{faculty.id}}" required="true" ng-selected="batchFaculty == faculty.id">{{faculty.facultyName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-3">
+                        <label class="pull-right">Department</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="batchDepartment">
+                            <option disabled selected value> select Department </option>
+                            <option ng-repeat="department in departments" value="{{department.id}}" required="true" ng-selected="batchDepartment == department.id">{{department.DepartmentName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label class="pull-right">Subject</label>
+                    </div>
+                    <div class="col-sm-9" ng-model="subjectsSelected">
+                        <div ng-repeat="subject in subjects">
+                            <input type="checkbox" checklist-model="batchSubject.selectedSubjects" checklist-value="subject.id">
+                            <label>{{subject.subjectName}}</label><br>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-success pull-right" style="margin-top: 5px;">
+                    <i class="fa fa-plus"></i>
+                    Create Batch
+                </button>
+            </form>
+        </div>
+    </section>
+</div>
