@@ -18,8 +18,6 @@ Controllers.AppointmentController = require('./ModuleControllers/AppointmentCont
 Controllers.RoomController = require('./ModuleControllers/RoomController');
 Controllers.UserAuthenticateController = require('./ModuleControllers/UserAuthenticateController');
 Controllers.CenterController = require('./ModuleControllers/CenterController');
-
-
-
+Controllers.DepartmentControlller = require('./ModuleControllers/DepartmentController');
 
 module.exports = Controllers;
