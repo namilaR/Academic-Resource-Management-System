@@ -1,0 +1,101 @@
+<!-- Modal -->
+<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="resheduleModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+            <form class="form-horizontal" ng-submit="submitAppoinmentCancel()">            
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Cancel appoinment</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <label for="inputEmail3" class=" control-label ">DIT</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label class="control-label  ">
+                                        <a href="">{{appointmentData.Student.studentDitNo}}</a>
+                                    </label>
+                                </div>
+                            </div>
+                            <div ng-if="role == 'Student'" class="form-group row">
+                                <div class="col-sm-4"> 
+                                    <label  for="inputEmail3" class=" control-label">Student Name</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label class="control-label  ">
+                                        <a href="">{{appointmentData.TimeSlot.Lecturer.User.userUserName}}</a>
+                                    </label>
+                                </div>
+                            </div>                            
+
+                            <div ng-if="role == 'Lecturer'" class="form-group row">
+                                <div class="col-sm-4">
+                                    <label  for="inputEmail3" class=" control-label  ">Lecture Name</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label class="control-label  ">
+                                        <a href="">{{appointmentData..User.userUserName}}</a>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <label for="inputEmail3" class=" control-label  ">Appointment Title</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label class="control-label  ">{{appointmentData.appointmentTitle}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <label for="inputEmail3" class=" control-label  ">Appointment Description</label>
+                                </div>
+                                <div class="col-sm-8">
+                                    <label class="control-label  ">{{appointmentData.appointmentSmallBref}}</label>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <label for="inputEmail3" class=" control-label  ">Appointment Date</label>
+                                </div>
+                                <div class="col-sm-8">
+                               <!--  <label class=" control-label" >{{appointmentData.appointmentDate}}</label> -->
+                                    <input  type="text" bs-datepicker data-min-date="today" data-autoclose="1" data-date-format="dd-MM-yyyy" type="text" class="form-control" ng-model="appointmentData.appointmentDate" name="date" ng-change="clearTimeSlots()">
+                                    <p ng-show="(appointmentRequestForm.date.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Date is required.</p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-4">
+                                    <label for="enterRequestTitle" class="control-label  ">Time Slot</label>
+                                </div>
+                                <div class="col-sm-8">
+                                <label class="control-label  ">{{ _24hoursToAmPm(appointmentData.TimeSlot.fromTime)}}&nbsp;-&nbsp;{{ _24hoursToAmPm(appointmentData.TimeSlot.toTime)}}&nbsp;
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                              <div class="col-sm-4">                                 
+                                  <label for="enterRequestTitle" class="control-label  ">Reson for Cacelation</label>
+                              </div>
+                              <div class="col-sm-8">                                
+                                <textarea class="form-control" ng-model="appointmentData.appointmentCancleNote" rows="8" cols="40"></textarea>
+                              </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-danger pull-right">Cancel appoinment</button>
+                </div>
+            </form>
+    </div>
+  </div>
+</div>

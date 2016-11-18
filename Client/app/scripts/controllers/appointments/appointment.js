@@ -93,7 +93,23 @@ angular.module('armsAngularApp')
 
             $scope.submitAppoinmentReshedule = function () {
               appointmentDataService.sendRescheduleRequest($scope.appointmentData).then(function (response) {
-                 angular.element("#resheduleModal").modal('hide');             
+                 angular.element("#resheduleModal").modal('hide'); 
+                 appointmentDataService.refreshTables();            
+                swal({
+                    title: "Request Sent",
+                    text: "You reschedule request has been successfully send",
+                    type: "success",
+                    timer: 2000
+                });
+              }, function (error) {
+                /* body... */
+              });
+            };            
+
+            $scope.submitAppoinmentCancel = function () {
+              appointmentDataService.sendCancelRequest($scope.appointmentData).then(function (response) {
+                 angular.element("#cancelModal").modal('hide');  
+                 appointmentDataService.refreshTables();           
                 swal({
                     title: "Request Sent",
                     text: "You reschedule request has been successfully send",
@@ -104,6 +120,8 @@ angular.module('armsAngularApp')
                 /* body... */
               });
             };
+
+
 
             $scope.getMoreAvailableTimeSlots = function(){
               appointmentDataService.getMoreAvailableTimeSlots({

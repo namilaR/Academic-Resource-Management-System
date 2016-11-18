@@ -80,6 +80,14 @@ angular.module('armsAngularApp')
                 return $http.put(baseUrl + 'appointment/save-reschedule-request', JSON.stringify(appointmentRequest));
             };
             /**
+             * send appointment reschedule to server
+             * @param {appointmentRequest}  
+             * @returns {HttpPromise}
+             */ 
+            appointmentDataService.sendCancelRequest = function(appointmentRequest) {
+                return $http.put(baseUrl + 'appointment/save-cancel-request', JSON.stringify(appointmentRequest));
+            };
+            /**
              * load all Pending appointment requests
              * @param {lecturer}
              * @returns {HttpPromise}

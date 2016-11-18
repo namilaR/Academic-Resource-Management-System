@@ -49,7 +49,7 @@ AppointmentController = function() {
 
     };
     /**
-     * save new appointment request
+     * save appointment reschedule request
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
@@ -65,6 +65,26 @@ AppointmentController = function() {
             TimeSlotId: AppoinmentInstance.TimeSlot.id,
             reShedule: 1,
             approved: approvedStatus
+        }, {
+            where: {
+                id: AppoinmentInstance.id,
+            }
+        }).then(function(data) {
+            res.send(data);
+        });
+
+    };
+    /**
+     * save appointment cancel request
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.saveAppoinmentCancelRequest = function(AppoinmentInstance, res) {
+        Appointment.update({
+
+            reShedule: 0,          
+            cancel:1,
+            appointmentCancleNote : AppoinmentInstance.appointmentCancleNote
         }, {
             where: {
                 id: AppoinmentInstance.id,
