@@ -19,5 +19,7 @@ Controllers.RoomController = require('./ModuleControllers/RoomController');
 Controllers.UserAuthenticateController = require('./ModuleControllers/UserAuthenticateController');
 Controllers.CenterController = require('./ModuleControllers/CenterController');
 Controllers.DepartmentControlller = require('./ModuleControllers/DepartmentController');
+Controllers.BatchController = require('./ModuleControllers/BatchController');
+
 
 module.exports = Controllers;
