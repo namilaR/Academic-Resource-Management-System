@@ -136,6 +136,11 @@ angular
           controller: 'CenterCenterCtrl',
           controllerAs: 'Center/Center'
       })
+     .when('/control-panel/admin/departments', {
+        templateUrl: 'views/department/department.html',
+        controller: 'DepartmentCtrl',
+        controllerAs: 'Department'
+      })
       .otherwise({
         redirectTo: '/'
       });
