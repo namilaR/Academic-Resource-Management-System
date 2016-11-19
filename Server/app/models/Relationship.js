@@ -11,13 +11,13 @@ var Relationship = function() {
 
     /**added by Kasun*/
 
-        //User Type Relationship
+    //User Type Relationship
 
     Models.UserRole.hasMany(Models.User)
     Models.User.belongsTo(Models.UserRole)
 
     //User Management Relationship
-
+    
     Models.User.hasMany(Models.Hod)
     Models.User.hasMany(Models.Student)
     Models.User.hasMany(Models.Lecturer)
@@ -25,10 +25,10 @@ var Relationship = function() {
     Models.Hod.belongsTo(Models.User)
     Models.Student.belongsTo(Models.User)
     Models.Lecturer.belongsTo(Models.User)
-
+ 
     Models.Hod.belongsTo(Models.Department)
-
-
+   
+    
 
 
 
@@ -77,7 +77,7 @@ var Relationship = function() {
     Models.Room.belongsTo(Models.Lecturer)
 
 
-
+   
     Models.Appointment.belongsTo(Models.Request)
 
 
@@ -85,7 +85,7 @@ var Relationship = function() {
     Models.Appointment.belongsTo(Models.Room)
 
     /**added by pasindu*/
-
+   
 
     Models.Lecturer.hasMany(Models.FeedBackSession)
     Models.FeedBackSession.belongsTo(Models.Lecturer)
@@ -106,7 +106,7 @@ var Relationship = function() {
     Models.FeedBackSession.belongsTo(Models.Batch)
 
     Models.QuestionTemplate.belongsToMany(Models.Question, {
-        through: 'QuestionTemplateQuestion'
+       through: 'QuestionTemplateQuestion'
     });
     Models.Question.belongsToMany(Models.QuestionTemplate, {
         through: 'QuestionTemplateQuestion'
