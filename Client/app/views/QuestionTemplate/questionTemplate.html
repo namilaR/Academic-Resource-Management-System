@@ -1,0 +1,183 @@
+<div nav-bar></div>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-controller="QuestionTemplateCtrl">
+    <div class="container">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Create New Question Template</h1>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="box box-orange">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <a data-target="#addnewusertype" data-toggle="modal" class="btn btn btn-primary " data-toggle="dropdown" role="menu">Add New Template</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-body" >
+                    <table class="table table-condensed">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Question</th>
+                            <th>Created Date</th>
+                            <th>Updated Date</th>
+                            <th>Options</th>
+                            <th>Activate</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="questionTemplate in allQuestionTemplates">
+                            <td>{{questionTemplate.id}}</td>
+                            <td>{{questionTemplate.templateName}}</td>
+                            <td>{{questionTemplate.createdAt}}</td>
+                            <td>{{questionTemplate.updatedAt}}</td>
+                            <td>
+                                <button class="btn-warning" ng-click="deleteQuestionTemplate(questionTemplate.id ,questionTemplate.templateName)">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                <button class="btn-success" 
+                                ng-click="loadSelectedQuestions(questionTemplate.id)" data-target="#updateTemplate" data-toggle="modal">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <toggle-switch ng-init="switchStatus=questionTemplate.status" ng-model="switchStatus" ng-change="test(questionTemplate.id)" ></toggle-switch>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="modal fade" id="addnewusertype">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header orange">
+                            <div class="row">
+                                <div class="col-md-12">
+                                     <form name="questionTemplateForm" ng-submit="submitQuestionTemplateForm(questionTemplateForm.$valid)" novalidate>
+                                        <div class="box box-orange">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">Question Template</h3>
+                                            </div>
+                                            <div class="box-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="form-group" ng-class="{ 'has-error' : (questionTemplateForm.userType.$invalid && !userTypeForm.userType.$pristine) || (userTypeForm.userType.$invalid && userTypeForm.$submitted )}">
+                                                            <label class="control-label ">Template Name</label>
+                                                            <div class="">
+                                                                <input type="text" class="form-control" ng-model="templateName" name="templateName" required>
+                                                                <p ng-show="(questionTemplateForm.userType.$invalid && !questionTemplateForm.userType.$pristine) || (questionTemplateForm.userType.$invalid && questionTemplateForm.$submitted ) " class="help-block">Please enter a new Template Name</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <table class="table table-condensed" datatable dt-options="dtOptions"  dt-instance="dtInstance" dt-columns="dtColumns"></table>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <input type="submit" class="btn btn-info pull-right" value="Create" >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.box-body -->
+                                            <div class="box-footer">
+
+                                            </div>
+                                            <!-- /.box-footer -->
+
+                                        </div>
+                                        </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="updateTemplate">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header orange">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form name="questionTemplateForm" 
+                                    ng-submit="changeQuestionTemplate(questionTemplateForm.$valid)" novalidate>
+                                        <div class="box box-orange">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">Update Question Template</h3>
+                                            </div>
+                                            <input type="hidden" name="template_id" ng-model="selectedTemplateID">
+                                            <div class="box-body">
+                                                <div>
+                                                    <table class="table table-condensed">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>EDIT</th>
+                                                            <th>Question</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr
+                                                         ng-repeat="questionTemplateQuestion in allQuestionTemplateQuestions">
+                                                            <td>
+                                                                <input  
+                                                                    type="checkbox" 
+                                                                    ng-model="questionTemplateQuestion.STATUS" 
+                                                                    ng-checked ='questionTemplateQuestion.STATUS>0'
+                                                                    ng-false-value="0"
+                                                                    ng-true-value="1"
+                                                                >
+                                                            </td>
+                                                            <td>{{questionTemplateQuestion.question}}</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <input type="submit" class="btn btn-info pull-right"
+                                                             value="Update" 
+                                                             >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- /.box-body -->
+                                            <div class="box-footer">
+                                            </div>
+                                            <!-- /.box-footer -->
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /.content-wrapper -->
+<div footer></div>
+
+
+<script src="bower_components/angular-toggle-switch/angular-toggle-switch.js"></script>
+<script src="bower_components/angular-toggle-switch/angular-toggle-switch.min.js"></script>
