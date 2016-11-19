@@ -21,8 +21,8 @@ QuestionTemplateController = function() {
                 });
                 ques.push(que);
             }
-            template.addQuestions(ques).then(function() {
-                //return success//
+            template.addQuestions(ques).then(function(result) {
+                response.send();
             });
 
         });

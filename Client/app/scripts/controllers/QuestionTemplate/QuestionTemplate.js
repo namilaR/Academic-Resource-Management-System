@@ -89,7 +89,17 @@ angular.module('armsAngularApp')
 
     function createNewQuestionTemplate(questionTemplateInstance) {
       $http.post(save_question_template_api, questionTemplateInstance).then((function(data) {
-        console.log(data);
+        if(data.status===200){
+          swal({
+            title: "Question Template",
+            text: "New Question Template Created Successfully..",
+            type: 'success',
+            showCancelButton: true
+          });
+
+          $('#newTemplate').modal('hide');
+          getQuestionTemplateData();
+        }
       }));
     }
 
