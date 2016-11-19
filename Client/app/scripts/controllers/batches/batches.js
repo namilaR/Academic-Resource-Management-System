@@ -16,6 +16,7 @@ angular.module('armsAngularApp')
         $scope.batchSubject= {
             selectedSubjects: []
         };
+        $scope.batches = [];
 
         $scope.loadParticularDepartments = function() {
             var particularDepartments = [];
@@ -42,16 +43,44 @@ angular.module('armsAngularApp')
             return batchService.createBatch(batch).then(function(result) {
                 if(result.status == 200) {
                     swal('success', 'successfully created batch', 'success');
+                    getBatches();
                 } else {
                     alert("error going on");
                 }
             })
         }
 
+        $scope.deleteBatch = function(batch) {
+            swal({
+                    title: "Are you sure to delete "+batch.batchName+" batch?",
+                    text: "You going to delete batch permenently!",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                },
+                function(){
+                    return batchService.deleteBatch(batch.id).then(function(response) {
+                        if(response.status == 200) {
+                            swal('success', 'successfully deleted batch', 'success');
+                            getBatches();
+                        } else {
+                            alert("error going on");
+                        }
+                    });
+                });
+        }
+
+        function getBatches() {
+            batchService.getAllBatches().then(function(result) {
+                $scope.batches = result.data;
+            })
+        }
+
         function getSubjects() {
             subjectService.getAllSubjects().then(function (res) {
                 $scope.subjects = res.data;
-                console.log($scope.subjects);
             });
         }
 
@@ -79,4 +108,5 @@ angular.module('armsAngularApp')
         loadFaculties();
         loadAllDepartments();
         getSubjects();
+        getBatches();
     }]);

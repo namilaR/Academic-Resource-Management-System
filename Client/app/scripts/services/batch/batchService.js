@@ -16,5 +16,23 @@ angular.module('armsAngularApp')
             })
         }
 
+        batchService.getAllBatches = function() {
+            return $http({
+                method: 'get',
+                url: baseUrl + 'batch'
+            }).then(function(response) {
+                return response;
+            })
+        }
+
+        batchService.deleteBatch = function(batchId) {
+            return $http({
+                method: 'delete',
+                url: baseUrl + 'batch/'+batchId
+            }).then(function(response) {
+                return response;
+            });
+        }
+
         return batchService;
     }]);

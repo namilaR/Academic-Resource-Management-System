@@ -51,6 +51,18 @@ function BatchController() {
             return res.send(data);
         })
     }
+
+    this.deleteBatch = function(batchID, res) {
+        return Batch.find({
+            where: {
+                id: batchID
+            }
+        }).then(function(batch) {
+            return batch.destroy().then(function(state) {
+                return res.send(state);
+            });
+        });
+    }
 }
 
 module.exports = new BatchController();

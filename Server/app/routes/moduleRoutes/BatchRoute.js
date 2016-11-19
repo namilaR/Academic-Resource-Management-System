@@ -12,5 +12,9 @@ router.post('/', function(req, res, next) {
 
 router.get('/', function(req, res, next) {
     BatchController.getAllBatches(res);
+});
+
+router.delete('/:id', function(req, res, next) {
+    BatchController.deleteBatch(req.params.id, res);
 })
 module.exports = router;
