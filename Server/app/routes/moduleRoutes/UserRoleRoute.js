@@ -9,14 +9,13 @@ var express = require('express');
 var router = express.Router();
 
 
-
 /*
  * indexpage path for user type to get all the types
  * @req -> client request
  * @res -> client response
  * @next -> call back method
  */
-router.get('/get-all-user-types', function(req,res,next) {
+router.get('/get-all-user-roles', function(req,res,next) {
     UserRoleController.get(res);
 });
 
@@ -27,7 +26,7 @@ router.get('/get-all-user-types', function(req,res,next) {
  * @res -> client response
  * @next -> call back method
  */
-router.post('/add-new-user-type', function(req, res, next) {
+router.post('/add-new-user-role', function(req, res, next) {
     UserRoleController.create(req.body, res);
 });
 

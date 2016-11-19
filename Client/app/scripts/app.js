@@ -19,7 +19,8 @@ angular
         'ui.bootstrap',
         'datatables',
         'datatables.bootstrap',
-        'ui.select2'
+        'ui.select2',
+        'toggle-switch'
     ])
     .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $routeProvider
@@ -57,7 +58,6 @@ angular
                 controllerAs: 'main'
             })
 
-
             /*  admin - backend management  routes  */
             .when('/about', {
                 templateUrl: 'views/about.html',
@@ -70,7 +70,6 @@ angular
                 controllerAs: 'facultyController'
             })
 
-
             /*  user - management  routes  */
             .when('/control-panel/users', {
                 templateUrl: 'views/user_management/users.html',
@@ -82,6 +81,21 @@ angular
                 controller: 'UserTypeCtrl',
                 controllerAs: 'usertype'
             })
+
+            /*  question and question template - management  routes  */
+            .when('/control-panel/questions', {
+                templateUrl: 'views/questions/questions.html',
+                controller: 'QuestionsCtrl',
+                controllerAs: 'questions'
+            })
+            .when('/control-panel/question-templates', {
+                templateUrl: 'views/question_template/questionTemplate.html',
+                controller: 'QuestionTemplateCtrl',
+                controllerAs: 'questionTemplate'
+            })
+
+
+
 
             /*  appointment - management  routes  */
             .when('/appointments/appointment', {
@@ -100,6 +114,15 @@ angular
                 controllerAs: 'appointment',
                 bindToController: 'true'
             })
+
+            /*  quiz routes  */
+            .when('/feedback/quiz', {
+                templateUrl: 'views/quiz/quiz.html',
+                controller: 'QuizCtrl',
+                controllerAs: 'QuizCtrl',
+                bindToController: 'true'
+            })
+
 
 
 
@@ -149,4 +172,11 @@ angular
 
         });
 
-});
+}).constant('CONFIG', {
+        'APP_NAME': 'Acadamic Resource Management',
+        'APP_VERSION': '0.0.1',
+        'GOOGLE_ANALYTICS_ID': '',
+        'BASE_URL': 'http://localhost:8002/',
+        'SYSTEM_LANGUAGE': ''
+    })
+    .constant("moment", moment);

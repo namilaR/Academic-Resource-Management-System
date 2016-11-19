@@ -9,10 +9,13 @@ var Models = require('./app/models/Models');
 var Relationship = require('./app/models/Relationship');
 var app = express();
 var cors = require('cors');
+var config = require('./config');
+var jwt = require('jsonwebtoken');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+app.set('api-arms-auth-1q2w3e4r', config.secret); // secret variable
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -21,7 +24,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(cors());
 app.use('/', routes);
 
@@ -57,7 +59,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var server = app.listen(8002, function() {
+var server = app.listen(8002,'localhost', function() {
   console.log('Server listening on port ' + server.address().port);
 });
 module.exports = app;

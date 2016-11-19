@@ -1,18 +1,20 @@
 /**
  * Created by User on 9/18/2016.
  * Develop: Kasun
- * Model: Hod
+ * Model: User Role
  */
 var Sequelize = require('sequelize');
 var connection  = require('./../Connection');
 
-var Hod = connection.define('Hod',{
+var userRole = connection.define('userRole', {
+    userRoleName: Sequelize.STRING,
     status: Sequelize.BOOLEAN
 },{
-    tableName: 'hod',
+    tableName: 'user_role',
     updatedAt: 'updatedAt',
     createdAt: 'createdAt',
     paranoid: true
 });
 
-module.exports = Hod;
+
+module.exports = userRole;
