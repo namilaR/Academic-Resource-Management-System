@@ -87,6 +87,21 @@ angular.module('armsAngularApp')
               });
             };
 
+            $scope.submitAppoinmentCancel = function () {
+              appointmentDataService.sendCancelRequest($scope.appointmentData).then(function (response) {
+                 angular.element("#cancelModal").modal('hide');  
+                 appointmentDataService.refreshTables();           
+                swal({
+                    title: "Request Sent",
+                    text: "You reschedule request has been successfully send",
+                    type: "success",
+                    timer: 2000
+                });
+              }, function (error) {
+                /* body... */
+              });
+            };
+
             $scope.reload = function() {
                 appointmentDataService.refreshTables();
             };

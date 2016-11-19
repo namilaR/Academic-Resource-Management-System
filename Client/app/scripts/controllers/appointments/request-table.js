@@ -40,12 +40,14 @@ angular.module('armsAngularApp')
         DTColumnBuilder.newColumn('appointmentTitle').withTitle('Title'),
         DTColumnBuilder.newColumn('approved').withTitle('Status').renderWith(function(data, type, full) {
           var st;
-          if (full.approved == true) {
-            return '<span class="label label-success">Approved</span>';
+          if (full.cancel == true) {
+             return '<span class="label label-danger">Cancelled</span>';             
           } else if (full.reShedule == true) {
               return '<span class="label label-info">On Reshedule</span>';
+          } else if (full.approved == true) {
+              return '<span class="label label-success">Approved</span>';
           } else {
-            return '<span class="label label-warning">Pending</span>';
+              return '<span class="label label-warning">Pending</span>';
           }
         }),
         DTColumnBuilder.newColumn(null).withTitle('Action').notSortable().renderWith(actionsHtml)
@@ -55,12 +57,22 @@ angular.module('armsAngularApp')
       vm.dtInstance = {};
 
       function actionsHtml(data, type, full, meta) {
-        if(full.approved == true) {
-          return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"> more details</button>'+
-                 '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>';
-        } else {
-          return '';
-        }
+        // if(full.approved == true) {
+        //   return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"> more details</button>'+
+        //          '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>';
+        // } else {
+        //   return '';
+        // }
+        // 
+        if (full.approved  === false ) { 
+            return '';         
+        } else if(full.cancel === true){
+            return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal2"> more details</button>';
+        } else {            
+          return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal2"> more details</button>'+
+           '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>'+
+           '<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelModal">Cancel</button>';
+        }  
 
       }
 

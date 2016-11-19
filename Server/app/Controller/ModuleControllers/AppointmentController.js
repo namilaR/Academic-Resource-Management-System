@@ -95,6 +95,23 @@ AppointmentController = function() {
 
     };
     /**
+     * save appointment comment 
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.saveAppoinmentComment = function(AppoinmentInstance, res) {
+        Appointment.update({
+            appointmentComment : AppoinmentInstance.appointmentComment
+        }, {
+            where: {
+                id: AppoinmentInstance.id,
+            }
+        }).then(function(data) {
+            res.send(data);
+        });
+
+    };
+    /**
      * returns all appoinments by the student
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}

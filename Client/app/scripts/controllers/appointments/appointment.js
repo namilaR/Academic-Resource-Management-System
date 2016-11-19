@@ -84,7 +84,8 @@ angular.module('armsAngularApp')
                         $scope.appoinment.toTime = moment(data.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
                         $scope.appoinment.TimeSlot = data.TimeSlot;
                         $scope.appoinment.room = data.Room;
-                        $scope.appointmentData = data;
+                        $scope.appointmentData = data;                        
+                        $rootScope.$broadcast('moreDetails',data);
                         $scope.getMoreAvailableTimeSlots2 ();                       
                         console.log($scope.appointmentData);
                     }

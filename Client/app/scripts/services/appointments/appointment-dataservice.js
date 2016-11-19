@@ -16,6 +16,7 @@ angular.module('armsAngularApp')
             var baseUrl = CONFIG.BASE_URL;
             var appointmentDataService = {};
             var message = '';
+            var appoinmentData = {};
 
             /**
              * load all lectures
@@ -80,12 +81,20 @@ angular.module('armsAngularApp')
                 return $http.put(baseUrl + 'appointment/save-reschedule-request', JSON.stringify(appointmentRequest));
             };
             /**
-             * send appointment reschedule to server
+             * send appointment cancle to server
              * @param {appointmentRequest}  
              * @returns {HttpPromise}
              */ 
             appointmentDataService.sendCancelRequest = function(appointmentRequest) {
                 return $http.put(baseUrl + 'appointment/save-cancel-request', JSON.stringify(appointmentRequest));
+            };
+            /**
+             * send appointment comment to server
+             * @param {appointmentRequest}  
+             * @returns {HttpPromise}
+             */ 
+            appointmentDataService.sendComment = function(appointmentRequest) {
+                return $http.put(baseUrl + 'appointment/save-comment', JSON.stringify(appointmentRequest));
             };
             /**
              * load all Pending appointment requests
@@ -144,6 +153,11 @@ angular.module('armsAngularApp')
                 this.message = '';
                 this.message = msg;
                 $rootScope.$broadcast('requestTableRowClick');
+            };
+
+            appointmentDataService.setModalData = function(data) {
+                this.appoinmentData = {};
+                this.appoinmentData = data;
             };
 
             appointmentDataService.passAppoinmentData = function(msg) {

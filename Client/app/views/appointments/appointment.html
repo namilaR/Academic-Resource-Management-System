@@ -79,6 +79,7 @@
         <!-- ./main content  -->
     </div>
     <!-- /.container-->
+    <detail-modal role="{{user_role}}"></detail-modal>
     <reshedule-modal-lecture role="{{user_role}}"></reshedule-modal-lecture>
     <cancel-modal></cancel-modal>    
 </div>
@@ -128,16 +129,6 @@
                                     </label>
                                 </div>
                             </div>
-                            <!-- <div class="form-group row">
-                    <div class="col-sm-4">
-                      <label for="inputEmail3" class=" control-label  ">Student Year</label>
-                    </div>
-                    <div class="col-sm-8">
-                      <label class="control-label  ">
-                        <a href="">Student Year</a>
-                      </label>
-                    </div>
-                  </div> -->
                             <div class="form-group row">
                                 <div class="col-sm-4">
                                     <label for="inputEmail3" class=" control-label  ">Request Title</label>
@@ -221,93 +212,6 @@
     </div>
 </div>
 <!-- /.content-wrapper -->
-<!-- Modal -->
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form class="form-horizontal" ng-submit="placeAppoinment()">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Appointment Details</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label for="inputEmail3" class=" control-label ">Lecture Name</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <label class="control-label  ">
-                                        <a href="">{{appoinment.TimeSlot.Lecturer.User.userFullname}}</a>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label for="inputEmail3" class=" control-label  ">Subject Name</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <label class="control-label  ">
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label for="inputEmail3" class=" control-label  ">Appointment Date</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <input type="text" bs-datepicker data-min-date="today" data-autoclose="1" data-date-format="dd-MM-yyyy" type="text" class="form-control" ng-model="appoinment.appointmentDate" name="date" ng-change="dataChange()">
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label for="inputEmail3" class=" control-label  ">Appointment Time Slot</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <a class="btn btn-time-slot btn-default">{{appoinment.fromTime}}-{{appoinment.toTime}}</a>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label for="inputEmail3" class=" control-label  ">Appointment Venue</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <a class="btn btn-time-slot btn-default">
-                                        <strong>{{appoinment.room.id}}</strong>
-                                        <br>{{appoinment.room.roomName}}</a>
-                                </div>
-                            </div>
-                            <!-- <div class="form-group row">
-                    <div class="col-sm-4">
-                      <label for="enterRequestTitle" class="control-label  ">Time Slot</label>
-                    </div>
-                    <div class="col-sm-8">
-                      <a class="btn btn-time-slot btn-default">
-                        <strong>{{pendingRequest.appointmentDay}}</strong><br>{{pendingRequest.fromTime}}-{{pendingRequest.toTime}}</a>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <div class="col-sm-4">
-                      <label for="enterRequestTitle" class="control-label  ">Available Rooms</label>
-                    </div>
-                    <div class="col-sm-8">
-                      <a ng-repeat=" room in rooms" ng-class="{'btn-success text-white' : pendingRequest.selectedRoom.id == room.id }" ng-click="selectRoom(room)" class="btn btn-time-slot btn-default">
-                        <strong>{{room.id}}</strong><br>{{room.roomName}}</a>
-                    </div>
-                  </div> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success pull-right">Make Reschedule Request</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 <div footer></div>
