@@ -3,6 +3,10 @@
  */
 var Modules = require('../../models/Models');
 var Batch = Modules.Batch;
+var Subject = Modules.Subject;
+var Faculty = Modules.Faculty;
+var Department = Modules.Department;
+var Center = Modules.Center;
 
 function BatchController() {
     this.createBatch = function(batch, res) {
@@ -13,7 +17,8 @@ function BatchController() {
             batchType: batch.batchType,
             DepartmentId : batch.DepartmentId,
             CenterId : batch.CenterId,
-            FacultyId : batch.FacultyId
+            FacultyId : batch.FacultyId,
+            batchWeek : batch.batchWeek
         }
 
         return Batch.create(batchInstance).then(function(instance) {
@@ -25,6 +30,26 @@ function BatchController() {
                 }
             });
         });
+    }
+
+    this.getAllBatches = function(res) {
+        return Batch.findAll({
+            include: [{
+                model: Subject,
+                attributes: ['id', 'subjectName']
+            }, {
+                model: Faculty,
+                attributes: ['id', 'facultyName']
+            }, {
+                model: Department,
+                attributes: ['id', 'DepartmentName']
+            }, {
+                model: Center,
+                attributes: ['id', 'centerName']
+            }]
+        }).then(function(data) {
+            return res.send(data);
+        })
     }
 }
 

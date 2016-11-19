@@ -33,6 +33,7 @@ angular.module('armsAngularApp')
                 batchYear : $scope.batchYear,
                 batchSemester : $scope.batchSemester,
                 batchType : $scope.batchType,
+                batchWeek : $scope.batchWeek,
                 DepartmentId : $scope.batchDepartment,
                 CenterId : $scope.batchCenter,
                 FacultyId : $scope.batchFaculty,

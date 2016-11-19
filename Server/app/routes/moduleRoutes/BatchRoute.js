@@ -10,4 +10,7 @@ router.post('/', function(req, res, next) {
     BatchController.createBatch(req.body, res);
 });
 
+router.get('/', function(req, res, next) {
+    BatchController.getAllBatches(res);
+})
 module.exports = router;
