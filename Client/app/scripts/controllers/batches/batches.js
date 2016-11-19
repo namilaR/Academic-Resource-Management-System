@@ -16,15 +16,27 @@ angular.module('armsAngularApp')
         $scope.batchSubject= {
             selectedSubjects: []
         };
+        $scope.updateBatchSubject = {
+            selectedSubjects: []
+        }
         $scope.batches = [];
+        $scope.updateBatch = null;
 
-        $scope.loadParticularDepartments = function() {
+        $scope.loadParticularDepartments = function(state) {
             var particularDepartments = [];
-            $scope.allDepartments.forEach(function(item) {
-                if (item.FacultyId == $scope.batchFaculty) {
-                    particularDepartments.push(item);
-                }
-            });
+            if(state == 'create') {
+                $scope.allDepartments.forEach(function(item) {
+                    if (item.FacultyId == $scope.batchFaculty) {
+                        particularDepartments.push(item);
+                    }
+                });
+            } else if(state == 'update') {
+                $scope.allDepartments.forEach(function(item) {
+                    if (item.FacultyId == $scope.updateBatchFaculty) {
+                        particularDepartments.push(item);
+                    }
+                });
+            }
             $scope.departments = particularDepartments;
         }
 
@@ -72,6 +84,45 @@ angular.module('armsAngularApp')
                 });
         }
 
+        $scope.loadUpdateBatchModal = function(batch) {
+            $scope.updateBatch = batch;
+            $scope.updateBatchName = batch.batchName;
+            $scope.updateBatchYear = batch.batchYear.toString();
+            $scope.updateBatchSemester = batch.batchSemester.toString();
+            $scope.updateBatchWeek = batch.batchWeek;
+            $scope.updateBatchType = batch.batchType;
+            $scope.updateBatchCenter = batch.CenterId;
+            $scope.updateBatchFaculty = batch.FacultyId;
+            $scope.updateBatchDepartment = batch.DepartmentId;
+            $scope.updateBatchSubject.selectedSubjects = [];
+            batch.Subjects.forEach(function(item) {
+                $scope.updateBatchSubject.selectedSubjects.push(item.id);
+            });
+        }
+
+        $scope.updateBatchDetails = function() {
+            var batch = {
+                id: $scope.updateBatch.id,
+                batchName : $scope.updateBatchName,
+                batchYear : $scope.updateBatchYear,
+                batchSemester : $scope.updateBatchSemester,
+                batchType : $scope.updateBatchType,
+                batchWeek : $scope.updateBatchWeek,
+                DepartmentId : $scope.updateBatchDepartment,
+                CenterId : $scope.updateBatchCenter,
+                FacultyId : $scope.updateBatchFaculty,
+                Subject: $scope.updateBatchSubject.selectedSubjects
+            };
+            return batchService.updateBatch(batch).then(function(result) {
+                if(result.status == 200) {
+                    swal('success', 'successfully updated batch', 'success');
+                    getBatches();
+                } else {
+                    alert("error going on");
+                }
+            })
+        }
+
         function getBatches() {
             batchService.getAllBatches().then(function(result) {
                 $scope.batches = result.data;
@@ -102,7 +153,6 @@ angular.module('armsAngularApp')
                 $scope.allDepartments = departments.data;
             })
         }
-
 
         loadCenters();
         loadFaculties();

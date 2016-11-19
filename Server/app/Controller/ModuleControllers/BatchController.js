@@ -63,6 +63,35 @@ function BatchController() {
             });
         });
     }
+
+    this.updateBatch = function(batch, res) {
+        return Batch.find({
+            where: {
+                id: batch.id
+            }
+        }).then(function(batchInstance) {
+            if(batchInstance) {
+                return batchInstance.update({
+                    batchName: batch.batchName,
+                    batchYear: batch.batchYear,
+                    batchSemester: batch.batchSemester,
+                    batchType: batch.batchType,
+                    DepartmentId : batch.DepartmentId,
+                    CenterId : batch.CenterId,
+                    FacultyId : batch.FacultyId,
+                    batchWeek : batch.batchWeek
+                }).then(function(updatedInstance) {
+                    return updatedInstance.setSubjects(batch.Subject).then(function(data) {
+                        if(data) {
+                            return res.send(data);
+                        } else {
+                            return res.send({'status': 500, 'message' : 'please try to add data again'})
+                        }
+                    })
+                })
+            }
+        })
+    }
 }
 
 module.exports = new BatchController();

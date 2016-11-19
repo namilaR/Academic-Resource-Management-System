@@ -34,5 +34,15 @@ angular.module('armsAngularApp')
             });
         }
 
+        batchService.updateBatch = function(batch) {
+            return $http({
+                method: 'put',
+                url: baseUrl + 'batch',
+                data: batch
+            }).then(function(response) {
+                return response;
+            });
+        }
+
         return batchService;
     }]);

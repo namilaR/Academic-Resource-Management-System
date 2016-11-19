@@ -102,7 +102,7 @@
                                     <label class="pull-right">Faculty</label>
                                 </div>
                                 <div class="col-sm-9">
-                                    <select class="form-control" ng-model="batchFaculty" ng-change="loadParticularDepartments()">
+                                    <select class="form-control" ng-model="batchFaculty" ng-change="loadParticularDepartments('create')">
                                         <option disabled selected value> select Faculty </option>
                                         <option ng-repeat="faculty in faculties" value="{{faculty.id}}" required="true" ng-selected="batchFaculty == faculty.id">{{faculty.facultyName}}</option>
                                     </select>
@@ -175,13 +175,140 @@
                         <button class="btn-warning" ng-click="deleteBatch(batch)">
                             <i class="fa fa-trash"></i>
                         </button>
-                        <button class="btn-success" ng-click="updateBatch(batch)" data-toggle="modal" data-target="#myModal">
+                        <button class="btn-success" ng-click="loadUpdateBatchModal(batch)" data-toggle="modal" data-target="#updateBatch">
                             <i class="fa fa-pencil"></i>
                         </button>
                     </td>
                 </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="updateBatch" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <section class="content">
+                <!-- Default box -->
+                <div class="box box-orange form-horizontal">
+                    <form class="box-body" ng-submit="updateBatchDetails()">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">
+                                <i class="fa fa-pencil"></i>
+                                Update Batch <span ng-bind="updateBatchName"></span>
+                            </h3>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="pull-right">Batch Name</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="batchName" required="true" placeholder="new batch name eg:Curtin Software Enginering"
+                                       ng-model="updateBatchName" required="true">
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="pull-right">Batch Year</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <select class="form-control" ng-model="updateBatchYear">
+                                    <option disabled selected value> select batch </option>
+                                    <option value="1">1st Year</option>
+                                    <option value="2">2nd Year</option>
+                                    <option value="3">3rd Year</option>
+                                    <option value="4">4th Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="pull-right">Semester</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <select class="form-control" ng-model="updateBatchSemester">
+                                    <option disabled selected value> select semester </option>
+                                    <option value="1">1st Semester</option>
+                                    <option value="2">2nd Semester</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="pull-right">Batch Week</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <select class="form-control" ng-model="updateBatchWeek">
+                                    <option disabled selected value> select Weekday or week end </option>
+                                    <option value="weekday">Week day</option>
+                                    <option value="weekend">Week End</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="pull-right">Type</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <select class="form-control" ng-model="updateBatchType">
+                                    <option disabled selected value> select type </option>
+                                    <option value="regular">Regular</option>
+                                    <option value="marchintake">March in take</option>
+                                    <option value="juneintake">June in take</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="pull-right">Center</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <select class="form-control" ng-model="updateBatchCenter">
+                                    <option disabled selected value> select center</option>
+                                    <option ng-repeat="center in centers" value="{{center.id}}" required="true" ng-selected="updateBatchCenter==center.id">{{center.centerName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="pull-right">Faculty</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <select class="form-control" ng-model="updateBatchFaculty" ng-change="loadParticularDepartments('update')">
+                                    <option disabled selected value> select Faculty </option>
+                                    <option ng-repeat="faculty in faculties" value="{{faculty.id}}" required="true" ng-selected="updateBatchFaculty == faculty.id">{{faculty.facultyName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-sm-3">
+                                <label class="pull-right">Department</label>
+                            </div>
+                            <div class="col-sm-9">
+                                <select class="form-control" ng-model="updateBatchDepartment">
+                                    <option disabled selected value> select Department </option>
+                                    <option ng-repeat="department in departments" value="{{department.id}}" required="true" ng-selected="updateBatchDepartment == department.id">{{department.DepartmentName}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label class="pull-right">Subject</label>
+                            </div>
+                            <div class="col-sm-9" ng-model="updateSubjectsSelected">
+                                <div ng-repeat="subject in subjects">
+                                    <input type="checkbox" checklist-model="updateBatchSubject.selectedSubjects" checklist-value="subject.id">
+                                    <label>{{subject.subjectName}}</label><br>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-success pull-right" style="margin-top: 5px;">
+                            <i class="fa fa-plus"></i>
+                            update Batch {{updateBatchName}}
+                        </button>
+                    </form>
+                </div>
+            </section>
         </div>
     </div>
 </div>
