@@ -9,6 +9,7 @@ var router = express.Router();
 var StudentRoute = require('./moduleRoutes/StudentRoute');
 var UserRoleRoute = require('./moduleRoutes/UserRoleRoute');
 var UserManagementRoute = require('./moduleRoutes/userManagement/UserManagementRoute');
+var FeedbackSessionRoute = require('./moduleRoutes/feedbacksession/FeedbackSessionRoute');
 var LecturerRoute = require('./moduleRoutes/LecturerRoute');
 var FacultyRoute = require('./moduleRoutes/FacultyRoute');
 var SubjectRoute = require('./moduleRoutes/SubjectRoute');
@@ -26,6 +27,7 @@ router.use('/faculty/', FacultyRoute);
 router.use('/request/', RequestRoute);
 router.use('/appointment/', AppointmentRoute);
 router.use('/api/authentication/', ApiAuthenticationRoute);
+router.use('/feedback-session/', FeedbackSessionRoute);
 
 
 

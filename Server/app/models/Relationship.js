@@ -114,6 +114,26 @@ var Relationship = function() {
 
 
 
+    // Relation for batch - subject
+    Models.Subject.belongsToMany(Models.Batch, {
+        through: {
+            model: Models.BatchSubject,
+            unique: false
+        },
+        foreignKey: 'subjectId',
+        constraints: false
+    });
+    Models.Batch.belongsToMany(Models.Subject, {
+        through: {
+            model: Models.BatchSubject,
+            unique: false
+        },
+        foreignKey: 'batchId',
+        constraints: false
+    });
+
+
+
     Models.Room.belongsTo(Models.Faculty)
 
     connection

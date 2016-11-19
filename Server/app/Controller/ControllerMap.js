@@ -14,5 +14,6 @@ Controllers.RequestController = require('./ModuleControllers/RequestController')
 Controllers.FacultyController = require('./ModuleControllers/FacultyController');
 Controllers.AppointmentController = require('./ModuleControllers/AppointmentController');
 Controllers.UserAuthenticateController = require('./ModuleControllers/UserAuthenticateController');
+Controllers.FeedbackSessionController = require('./ModuleControllers/FeedbackSessionController');
 
 module.exports = Controllers;

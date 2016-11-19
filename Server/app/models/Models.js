@@ -14,6 +14,7 @@ Models.Center = require('./entity/Center');
 Models.Faculty = require('./entity/Faculty');
 Models.Department = require('./entity/Department');
 Models.Batch = require('./entity/Batch');
+Models.BatchSubject = require('./entity/BatchSubject');
 Models.Request = require('./entity/Request');
 Models.Room = require('./entity/Room');
 Models.Appointment = require('./entity/Appointment')

@@ -30,6 +30,51 @@
         </div>
       </div>
 
+      <div class="box box-orange">
+        <div class="box-header with-border">
+          <h3 class="box-title">Sessions List</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+          <table>
+            <thead align="center">
+            <tr>
+              <td ng-style="rowWidth" ><b>Code</b></td>
+              <td ng-style="rowWidth" ><b>Date</b></td>
+              <td ng-style="rowWidth" ><b>Start Time</b></td>
+              <td ng-style="rowWidth" ><b>End Time</b></td>
+              <td ng-style="rowWidth" ><b>Status</b></td>
+              <td ng-style="rowWidth" ><b>Subject</b></td>
+              <td ng-style="rowWidth" ><b>Lecturer</b></td>
+            </tr>
+            </thead>
+            <tbody ng:repeat="i in sessionsList" align="center">
+            <tr>
+              <td ng-style="rowWidth" >{{i.id}}</td>
+              <td ng-style="rowWidth" >{{i.feedbackSessionDate}}</td>
+              <!--<td ng-style="rowWidth" >{{i.feedbackSessionStartTime}}</td>-->
+              <td ng-style="rowWidth"><input type="text" required name="date" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="appointmentRequest.requestDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" /><span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span></td>
+              <td ng-style="rowWidth" >{{i.feedbackSessionEndTime}}</td>
+              <td ng-style="rowWidth"  ng-if=" i.status == 1 "> <input type="checkbox" name="" value="1" checked="checked" ></td>
+              <td ng-if=" i.status == 0 "><input type="checkbox" name="" value="1" ></td>
+              <td ng-style="rowWidth" >{{i.subjectName}}</td>
+              <td ng-style="rowWidth" >{{i.userFullname}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+
+        </div>
+        <!-- /.box-footer -->
+
+      </div>
+
+
       <div class="modal fade" id="addnewusertype" >
         <div class="modal-dialog">
           <div class="modal-content">
@@ -37,7 +82,7 @@
               <div class="row">
                 <div class="col-md-12">
                   <div ng-controller="UserTypeCtrl">
-                    <form name="feedbacksessionForm" ng-submit="submitUserRoleForm(feedbacksessionForm.$valid)" novalidate>
+                    <form name="feedbacksessionForm" ng-submit="createFeedbackSession(feedbacksessionForm.$valid)" novalidate>
                       <div class="row">
                         <div class="col-md-12 text-center">
                           <h3>Create New FeedBack Session</h3>
@@ -46,21 +91,43 @@
                       <div class="row">
 
                         <div class="col-md-6 text-center">
-                          <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted )}">
-                            <label class="control-label ">Year</label>
+                          <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.batch.$invalid && !feedbacksessionForm.batch.$pristine) || (feedbacksessionForm.batch.$invalid && feedbacksessionForm.$submitted )}">
+                            <label class="control-label ">Batch</label>
                             <div class="">
-                              <input type="text" class="form-control" ng-model="userType" name="userType" required>
-                              <p ng-show="(feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
+                              <select name="batchName" id="batchName" class="form-control"
+                                      ng-options="option.batchName for option in data.availableOptions track by option.id"
+                                      ng-model="data.selectedOption" ng-change="GetValue()" required>
+                              </select>
+                              <p ng-show="(feedbacksessionForm.batch.$invalid && !feedbacksessionForm.batch.$pristine) || (feedbacksessionForm.batch.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
                             </div>
                           </div>
                         </div>
 
                         <div class="col-md-6 text-center">
                           <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted )}">
-                            <label class="control-label ">Batch</label>
+                            <label class="control-label ">Year</label>
                             <div class="">
-                              <input type="text" class="form-control" ng-model="userType" name="userType" required>
-                              <p ng-show="(feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
+                              <select name="year" id="year" class="form-control"
+                                      ng-options="option.year for option in year.availableOptions track by option.id"
+                                      ng-model="year.selectedOption" ng-change="GetValue()" required>
+                              </select>
+                              <p ng-show="(feedbacksessionForm.year.$invalid && !feedbacksessionForm.year.$pristine) || (feedbacksessionForm.year.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="row">
+
+                        <div class="col-md-6 text-center">
+                          <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.batch_week.$invalid && !feedbacksessionForm.batch_week.$pristine) || (feedbacksessionForm.batch_week.$invalid && feedbacksessionForm.$submitted )}">
+                            <label class="control-label ">Batch Week</label>
+                            <div class="">
+                              <select name="batch_week" id="batch_week" class="form-control"
+                                      ng-options="option.batch_week for option in batch_week.availableOptions track by option.id"
+                                      ng-model="batch_week.selectedOption" ng-change="GetValue()" required>
+                              </select>
+                              <p ng-show="(feedbacksessionForm.batch_week.$invalid && !feedbacksessionForm.batch_week.$pristine) || (feedbacksessionForm.batch_week.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
                             </div>
                           </div>
                         </div>
@@ -77,6 +144,48 @@
                   </div>
                 </div>
               </div>
+              <div class="box box-orange">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Sessions</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                  <table>
+                    <thead align="center">
+                      <tr>
+                        <td ng-style="rowWidth"><b>Code</b></td>
+                        <td ng-style="rowWidth"><b>Date</b></td>
+                        <td ng-style="rowWidth"><b>Start Time</b></td>
+                        <td ng-style="rowWidth"><b>End Time</b></td>
+                        <td ng-style="rowWidth"><b>Status</b></td>
+                        <td ng-style="rowWidth"><b>Subject</b></td>
+                        <td ng-style="rowWidth"><b>Lecturer</b></td>
+                      </tr>
+                    </thead>
+                    <tbody ng:repeat="i in phones" align="center">
+                    <tr>
+                      <td ng-style="rowWidth">{{i.id}}</td>
+                      <td ng-style="rowWidth">{{i.feedbackSessionDate}}</td>
+                      <td ng-style="rowWidth">{{i.feedbackSessionStartTime}}</td>
+                      <td ng-style="rowWidth">{{i.feedbackSessionEndTime}}</td>
+                      <td ng-style="rowWidth" ng-if=" i.status == 1 ">Active</td>
+                      <td ng-style="rowWidth" ng-if=" i.status == 0 ">Inactive</td>
+                      <td ng-style="rowWidth">{{i.subjectName}}</td>
+                      <td ng-style="rowWidth">{{i.userFullname}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+
+                </div>
+                <!-- /.box-footer -->
+
+              </div>
+
+
             </div>
           </div>
         </div>
