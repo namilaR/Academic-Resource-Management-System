@@ -14,14 +14,11 @@
     <!-- endbower -->
     <!-- endbuild -->
 
+
     <!-- build:css(.) styles/modules.css -->
     <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.min.css">
     <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
     <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css">
-    <link rel="stylesheet" href="node_modules/angular-bootstrap-datetimepicker/src/css/datetimepicker.css.map">
-
-    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-
     <!-- endbuild -->
 
     <!-- build:css(.tmp) styles/main.css -->
@@ -98,17 +95,20 @@
 
     <!-- build:js(.) scripts/modules.js -->
         <script src="scripts/admin_lte_app.js"></script>
-        <script src="node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
-        <script src="node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
     <!-- endbuild -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert-dev.min.js"></script>
+   
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+
         <script src="scripts/app.js"></script>
+        <script src="scripts/env_vars.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/login.js"></script>
         <script src="scripts/directives/icheck.js"></script>
         <script src="scripts/directives/master/navbar-user.js"></script>
+        <script src="scripts/directives/master/navbar-user-hod-list.js"></script>
+        <script src="scripts/directives/master/navbar-user-student-list.js"></script>
+        <script src="scripts/directives/master/navbar-user-lecturer-list.js"></script>
         <script src="scripts/directives/master/navbar.js"></script>
         <script src="scripts/controllers/master/navbar-user.js"></script>
         <script src="scripts/controllers/master/sidebar.js"></script>
@@ -118,27 +118,32 @@
         <script src="scripts/directives/role/usertype.js"></script>
         <script src="scripts/services/role/dataservicerole.js"></script>
         <script src="scripts/services/faculty/facultyService.js"></script>
-        <script src="scripts/services/question.js"></script>
         <script src="scripts/controllers/role/test.js"></script>
         <script src="scripts/controllers/role/roletable.js"></script>
+
+
+        <!-- Start User Management -->
+        <script src="scripts/services/user_authentication_services.js"></script>
+        <script src="scripts/controllers/auth.js"></script>
+
+        <script src="scripts/controllers/user_management/UserController.js"></script>
+        <script src="scripts/directives/user_management/UserDirective.js"></script>
+
+        <script src="scripts/controllers/user_management/UserTypeController.js"></script>
+        <script src="scripts/directives/user_management/UserTypeDirective.js"></script>
+        <!-- End User Management -->
+
+        <!-- Feedback Management -->
+        <script src="scripts/controllers/feedback_management/FeedBackSession.js"></script>
+        <!-- Feedback Management -->
+
         <script src="scripts/controllers/appointments/appointment.js"></script>
         <script src="scripts/controllers/appointments/request-table.js"></script>
         <script src="scripts/services/appointments/appointment-dataservice.js"></script>
         <script src="http://code.jboxcdn.com/0.3.2/jBox.min.js"></script>
         <script src="scripts/controllers/faculty/main.js"></script>
-        <script src="scripts/controllers/questions.js"></script>
         <script src="scripts/controllers/appointments/appointment-requests.js"></script>
         <script src="scripts/controllers/appointments/appointment-table.js"></script>
-        <script src="scripts/controllers/feedback/feedback.js"></script>
-        <script src="scripts/controllers/QuestionTemplate/QuestionTemplate.js"></script>
-        <script src="scripts/controllers/reports/report.js"></script>
-        <script src="scripts/services/questionTemplate/QuestionTemplate.js"></script>
-        <script src="scripts/services/reports/reports-dataservice.js"></script>
-        <script src="scripts/controllers/Quiz/quiz.js"></script>
-        <script src="scripts/services/quiz/quizService.js"></script>
-
-
-
 
         <!-- endbuild -->
 </body>
