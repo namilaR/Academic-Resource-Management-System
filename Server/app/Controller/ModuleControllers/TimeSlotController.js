@@ -12,7 +12,7 @@ var TimeSlot = Modules.TimeSlot;
 
 
 /**
- * initilize basic day object
+* initilize basic day object 
  */
 var initDays = function() {
     return [{
@@ -53,13 +53,13 @@ TimeSlotController = function() {
      */
     this.saveTimeSlot = function(TimeSlotInstance, res) {
 
-          //create new TimeSlot instanse and set parameters
-          Lecturer.findOne({
-              where: {
-                  status: 1,
-                  UserId: TimeSlotInstance.userId
-              }
-          }).then(function(data){
+        //create new TimeSlot instanse and set parameters
+        Lecturer.findOne({
+            where: {
+                status: 1,
+                UserId: TimeSlotInstance.userId
+            }
+        }).then(function(data) {
             TimeSlot.create({
                 day: TimeSlotInstance.dayDetails.day,
                 isChecked: TimeSlotInstance.dayDetails.checked,
@@ -72,7 +72,7 @@ TimeSlotController = function() {
 
                 res.send(data);
             });
-          })
+        })
 
     };
 
@@ -194,7 +194,7 @@ TimeSlotController = function() {
                     hide: 0,
                     day: Helper.getDay(DataInstance.date),
                     id: {
-                        $notIn: [Sequelize.literal("SELECT a.TimeSlotId FROM appointment a WHERE a.appointmentDate >= '" + Helper.JSDateToSQLDate(DataInstance.date) + "'")],
+                        $notIn: [Sequelize.literal("SELECT a.TimeSlotId FROM appointment a WHERE a.appointmentDate >= '" + Helper.JSDateToSQLDate(DataInstance.date) + "' AND a.cancel IS NULL")],
                     }
                 }
             })
@@ -217,6 +217,46 @@ TimeSlotController = function() {
                 }
                 res.send(timeSlots);
             });
+    };
+    /**
+     * list all free TimeSlots for given date and lecture
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.getMoreAvailableTimeSlots = function(DataInstance, res) {
+            console.log(DataInstance);
+ 
+            TimeSlot.findAll({
+                    where: {
+                        status: 1,
+                        LecturerId: DataInstance.LecturerId,
+                        hide: 0,
+                        day: Helper.getDay(DataInstance.appointmentDate),
+                        id: {
+                            $notIn: [Sequelize.literal("SELECT a.TimeSlotId FROM appointment a WHERE a.appointmentDate >= '" + Helper.JSDateToSQLDate(DataInstance.appointmentDate) + "'")],
+                        }
+                    }
+                })
+                .then(function(data) {
+                    var timeSlots = [];
+                    for (var i = 0, len2 = data.length; i < len2; i++) {
+                        timeSlots.push({
+                            id: data[i].id,
+                            day: data[i].day,
+                            fromTime: Helper._24HoursToAmPm(data[i].fromTime),
+                            toTime: Helper._24HoursToAmPm(data[i].toTime),
+                            status: data[i].status,
+                            hide: data[i].hide,
+                            isChecked: data[i].isChecked,
+                            createdAt: data[i].createdAt,
+                            updatedAt: data[i].updatedAt,
+                            deletedAt: data[i].deletedAt,
+                            LecturerId: data[i].LecturerId
+                        });
+                    }
+                    res.send(timeSlots);
+                });
+        
     };
 };
 module.exports = new TimeSlotController();

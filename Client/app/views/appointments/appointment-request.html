@@ -110,6 +110,7 @@
   </div>
   <!-- /.container-->
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -201,9 +202,11 @@
           <button type="submit"  class="btn btn-success pull-right">Make Reshedule Request</button>
         </div>
       </form>
-
     </div>
   </div>
 </div>
+<detail-modal role="{{user_role}}"></detail-modal>
+<reshedule-modal role="{{user_role}}"></reshedule-modal>
+<cancel-modal-student></cancel-modal-student>
 <!-- /.content-wrapper -->
 <div footer></div>

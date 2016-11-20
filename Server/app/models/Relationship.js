@@ -40,11 +40,20 @@ var Relationship = function() {
     Models.Department.hasMany(Models.Batch)
     Models.Batch.belongsTo(Models.Department)
 
+    Models.Center.hasMany(Models.Batch)
+    Models.Batch.belongsTo(Models.Center)
+
+    Models.Faculty.hasMany(Models.Batch)
+    Models.Batch.belongsTo(Models.Faculty)
+
     Models.Batch.hasMany(Models.Student)
     Models.Student.belongsTo(Models.Batch)
 
     Models.Department.hasMany(Models.Batch);
     Models.Batch.belongsTo(Models.Department);
+
+    Models.Subject.belongsToMany(Models.Batch, {through: 'BatchSubject'})
+    Models.Batch.belongsToMany(Models.Subject, {through: 'BatchSubject'})
 
     Models.Batch.hasMany(Models.Student);
     Models.Student.belongsTo(Models.Batch);

@@ -43,6 +43,18 @@ router.post('/save-appointment-request', function(req, res, next) {
     AppointmentController.saveAppoinmentRequest(req.body, res);
 
 });
+router.put('/save-reschedule-request', function(req, res, next) {
+    AppointmentController.saveAppoinmentRescheduleRequest(req.body, res);
+
+});
+router.put('/save-cancel-request', function(req, res, next) {
+    AppointmentController.saveAppoinmentCancelRequest(req.body, res);
+
+});
+router.put('/save-comment', function(req, res, next) {
+    AppointmentController.saveAppoinmentComment(req.body, res);
+
+});
 
 router.put('/make-appoinment', function(req, res, next) {
     AppointmentController.makeAppoinment(req.body, res);

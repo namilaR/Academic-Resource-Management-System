@@ -32,19 +32,22 @@ angular.module('armsAngularApp')
         DTColumnBuilder.newColumn('appointmentDate').withTitle('Date').renderWith(function(data, type, full) {
           return moment(full.appointmentDate).format("MMM-DD");
         }),
-        DTColumnBuilder.newColumn('TimeSlot.fromTime').withTitle('Start Time').renderWith(function(data, type, full) {
-          return moment(full.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A");
+        DTColumnBuilder.newColumn(null).withTitle('Time Slot').renderWith(function(data, type, full) {
+          return moment(full.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A")+' - '+ moment(full.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
         }),
-        DTColumnBuilder.newColumn('TimeSlot.toTime').withTitle('End Time').renderWith(function(data, type, full) {
-          return moment(full.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
-        }),
+        DTColumnBuilder.newColumn('appointmentTitle').withTitle('Title'),
+        DTColumnBuilder.newColumn('appointmentNoteLecturer').withTitle('Notes'),
         DTColumnBuilder.newColumn('appointmentTitle').withTitle('Title'),
         DTColumnBuilder.newColumn('approved').withTitle('Status').renderWith(function(data, type, full) {
           var st;
-          if (full.approved == true) {
-            return '<span class="label label-success">Approved</span>';
+          if (full.cancel == true) {
+             return '<span class="label label-danger">Cancelled</span>';             
+          } else if (full.reShedule == true) {
+              return '<span class="label label-info">On Reshedule</span>';
+          } else if (full.approved == true) {
+              return '<span class="label label-success">Approved</span>';
           } else {
-            return '<span class="label label-warning">Pending</span>';
+              return '<span class="label label-warning">Pending</span>';
           }
         }),
         DTColumnBuilder.newColumn(null).withTitle('Action').notSortable().renderWith(actionsHtml)
@@ -54,11 +57,22 @@ angular.module('armsAngularApp')
       vm.dtInstance = {};
 
       function actionsHtml(data, type, full, meta) {
-        if(full.approved == true) {
-          return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"> more details</button>';
-        } else {
-          return '';
-        }
+        // if(full.approved == true) {
+        //   return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal"> more details</button>'+
+        //          '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>';
+        // } else {
+        //   return '';
+        // }
+        // 
+        if (full.approved  === false ) { 
+            return '';         
+        } else if(full.cancel === true){
+            return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="triggerMoreDetails()" data-target="#detailModal"> more details</button>';
+        } else {            
+          return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="triggerMoreDetails()" data-target="#detailModal"> more details</button>'+
+           '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>'+
+           '<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelModal">Cancel</button>';
+        }  
 
       }
 
