@@ -194,7 +194,7 @@ TimeSlotController = function() {
                     hide: 0,
                     day: Helper.getDay(DataInstance.date),
                     id: {
-                        $notIn: [Sequelize.literal("SELECT a.TimeSlotId FROM appointment a WHERE a.appointmentDate >= '" + Helper.JSDateToSQLDate(DataInstance.date) + "'")],
+                        $notIn: [Sequelize.literal("SELECT a.TimeSlotId FROM appointment a WHERE a.appointmentDate >= '" + Helper.JSDateToSQLDate(DataInstance.date) + "' AND a.cancel IS NULL")],
                     }
                 }
             })

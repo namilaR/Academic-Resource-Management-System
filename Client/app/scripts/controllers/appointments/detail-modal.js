@@ -29,8 +29,7 @@ angular.module('armsAngularApp')
         	};
 
             $rootScope.$on('moreDetails',function (event,data) {
-            	$scope.appointmentData = data;
-            	console.log(data);
+            	$scope.appointmentData = data;            	
 
             });
         }

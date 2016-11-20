@@ -79,7 +79,7 @@ angular.module('armsAngularApp')
           return moment(full.TimeSlot.fromTime, 'HH:mm:ss').format("hh:mm A")+' - '+ moment(full.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
         }),
         DTColumnBuilder.newColumn('appointmentTitle').withTitle('Title'),
-        DTColumnBuilder.newColumn('appointmentNotes').withTitle('Notes'),
+        DTColumnBuilder.newColumn('appointmentNoteStudent').withTitle('Notes'),
         DTColumnBuilder.newColumn(null).withTitle('Venue').renderWith(function(data, type, full) {
           var st;
           if (full.Room !== 'undefined' ) {

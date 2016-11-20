@@ -67,9 +67,9 @@ angular.module('armsAngularApp')
         if (full.approved  === false ) { 
             return '';         
         } else if(full.cancel === true){
-            return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal2"> more details</button>';
+            return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="triggerMoreDetails()" data-target="#detailModal"> more details</button>';
         } else {            
-          return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal2"> more details</button>'+
+          return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="triggerMoreDetails()" data-target="#detailModal"> more details</button>'+
            '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>'+
            '<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelModal">Cancel</button>';
         }  

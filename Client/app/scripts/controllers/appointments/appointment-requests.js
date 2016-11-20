@@ -168,6 +168,7 @@ angular.module('armsAngularApp')
                         $scope.appoinment.room = data.Room;
                         console.log(data);
                         $scope.appointmentData = data;
+                        $rootScope.$broadcast('moreDetails',data);
 
 
                     }
