@@ -34,8 +34,8 @@ var Relationship = function() {
     Models.Faculty.belongsToMany(Models.Center, {through: 'FacultyCenter'})
     Models.Center.belongsToMany(Models.Faculty, {through: 'FacultyCenter'})
 
-    Models.Department.belongsToMany(Models.Faculty, {through: 'DepartmentFaculty'})
-    Models.Faculty.belongsToMany(Models.Department, {through: 'DepartmentFaculty'})
+    Models.Faculty.hasMany(Models.Department)
+    Models.Department.belongsTo(Models.Faculty)
 
     Models.Department.hasMany(Models.Batch)
     Models.Batch.belongsTo(Models.Department)
@@ -48,7 +48,7 @@ var Relationship = function() {
 
     Models.Batch.hasMany(Models.Student);
     Models.Student.belongsTo(Models.Batch);
-    
+
     Models.Lecturer.belongsToMany(Models.Batch, {through: 'LecturerBatch'})
     Models.Batch.belongsToMany(Models.Lecturer, {through: 'LecturerBatch'})
 

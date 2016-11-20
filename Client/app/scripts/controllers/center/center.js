@@ -47,7 +47,7 @@ angular.module('armsAngularApp')
                     }
                 });
             } else {
-                swal('error', 'please fill empty fields', 'Error');
+                alert("please fill out empty fields");
             }
         }
 

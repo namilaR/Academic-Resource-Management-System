@@ -103,9 +103,13 @@ angular.module('armsAngularApp')
          */
         $scope.submitFacultyForm = function (isValid) {
             if (isValid) {
-                createNewFaculty($scope.faculty);
-                $scope.faculty = '';
-                $scope.facultyForm.$setPristine();
+                if (!$scope.faculty) {
+                    alert("Please fill empty fields");
+                } else {
+                    createNewFaculty($scope.faculty);
+                    $scope.faculty = '';
+                    $scope.facultyForm.$setPristine();
+                }
             }
         };
 

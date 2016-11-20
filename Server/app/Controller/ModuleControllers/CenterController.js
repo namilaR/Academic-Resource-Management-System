@@ -77,7 +77,6 @@ CenterController = function() {
                 id: center.center.id
             }
         }).then(function(instance) {
-            console.log("*************"+JSON.stringify(instance));
             if(instance) {
                 return instance.update({
                     centerName: center.center.centerName

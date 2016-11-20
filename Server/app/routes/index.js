@@ -15,6 +15,7 @@ var SubjectRoute = require('./moduleRoutes/SubjectRoute');
 var RequestRoute = require('./moduleRoutes/RequestRoute');
 var QuestionRoute = require('./moduleRoutes/QuestionRoute');
 var Appointment = require('./moduleRoutes/AppointmentRoute');
+var DepartmentRoute = require('./moduleRoutes/DepartmentRoute');
 // route for api authentication
 var ApiAuthenticationRoute = require('./moduleRoutes/authentication/ApiAuthenticationRoute');
 var CenterRoute = require('./moduleRoutes/CenterRoute');
@@ -32,7 +33,7 @@ router.use('/question/', QuestionRoute);
 router.use('/appointment/', Appointment);
 router.use('/api/authentication/', ApiAuthenticationRoute);
 router.use('/center/', CenterRoute);
-
+router.use('/department/', DepartmentRoute);
 
 
 
