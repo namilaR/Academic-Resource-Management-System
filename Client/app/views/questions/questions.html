@@ -24,7 +24,7 @@
                 <i class="fa fa-times"></i></button>
             </div>
         </div>
-        <form class="form-horizontal" name="questionForm" ng-submit="submitQuestionForm(questionForm.$valid)" novalidate>
+        <form class="form-horizontal" name="questionForm" ng-submit="submitQuestionForm()" novalidate>
           <div class="box-body">
             <div class="row form-group" ng-class="{ 'has-error' : (questionForm.faculty.$invalid && !questionForm.faculty.$pristine) || (questionForm.question.$invalid && questionForm.$submitted )}">
               <div class="col-sm-2">
@@ -33,6 +33,19 @@
               <div class="col-sm-10">
                 <input type="text" class="form-control" name="question" required="true" placeholder="new question eg:Are you satisfy with attendance?" ng-model="question">
                 <p ng-show="(questionForm.question.$invalid && !questionForm.question.$pristine) || (questionForm.question.$invalid && questionForm.$submitted ) " class="help-block">New question required.</p>
+              </div>
+            </div>
+            <div class="row form-group" ng-class="{ 'has-error' : (questionForm.faculty.$invalid && !questionForm.faculty.$pristine) || (questionForm.question.$invalid && questionForm.$submitted )}">
+                <div class="col-sm-2">
+                    <label class="pull-right">Question Type</label>
+                </div>
+                <div class="col-sm-10">
+                    <select class="form-control" ng-model="questionType">
+                        <option disabled selected value> select questionType </option>
+                        <option value="lecturer">lecturer</option>
+                        <option value="institute">institute</option>
+                        <option value="subject">subject</option>
+                    </select>
               </div>
             </div>
             <button class="btn btn-success pull-right" style="margin-top: 5px;">
@@ -59,6 +72,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Question</th>
+                            <th>Question Type</th>
                             <th>Created Date</th>
                             <th>Updated Date</th>
                             <th>Options</th>
@@ -68,13 +82,14 @@
                         <tr ng-repeat="question in allQuestions | filter:$ctrl.query">
                             <td>{{question.id}}</td>
                             <td>{{question.question}}</td>
+                            <td>{{question.questionType}}</td>
                             <td>{{question.createdAt}}</td>
                             <td>{{question.updatedAt}}</td>
                             <td>
                                 <button class="btn-warning" ng-click="deleteQuestion(question.id)">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <button class="btn-success" ng-click="updateQuestion(question.id)">
+                                <button class="btn-success" ng-click="loadModal(question)" data-toggle="modal" data-target="#updateModal">
                                     <i class="fa fa-pencil"></i>
                                 </button>
                             </td>
@@ -86,4 +101,42 @@
         </div>
     </div>
   </section>
+
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form class="form-horizontal" name="questionForm" ng-submit="updateQuestionInstance()">
+                    <div class="box-body">
+                        <div class="row form-group" ng-class="{ 'has-error' : (questionForm.faculty.$invalid && !questionForm.faculty.$pristine) || (questionForm.question.$invalid && questionForm.$submitted )}">
+                            <div class="col-sm-2">
+                                <label class="pull-right">Question</label>
+                            </div>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" name="question" required="true" placeholder="new question eg:Are you satisfy with attendance?" ng-model="updateQuestion.question">
+                                <p ng-show="(questionForm.question.$invalid && !questionForm.question.$pristine) || (questionForm.question.$invalid && questionForm.$submitted ) " class="help-block">New question required.</p>
+                            </div>
+                        </div>
+                        <div class="row form-group" ng-class="{ 'has-error' : (questionForm.faculty.$invalid && !questionForm.faculty.$pristine) || (questionForm.question.$invalid && questionForm.$submitted )}">
+                            <div class="col-sm-2">
+                                <label class="pull-right">Question Type</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select class="form-control" ng-model="updateQuestion.questionType">
+                                    <option disabled selected value> select questionType </option>
+                                    <option value="lecturer">lecturer</option>
+                                    <option value="institute">institute</option>
+                                    <option value="subject">subject</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-success pull-right" style="margin-top: 5px;">
+                            <i class="fa fa-plus"></i>
+                            update question
+                        </button>
+                    </div>
+                </form>
+             </div>
+        </div>
+    </div>
+  </div>
 </div>
