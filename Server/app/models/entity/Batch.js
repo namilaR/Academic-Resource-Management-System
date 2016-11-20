@@ -11,6 +11,9 @@ var Batch = connection.define('Batch',{
     batchWeek : Sequelize.STRING,
     batchName : Sequelize.STRING,
     timeTable:Sequelize.STRING,
+    batchYear : Sequelize.INTEGER,
+    batchSemester : Sequelize.INTEGER,
+    batchType : Sequelize.STRING,
     status: Sequelize.BOOLEAN
 },{
     tableName: 'batch',

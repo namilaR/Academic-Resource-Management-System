@@ -35,6 +35,7 @@ angular.module('armsAngularApp')
                     function(response) {
                         var data = response.data;
                         console.log(data);
+                        console.log(data.TimeSlot.LecturerId);
                         $scope.pendingRequest.id = data.id;
                         $scope.pendingRequest.lecturerId = data.TimeSlot.LecturerId;
                         $scope.pendingRequest.requestTitle = data.appointmentTitle;

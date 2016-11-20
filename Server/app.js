@@ -59,7 +59,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-var server = app.listen(8002,'localhost', function() {
+var server = app.listen(8002,'0.0.0.0','localhost', function() {
   console.log('Server listening on port ' + server.address().port);
 });
 module.exports = app;
