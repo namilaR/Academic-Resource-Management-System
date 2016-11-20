@@ -34,15 +34,16 @@ QuestionController = function() {
     };
 
 
-    this.update = function(questionInstance, id, res) {
-        console.log(questionInstance);
+    this.update = function(questionInstance,res) {
+        console.log("********"+JSON.stringify(questionInstance));
         Question.find({
             where: {
-                id: id
+                id: questionInstance.id
             }
-        }).then(function(question) {
-            question.update({
-                question: questionInstance
+        }).then(function(updatedInstance) {
+            updatedInstance.update({
+                question: questionInstance.question,
+                questionType:questionInstance.questionType
             }).then(function(result) {
                 res.send(result);
             });

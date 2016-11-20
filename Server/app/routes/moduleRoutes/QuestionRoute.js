@@ -20,7 +20,7 @@ router.delete('/', function(req, res, next) {
 });
 
 router.put('/', function(req, res, next) {
-    QuestionController.update(req.query.question, req.query.id, res);
+    QuestionController.update(req.body, res);
 });
 
 module.exports = router;

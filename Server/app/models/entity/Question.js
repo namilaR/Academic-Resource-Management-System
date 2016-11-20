@@ -9,6 +9,7 @@ var connection  = require('./../Connection');
 
 var Question = connection.define('Question',{
     question : Sequelize.STRING,
+    questionType : Sequelize.STRING,
     status: Sequelize.BOOLEAN
 },{
     tableName: 'question',
