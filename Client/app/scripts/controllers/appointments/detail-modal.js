@@ -13,8 +13,10 @@ angular.module('armsAngularApp')
         '$rootScope',
         'appointmentDataService',
         function($scope,$rootScope,appointmentDataService) {
-        	console.log('DetailModalCtrl'); 
+        	console.log('DetailModalCtrl');
         	$scope.comment;
+          $scope.reasonForCancel;
+          $scope.appointmentData;
 
         	$scope._24hoursToAmPm = function(time) {
         	    return moment(time, 'HH:mm:ss').format("hh:mm A");
@@ -29,9 +31,26 @@ angular.module('armsAngularApp')
         	};
 
           $rootScope.$on('moreDetails',function (event,data) {
-            $scope.appointmentData = data;            	
+            $scope.appointmentData = data;
 
           });
+
+          $scope.submitAppoinmentCancel = function () {
+            $scope.appointmentData.appointmentCancleNote = $scope.reasonForCancel;
+            appointmentDataService.sendCancelRequest($scope.appointmentData).then(function (response) {
+              angular.element("#cancelModal").modal('hide');
+              appointmentDataService.refreshTables();
+              $scope.appointmentData.cancel = true; 
+              swal({
+                title: "Request Sent",
+                text: "You reschedule request has been successfully send",
+                type: "success",
+                timer: 2000
+              });
+            }, function (error) {
+              /* body... */
+            });
+          };
         }
 
     ]);

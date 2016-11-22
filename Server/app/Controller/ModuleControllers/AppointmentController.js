@@ -330,7 +330,7 @@ AppointmentController = function() {
                                 "   SELECT appointment.RoomId\n" +
                                 "   FROM appointment JOIN timeSlot \n" +
                                 "   ON appointment.TimeSlotId = timeSlot.id\n" +
-                                "   WHERE timeSlot.fromTime >= (SELECT timeSlot.fromTime FROM timeSlot WHERE timeSlot.id = " + timeSlot.id + ") AND appointment.appointmentDate = '" + Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate) + "' AND appointment.RoomId IS NOT NULL "
+                                "   WHERE timeSlot.fromTime >= (SELECT timeSlot.fromTime FROM timeSlot WHERE timeSlot.id = " + timeSlot.id + ") AND timeSlot.toTime <= (SELECT timeSlot.toTime FROM timeSlot WHERE timeSlot.id = " + timeSlot.id + ") AND appointment.appointmentDate = '" + Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate) + "' AND appointment.RoomId IS NOT NULL "
                             )
                         ]
                     }
