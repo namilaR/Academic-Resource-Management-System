@@ -28,10 +28,10 @@ angular.module('armsAngularApp')
         		appointmentDataService.sendComment($scope.appointmentData).then();
         	};
 
-            $rootScope.$on('moreDetails',function (event,data) {
-            	$scope.appointmentData = data;            	
+          $rootScope.$on('moreDetails',function (event,data) {
+            $scope.appointmentData = data;            	
 
-            });
+          });
         }
 
     ]);

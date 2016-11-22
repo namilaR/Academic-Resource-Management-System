@@ -180,7 +180,12 @@ AppointmentController = function() {
                     where: {
                         id: Sequelize.col('Appointment.StudentId')
                     },
-
+                    include: [{
+                        model: User,
+                        where: {
+                            id: Sequelize.col('Student.UserId')
+                        }
+                    }]
                 }]
 
             })
@@ -199,6 +204,7 @@ AppointmentController = function() {
                 where: {
                     status: 1,
                     id: AppoimnetInstance.id,
+
                 },
                 include: [{
                     model: TimeSlot,

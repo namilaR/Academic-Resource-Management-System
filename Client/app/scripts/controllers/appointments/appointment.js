@@ -27,6 +27,15 @@ angular.module('armsAngularApp')
             $scope.rooms = [];
             $scope.availableTimeSlots = [];
             var data = {};
+          
+          var clearAll = function () {
+            $scope.pendingRequest = {};
+            $scope.appointment = {};
+            $scope.appoinment = {};
+            $scope.appointmentData = {};
+            $scope.rooms = [];
+            $scope.availableTimeSlots = [];
+          };
 
             $scope.$on('requestTableRowClick', function() {
                 $scope.pendingRequest = {};
@@ -67,6 +76,7 @@ angular.module('armsAngularApp')
                         console.log(d);
                         appointmentDataService.refreshTables();
                         angular.element("#myModal").modal('hide');
+                        clearAll();
                     }
                 );
             };
