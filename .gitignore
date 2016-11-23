@@ -10,3 +10,4 @@ Server/app/modules/Connection.js
 Server/.idea
 /Client/nbproject/private/
 /Server/nbproject/private/
+Server/mochawesome-reports/
