@@ -74,27 +74,7 @@ AppointmentController = function() {
         });
 
     };
-    /**
-     * save appointment cancel request
-     * @param  {REQUEST},{RESPONSE}
-     * @return {RESPONSE}
-     */
-    this.saveAppoinmentCancelRequest = function(AppoinmentInstance, res) {
-        Appointment.update({
-
-            reShedule: 0,          
-            cancel:1,
-            appointmentCancleNote : AppoinmentInstance.appointmentCancleNote
-        }, {
-            where: {
-                id: AppoinmentInstance.id,
-            }
-        }).then(function(data) {
-            res.send(data);
-        });
-
-    };
-    /**
+   /**
      * save appointment comment 
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
@@ -112,22 +92,16 @@ AppointmentController = function() {
 
     };
     /**
-     * returns all appoinments by the student
+     * returns all appointments
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
-    this.getMyAllAppoinments = function(UserInstance, res) {
-        Student.findOne({
-            where: {
-                status: 1,
-                UserId: UserInstance.userId
-            }
-        }).then(function(data) {
+    this.getAllAppoinments = function(UserInstance, res) {
+
             Appointment.findAll({
                     where: {
-                        status: 1,
-                        StudentId: data.id,
-                        //StudentId: 1,
+                        status: 1,                    
+                       
                     },
                     include: [{
                         model: TimeSlot,
@@ -140,7 +114,7 @@ AppointmentController = function() {
                 .then(function(data) {
                     res.send(data);
                 });
-        });
+        
     };
     /**
      * returns more details of given appointment

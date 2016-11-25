@@ -9,6 +9,11 @@ var AppointmentController = ControllerMap.AppointmentController;
 var TimeSlotController = ControllerMap.TimeSlotController;
 
 
+router.get('/get-all-appointments', function(req, res, next) {
+    AppointmentController.getAllAppoinments(req.query, res);
+
+});
+
 router.get('/get-my-appointments', function(req, res, next) {
     AppointmentController.getMyAllAppoinments(req.query, res);
 

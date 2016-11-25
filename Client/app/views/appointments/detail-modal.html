@@ -21,7 +21,7 @@
                 </label>
               </div>
             </div>
-            <div ng-if="role == 'Lecturer'" class="form-group row">
+            <div ng-if="role == 'Lecturer' || role == 'HOD' " class="form-group row">
               <div class="col-sm-4">
                 <label for="inputEmail3" class=" control-label  ">Student Name</label>
               </div>
@@ -32,7 +32,7 @@
               </div>
             </div>
 
-            <div ng-if="role == 'Student'" class="form-group row">
+            <div ng-if="role == 'Student'  || role == 'HOD'" class="form-group row">
               <div class="col-sm-4">
                 <label for="inputEmail3" class=" control-label  ">Lecture Name</label>
               </div>
@@ -45,7 +45,7 @@
 
             <div class="form-group row">
               <div class="col-sm-4">
-                <label ng-if="role == 'Lecturer'" for="inputEmail3" class=" control-label  ">Batch Time Table</label>
+                <label ng-if="role == 'Lecturer'  || role == 'HOD'" for="inputEmail3" class=" control-label  ">Batch Time Table</label>
                 <label ng-if="role == 'Student'" for="inputEmail3" class=" control-label  ">My Time Table</label>
               </div>
               <div class="col-sm-8">
@@ -107,13 +107,13 @@
                 <span ng-show="!appointmentData.appointmentNoteLecturer">--</span>
               </div>
             </div>
-            <div ng-if="role == 'Lecturer'" class="form-group row">
+            <div ng-if="role == 'Lecturer'  || role == 'HOD' " class="form-group row">
               <div class="col-sm-4">
                 <label for="enterRequestTitle" class="control-label  "> Comment </label>
               </div>
               <div class="col-sm-8">
                 <span ng-if="appointmentData.appointmentComment">{{appointmentData.appointmentComment}}</span>
-                <div ng-show="!appointmentData.appointmentComment">
+                <div ng-show="!appointmentData.appointmentComment && role == 'Lecturer'">
                   <textarea ng-model="comment" class="form-control"  rows="8"
                             cols="40"></textarea>
                   <button class="btn btn-warning pull-right" style="margin-top: 10px;" ng-click="placeComment()">

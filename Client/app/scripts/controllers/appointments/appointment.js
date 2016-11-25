@@ -15,11 +15,7 @@ angular.module('armsAngularApp')
         'appointmentDataService',
         'moment',
         function($rootScope,CONFIG, $scope, $log, appointmentDataService, moment) {
-            this.awesomeThings = [
-                'HTML5 Boilerplate',
-                'AngularJS',
-                'Karma'
-            ];
+
             $scope.pendingRequest = {};
             $scope.appointment = {};
             $scope.appoinment = {};
@@ -27,7 +23,7 @@ angular.module('armsAngularApp')
             $scope.rooms = [];
             $scope.availableTimeSlots = [];
             var data = {};
-          
+
           var clearAll = function () {
             $scope.pendingRequest = {};
             $scope.appointment = {};
@@ -70,7 +66,7 @@ angular.module('armsAngularApp')
             });
 
             $scope.placeAppoinment = function() {
-                $scope.pendingRequest.appointmentNoteLecturer = $scope.appointmentNoteLecturer;                
+                $scope.pendingRequest.appointmentNoteLecturer = $scope.appointmentNoteLecturer;
                 appointmentDataService.placeAppoinment($scope.pendingRequest).then(
                     function(d) {
                         console.log(d);
@@ -95,9 +91,9 @@ angular.module('armsAngularApp')
                         $scope.appoinment.toTime = moment(data.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
                         $scope.appoinment.TimeSlot = data.TimeSlot;
                         $scope.appoinment.room = data.Room;
-                        $scope.appointmentData = data;                        
-                        $rootScope.$broadcast('moreDetails',data);
-                        $scope.getMoreAvailableTimeSlots2 ();                       
+                        $scope.appointmentData = data;
+                        
+                        $scope.getMoreAvailableTimeSlots2 ();
                         console.log($scope.appointmentData);
                     }
                 );
@@ -105,8 +101,8 @@ angular.module('armsAngularApp')
 
             $scope.submitAppoinmentReshedule = function () {
               appointmentDataService.sendRescheduleRequest($scope.appointmentData).then(function (response) {
-                 angular.element("#resheduleModal").modal('hide'); 
-                 appointmentDataService.refreshTables();            
+                 angular.element("#resheduleModal").modal('hide');
+                 appointmentDataService.refreshTables();
                 swal({
                     title: "Request Sent",
                     text: "You reschedule request has been successfully send",
@@ -116,12 +112,12 @@ angular.module('armsAngularApp')
               }, function (error) {
                 /* body... */
               });
-            };            
+            };
 
             $scope.submitAppoinmentCancel = function () {
               appointmentDataService.sendCancelRequest($scope.appointmentData).then(function (response) {
-                 angular.element("#cancelModal").modal('hide');  
-                 appointmentDataService.refreshTables();           
+                 angular.element("#cancelModal").modal('hide');
+                 appointmentDataService.refreshTables();
                 swal({
                     title: "Request Sent",
                     text: "You reschedule request has been successfully send",
@@ -198,7 +194,7 @@ angular.module('armsAngularApp')
               } else {
                  window.open(CONFIG.BASE_URL+$scope.appoinment.Student.Batch.timeTable,'_blank');
               }
-             
+
             };
 
 
