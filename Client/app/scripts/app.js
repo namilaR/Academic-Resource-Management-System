@@ -86,7 +86,7 @@ angular
       })
       /*  appointment - management  routes  */
       .when('/hod/appointments/appointment', {
-        templateUrl: '../views/appointments/hod-appoinments.html',
+        templateUrl: 'views/appointments/hod-appoinments.html',
         controller: 'HodAppointmentsCtrl',
         // controllerAs: 'appointment',
         // bindToController: 'true'
