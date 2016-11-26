@@ -92,7 +92,7 @@ angular.module('armsAngularApp')
                         $scope.appoinment.TimeSlot = data.TimeSlot;
                         $scope.appoinment.room = data.Room;
                         $scope.appointmentData = data;
-                        
+                        $rootScope.$broadcast('moreDetails',data);
                         $scope.getMoreAvailableTimeSlots2 ();
                         console.log($scope.appointmentData);
                     }
@@ -190,9 +190,9 @@ angular.module('armsAngularApp')
             //load time table in new tab
             $scope.showTimeTable = function(operation){
               if (operation == 'make') {
-                 window.open(CONFIG.BASE_URL+$scope.pendingRequest.Student.Batch.timeTable,'_blank');
+                 window.open(CONFIG.BASE_URL+'pdfs/'+$scope.pendingRequest.Student.Batch.timeTable,CONFIG.BASE_URL+'pdfs/'+$scope.pendingRequest.Student.Batch.timeTable);
               } else {
-                 window.open(CONFIG.BASE_URL+$scope.appoinment.Student.Batch.timeTable,'_blank');
+                 window.open(CONFIG.BASE_URL+'pdfs/'+$scope.appoinment.Student.Batch.timeTable,'_blank');
               }
 
             };

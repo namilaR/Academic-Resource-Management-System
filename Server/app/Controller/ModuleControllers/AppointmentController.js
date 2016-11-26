@@ -92,16 +92,22 @@ AppointmentController = function() {
 
     };
     /**
-     * returns all appointments
+     * returns all appoinments by the student
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
-    this.getAllAppoinments = function(UserInstance, res) {
-
+    this.getMyAllAppoinments = function(UserInstance, res) {
+        Student.findOne({
+            where: {
+                status: 1,
+                UserId: UserInstance.userId
+            }
+        }).then(function(data) {
             Appointment.findAll({
                     where: {
-                        status: 1,                    
-                       
+                        status: 1,
+                        StudentId: data.id,
+                        //StudentId: 1,
                     },
                     include: [{
                         model: TimeSlot,
@@ -114,7 +120,32 @@ AppointmentController = function() {
                 .then(function(data) {
                     res.send(data);
                 });
-        
+        });
+    };
+    /**
+     * returns all appointments
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.getAllAppoinments = function(UserInstance, res) {
+
+        Appointment.findAll({
+            where: {
+                status: 1,
+
+            },
+            include: [{
+                model: TimeSlot,
+                where: {
+                    id: Sequelize.col('Appointment.TimeSlotId')
+                }
+            }]
+
+        })
+            .then(function(data) {
+                res.send(data);
+            });
+
     };
     /**
      * returns more details of given appointment
@@ -327,7 +358,8 @@ AppointmentController = function() {
             appointmentDate : Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate),
             appointmentNoteLecturer : AppoinmentInstance.appointmentNoteLecturer,
             TimeSlotId: AppoinmentInstance.timeSlot.id,
-            approved: 1
+            approved: 1,
+            cancel: 0
         }, {
             where: {
                 id: AppoinmentInstance.id,

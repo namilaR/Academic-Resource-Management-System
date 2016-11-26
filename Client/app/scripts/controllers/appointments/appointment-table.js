@@ -91,7 +91,7 @@ angular.module('armsAngularApp')
         DTColumnBuilder.newColumn('approved').withTitle('Status').renderWith(function(data, type, full) {
           var st;
           if (full.cancel == true) {
-             return '<span class="label label-danger">Cancelled</span>';             
+             return '<span class="label label-danger">Cancelled</span>';
           } else if (full.reShedule == true) {
               return '<span class="label label-info">On Reshedule</span>';
           } else if (full.approved == true) {
@@ -108,14 +108,13 @@ angular.module('armsAngularApp')
       vm.dtInstance = {};
 
       function actionsHtml(data, type, full, meta) {
-        if (full.cancel === true) {          
+        if (full.cancel === true) {
             return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detailModal"> more details</button>';
-        } else {      
-          
+        } else {
+
           return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="triggerMoreDetails()" data-target="#detailModal"> more details</button>'+
-           '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>'+
-           '<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelModal">Cancel</button>';
-        }    
+           '<button type="button" class="btn btn-primary btn-sm table-action-btn" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>';
+        }
 
       }
 
@@ -125,7 +124,7 @@ angular.module('armsAngularApp')
       };
 
       $scope.triggerMoreDetails = function(){
-        
+
       };
 
     }

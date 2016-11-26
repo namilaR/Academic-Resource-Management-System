@@ -70,7 +70,7 @@ angular.module('armsAngularApp')
             return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="triggerMoreDetails()" data-target="#detailModal"> more details</button>';
         } else {
           return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="triggerMoreDetails()" data-target="#detailModal"> more details</button>'+
-           '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>';
+           '<button type="button" class="btn btn-primary btn-sm table-action-btn" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>';
 
         }
 
@@ -120,6 +120,11 @@ angular.module('armsAngularApp')
         console.log('refreshDataTables');
           vm.dtInstance.reloadData();
       });
+
+      function reloadData() {
+        var resetPaging = true;
+        vm.dtInstance.reloadData(callback, resetPaging);
+      }
 
     }
   ]);
