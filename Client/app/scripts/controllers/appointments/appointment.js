@@ -103,6 +103,7 @@ angular.module('armsAngularApp')
               appointmentDataService.sendRescheduleRequest($scope.appointmentData).then(function (response) {
                  angular.element("#resheduleModal").modal('hide');
                  appointmentDataService.refreshTables();
+                  clearAll();
                 swal({
                     title: "Request Sent",
                     text: "You reschedule request has been successfully send",

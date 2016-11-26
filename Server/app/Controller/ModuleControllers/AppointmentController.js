@@ -92,6 +92,26 @@ AppointmentController = function() {
 
     };
     /**
+     * save appointment cancel request
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.saveAppoinmentCancelRequest = function(AppoinmentInstance, res) {
+        Appointment.update({
+
+            reShedule: 0,
+            cancel:1,
+            appointmentCancleNote : AppoinmentInstance.appointmentCancleNote
+        }, {
+            where: {
+                id: AppoinmentInstance.id,
+            }
+        }).then(function(data) {
+            res.send(data);
+        });
+
+    };
+    /**
      * returns all appoinments by the student
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}

@@ -29,6 +29,7 @@ angular.module('armsAngularApp')
           $scope.placeComment = function () {
             $scope.appointmentData.appointmentComment = this.comment;
             appointmentDataService.sendComment($scope.appointmentData).then();
+            this.comment = '';
           };
 
           $rootScope.$on('moreDetails', function (event, data) {
