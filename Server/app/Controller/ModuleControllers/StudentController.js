@@ -7,7 +7,11 @@ var Student = Modules.Student;
 
 StudentController = function() {
     this.get = function(res) {
-        Student.findAll().then(function(data) {
+        Student.findAll({
+            where: {
+                status: 1
+            }
+        }).then(function(data) {
             res.send(data);
         });
     };

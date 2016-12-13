@@ -5,12 +5,15 @@
  */
 var Models = {};
 
+ 
 Models.Lecturer = require('./entity/Lecturer');
 Models.TimeSlot = require('./entity/TimeSlot');
 Models.User = require('./entity/User');
 Models.Student = require('./entity/Student');
 Models.UserType = require('./entity/UserType');
 Models.Hod = require('./entity/Hod');
+ 
+ 
 Models.FeedBackSession = require('./entity/FeedbackSession');
 Models.Feedback = require('./entity/Feedback');
 Models.Question = require('./entity/Question');
@@ -19,9 +22,21 @@ Models.Center = require('./entity/Center');
 Models.Faculty = require('./entity/Faculty');
 Models.Department = require('./entity/Department');
 Models.Batch = require('./entity/Batch');
-//Models.Request = require('./entity/Request');
+ 
+Models.BatchSubject = require('./entity/BatchSubject');
+Models.Request = require('./entity/Request');
+ 
 Models.Room = require('./entity/Room');
 Models.Appointment = require('./entity/Appointment');
+
+// Required by Login 
+Models.UserRole = require('./entity/UserRole');
+Models.User = require('./entity/User');
+
+//Required by User Module
+Models.Lecturer = require('./entity/Lecturer');
+Models.Student = require('./entity/Student');
+Models.Hod = require('./entity/Hod');
 Models.QuestionTemplate = require('./entity/QuestionTemplate');
 
 

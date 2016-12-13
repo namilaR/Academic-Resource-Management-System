@@ -11,12 +11,16 @@ router.get('/', function(req, res, next) {
     QuestionController.get(res);
 });
 
+router.get('/get-available-quiz', function(req, res, next) {
+    QuestionController.getAvailableQuiz(res);
+});
+
 router.delete('/', function(req, res, next) {
     QuestionController.delete(req.query.questionId, res);
 });
 
 router.put('/', function(req, res, next) {
-    QuestionController.update(req.query.question, req.query.id, res);
+    QuestionController.update(req.body, res);
 });
 
 module.exports = router;
