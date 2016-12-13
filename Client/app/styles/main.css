@@ -47,5 +47,9 @@
 }
 
 .text-white {
-  color: white; 
+  color: white;
+}
+
+.table-action-btn {
+  margin-left: 10px;
 }

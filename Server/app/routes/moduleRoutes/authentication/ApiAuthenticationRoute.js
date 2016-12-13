@@ -10,7 +10,6 @@ var router = express.Router();
 
 
 router.post('/authenticate-user', function(req,res,next) {
-
     UserAuthenticateController.authenticate(req.body,res);
 });
 

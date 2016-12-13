@@ -14,80 +14,81 @@ var jwt = require('jsonwebtoken');
 
 UserAuthenticateController = function() {
 
-    this.authenticate = function(req,res) {
-        User.findOne( {
-                where: {userUserName: req[0].username}
-            }
-        ).then(function(user) {
-                if (!user) {
+    this.authenticate = function(req, res) {
+        User.findOne({
+            where: { userUserName: req[0].username }
+        }).then(function(user) {
+            if (!user) {
+                res.json({ success: false, message: 'Authentication failed' });
+            } else if (user) {
+                if (user.userPassword != req[0].password) {
                     res.json({ success: false, message: 'Authentication failed' });
-                } else if (user) {
-                    if (user.userPassword != req[0].password) {
-                        res.json({ success: false, message: 'Authentication failed' });
-                    }else{
+                } else {
 
-                        UserRole.findOne( {
-                                where: {id: user.userRoleId}
-                            }
-                        ).then(function(usertype) {
+                    UserRole.findOne({
+                        where: { id: user.userRoleId }
+                    }).then(function(usertype) {
 
-                                console.log(usertype.userRoleName);
-                                console.log(user.userFullname);
+                        console.log(usertype.userRoleName);
+                        console.log(user.userFullname);
+                        console.log(user.id);
 
 
-                                if(usertype.userRoleName == 'HOD'){
 
-                                            Hod.findOne( {
-                                                    where: {UserId: user.id}
-                                                }
-                                            ).then(function(hod) {
+                        if (usertype.userRoleName == 'HOD') {
 
-                                                    var user_data = {
-                                                        full_name: user.userFullname,
-                                                        username: user.userUserName,
-                                                        email: user.userEmail,
-                                                        usertype:usertype.userRoleName,
-                                                        dept:hod.DepartmentId
-                                                    }
+                            Hod.findOne({
+                                where: { UserId: user.id }
+                            }).then(function(hod) {
 
-                                                    // create a token
-                                                    var token = jwt.sign(user_data, app.get('api-arms-auth-1q2w3e4r'), {
-                                                        expiresIn: '10m',
-                                                        algorithm: 'HS256'
-                                                    });
-                                                    res.json({
-                                                        success: true,
-                                                        token: token
-                                                    });
-                                                })
-                                }else{
-
-
-                                    var user_data = {
-                                        full_name: user.userFullname,
-                                        username: user.userUserName,
-                                        email: user.userEmail,
-                                        usertype:usertype.userRoleName
-                                    }
-
-                                    // create a token
-                                    var token = jwt.sign(user_data, app.get('api-arms-auth-1q2w3e4r'), {
-                                        expiresIn: '10m',
-                                        algorithm: 'HS256'
-                                    });
-                                    res.json({
-                                        success: true,
-                                        token: token
-                                    });
+                                var user_data = {
+                                    full_name: user.userFullname,
+                                    username: user.userUserName,
+                                    email: user.userEmail,
+                                    usertype: usertype.userRoleName,
+                                    dept: hod.DepartmentId
                                 }
 
-
-
-
+                                // create a token
+                                var token = jwt.sign(user_data, app.get('api-arms-auth-1q2w3e4r'), {
+                                    expiresIn: '10m',
+                                    algorithm: 'HS256'
+                                });
+                                res.json({
+                                    success: true,
+                                    token: token
+                                });
                             })
-                    }
+                        } else {
+
+
+                            var user_data = {
+                                full_name: user.userFullname,
+                                username: user.userUserName,
+                                email: user.userEmail,
+                                usertype: usertype.userRoleName,
+                                userId: user.id
+                            }
+
+                            // create a token
+                            var token = jwt.sign(user_data, app.get('api-arms-auth-1q2w3e4r'), {
+                                expiresIn: '10m',
+                                algorithm: 'HS256'
+                            });
+                            res.json({
+                                success: true,
+                                token: token
+                            });
+                        }
+
+
+
+
+
+                    })
                 }
-            });
+            }
+        });
     }
 
 }

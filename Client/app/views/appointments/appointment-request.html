@@ -63,7 +63,7 @@
                   <label for="selectLecture">Lecture</label>
                   <select ui-select2="{ allowClear: true}" ng-model="appointmentRequest.LecturerId" name="lecture" id="selectLecture" theme="select2" class="form-control select2" data-placeholder="Pick a lecture" required>
                     <option value=""></option>
-                    <option ng-repeat="lecture in lectures" value="{{lecture.id}}">{{lecture.lecturerFullName}}</option>
+                    <option ng-repeat="lecture in lectures" value="{{lecture.id}}">{{lecture.User.userFullname }}</option>
                   </select>
                   <p ng-show="(appointmentRequestForm.lecture.$invalid && appointmentRequestForm.$submitted ) " class="help-block">Lecture is required.</p>
                 </div>
@@ -103,10 +103,86 @@
         </div>
       </div>
     </section>
-    <!-- ./main content  -->
-    <button type="button" ng-click="reload()" name="button">reload </button>
   </div>
   <!-- /.container-->
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <form class="form-horizontal" ng-submit="placeAppoinment()">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Appointment Details</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="inputEmail3" class=" control-label ">Lecture Name</label>
+                </div>
+                <div class="col-sm-8">
+                  <label class="control-label  ">
+                    <a href="">{{appoinment.TimeSlot.Lecturer.User.userFullname}}</a>
+                  </label>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="inputEmail3" class=" control-label  ">Subject Name</label>
+                </div>
+                <div class="col-sm-8">
+                  <label class="control-label  ">
+
+                  </label>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="inputEmail3" class=" control-label  ">Appointment Date</label>
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" bs-datepicker data-min-date="today" data-autoclose="1" data-date-format="dd-MM-yyyy" type="text" class="form-control" ng-model="appoinment.appointmentDate" name="date" ng-change="dataChange()">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="inputEmail3" class=" control-label  ">Appointment Time Slot</label>
+                </div>
+                <div class="col-sm-8">
+                  <a class="btn btn-time-slot btn-default">
+                    {{appoinment.fromTime}}-{{appoinment.toTime}}</a>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="inputEmail3" class=" control-label  ">Appointment  Venue</label>
+                </div>
+                <div class="col-sm-8">
+                  <a class="btn btn-time-slot btn-default">
+                    <strong>{{appoinment.room.id}}</strong><br>{{appoinment.room.roomName}}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit"  class="btn btn-success pull-right">Make Reshedule Request</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<detail-modal role="{{user_role}}"></detail-modal>
+<reshedule-modal role="{{user_role}}"></reshedule-modal>
+<cancel-modal-student></cancel-modal-student>
 <!-- /.content-wrapper -->
 <div footer></div>

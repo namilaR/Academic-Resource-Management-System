@@ -12,12 +12,6 @@ var BatchSubject = connection.define('BatchSubject',{
         primaryKey: true,
         autoIncrement: true
     },
-    batchId: {
-        type: Sequelize.INTEGER
-    },
-    subjectId: {
-        type: Sequelize.INTEGER
-    },
     year: {
         type: Sequelize.STRING
     },

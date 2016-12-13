@@ -9,6 +9,11 @@ var AppointmentController = ControllerMap.AppointmentController;
 var TimeSlotController = ControllerMap.TimeSlotController;
 
 
+router.get('/get-all-appointments', function(req, res, next) {
+    AppointmentController.getAllAppoinments(req.query, res);
+
+});
+
 router.get('/get-my-appointments', function(req, res, next) {
     AppointmentController.getMyAllAppoinments(req.query, res);
 
@@ -24,6 +29,11 @@ router.get('/get-my-pending-appointments', function(req, res, next) {
 
 });
 
+router.get('/get-a-appointment', function(req, res, next) {
+    AppointmentController.getAppointmentMoreDetails(req.query, res);
+
+});
+
 router.get('/get-a-pending-appointment', function(req, res, next) {
     AppointmentController.getAnPendingAppoinment(req.query, res);
 
@@ -36,6 +46,18 @@ router.get('/get-available-rooms', function(req, res, next) {
 
 router.post('/save-appointment-request', function(req, res, next) {
     AppointmentController.saveAppoinmentRequest(req.body, res);
+
+});
+router.put('/save-reschedule-request', function(req, res, next) {
+    AppointmentController.saveAppoinmentRescheduleRequest(req.body, res);
+
+});
+router.put('/save-cancel-request', function(req, res, next) {
+    AppointmentController.saveAppoinmentCancelRequest(req.body, res);
+
+});
+router.put('/save-comment', function(req, res, next) {
+    AppointmentController.saveAppoinmentComment(req.body, res);
 
 });
 

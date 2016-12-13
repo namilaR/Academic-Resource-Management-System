@@ -4,11 +4,13 @@
  */
  var Sequelize = require('sequelize');
 var Modules = require('../../models/Models');
+var Sequelize = require('sequelize');
 var Lecturer = Modules.Lecturer;
 var Appointment = Modules.Appointment;
 var Room = Modules.Room;
 var Request = Modules.Request;
- 
+var User = Modules.User;
+
 var moment = require('moment');
  
 
@@ -18,7 +20,13 @@ LecturerController = function() {
         Lecturer.findAll({
             where: {
                 status: 1
-            }
+            },
+            include :[
+              {
+                model: User,
+                where: { id: Sequelize.col('Lecturer.UserId') }
+              }
+            ]
         }).then(function(data) {
           res.send(data);
         });

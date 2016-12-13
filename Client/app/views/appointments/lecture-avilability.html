@@ -87,7 +87,7 @@
                                         <i ng-show="timeSlot.visibility" class="fa fa-eye-slash" aria-hidden="true"></i>
                                     </button>
                                     &nbsp;
-                                    <button ng-show="!timeSlot.status"  type="button" ng-click="saveTimeSlot($parent.$index,$index)" name="button"
+                                    <button ng-disabled="!timeSlot.from || !timeSlot.to" ng-show="!timeSlot.status"  type="button" ng-click="saveTimeSlot($parent.$index,$index)" name="button"
                                             class="btn btn-sm btn-success">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
                                     </button>

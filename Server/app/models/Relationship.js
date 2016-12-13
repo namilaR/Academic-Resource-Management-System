@@ -8,7 +8,9 @@ var connection = require('./Connection');
 var Relationship = function() {
 
 
-
+    /***********************************************************************
+                            USER-MANAGEMENT  RELATIONSHIPS
+    ***********************************************************************/
     /**added by Kasun*/
 
     //User Type Relationship
@@ -17,7 +19,7 @@ var Relationship = function() {
     Models.User.belongsTo(Models.UserRole)
 
     //User Management Relationship
-    
+
     Models.User.hasMany(Models.Hod)
     Models.User.hasMany(Models.Student)
     Models.User.hasMany(Models.Lecturer)
@@ -25,14 +27,81 @@ var Relationship = function() {
     Models.Hod.belongsTo(Models.User)
     Models.Student.belongsTo(Models.User)
     Models.Lecturer.belongsTo(Models.User)
- 
+
+    /*********************************************************************    
+    *********************************************************************/
+
+
+    /***********************************************************************
+                            FACULTY-MANAGEMENT  RELATIONSHIPS
+    ***********************************************************************/
+
     Models.Hod.belongsTo(Models.Department)
-   
-    
+
+    Models.Center.belongsToMany(Models.Subject, {through: 'CenterSubject'})
+    Models.Subject.belongsToMany(Models.Center, {through: 'CenterSubject'})
+
+    Models.Faculty.belongsToMany(Models.Center, {through: 'FacultyCenter'})
+    Models.Center.belongsToMany(Models.Faculty, {through: 'FacultyCenter'})
+
+    Models.Faculty.hasMany(Models.Department)
+    Models.Department.belongsTo(Models.Faculty)
+
+    Models.Department.hasMany(Models.Batch)
+    Models.Batch.belongsTo(Models.Department)
+
+    Models.Center.hasMany(Models.Batch)
+    Models.Batch.belongsTo(Models.Center)
+
+    Models.Faculty.hasMany(Models.Batch)
+    Models.Batch.belongsTo(Models.Faculty)
+
+    Models.Batch.hasMany(Models.Student)
+    Models.Student.belongsTo(Models.Batch)
+
+    Models.Department.hasMany(Models.Batch);
+    Models.Batch.belongsTo(Models.Department);
+
+    Models.Subject.belongsToMany(Models.Batch, {through: 'BatchSubject'})
+    Models.Batch.belongsToMany(Models.Subject, {through: 'BatchSubject'})
+
+    Models.Batch.hasMany(Models.Student);
+    Models.Student.belongsTo(Models.Batch);
+
+    Models.Lecturer.belongsToMany(Models.Batch, {through: 'LecturerBatch'})
+    Models.Batch.belongsToMany(Models.Lecturer, {through: 'LecturerBatch'})
+
+    Models.Room.belongsTo(Models.Faculty)
+
+    Models.Subject.belongsToMany(Models.Lecturer,{through: 'SubjectLecturer'});
+    Models.Lecturer.belongsToMany(Models.Subject,{through: 'SubjectLecturer'});
+
+    /*********************************************************************    
+    *********************************************************************/
+
+
+    /***********************************************************************
+                            APPOINMENTS RELATIONSHIPS
+    ***********************************************************************/
+    Models.Student.hasMany(Models.Appointment);
+    Models.Appointment.belongsTo(Models.Student);
+
+    Models.TimeSlot.hasMany(Models.Appointment);
+    Models.Appointment.belongsTo(Models.TimeSlot);
+
+    Models.Lecturer.hasMany(Models.TimeSlot);
+    Models.TimeSlot.belongsTo(Models.Lecturer);
+
+    Models.Appointment.belongsTo(Models.Room);
+
+    /*********************************************************************
+    *********************************************************************/
 
 
 
-
+    /***********************************************************************
+                            FEED-BACK_MANAGEMENT RELATIONSHIPS
+    ***********************************************************************/
 
     Models.Hod.hasMany(Models.FeedBackSession)
     Models.FeedBackSession.belongsTo(Models.Hod)
@@ -46,71 +115,11 @@ var Relationship = function() {
     Models.Question.hasMany(Models.Feedback)
     Models.Feedback.belongsTo(Models.Question)
 
-    Models.Center.belongsTo(Models.Subject)
-    Models.Subject.hasMany(Models.Center)
-
- 
-    Models.Student.hasMany(Models.Appointment);
-    Models.Appointment.belongsTo(Models.Student);
-
-    Models.TimeSlot.hasMany(Models.Appointment);
-    Models.Appointment.belongsTo(Models.TimeSlot);
-
-    Models.Lecturer.hasMany(Models.TimeSlot);
-    Models.TimeSlot.belongsTo(Models.Lecturer);
- 
-    Models.Faculty.belongsToMany(Models.Center,{through: 'FacultyCenter'})
-    Models.Center.belongsToMany(Models.Faculty,{through: 'FacultyCenter'})
-
-    Models.Department.belongsToMany(Models.Faculty,{through: 'DepartmentFaculty'})
-    Models.Faculty.belongsToMany(Models.Department,{through: 'DepartmentFaculty'})
-
-    Models.Center.hasMany(Models.Batch)
-    Models.Batch.belongsTo(Models.Center)
- 
-
-    Models.Department.hasMany(Models.Batch)
-    Models.Batch.belongsTo(Models.Department)
-
-    Models.Batch.hasMany(Models.Student)
-    Models.Student.belongsTo(Models.Batch)
-
- 
-    //Models.Appointment.belongsTo(Models.Request);
- 
-    Models.Lecturer.belongsToMany(Models.Batch,{through: 'LecturerBatch'})
-    Models.Batch.belongsToMany(Models.Lecturer, {through: 'LecturerBatch'})
- 
-
-    Models.Student.hasMany(Models.Request)
-    Models.Request.belongsTo(Models.Student)
-
-    Models.Lecturer.hasMany(Models.Request)
-    Models.Request.belongsTo(Models.Lecturer)
-
-    Models.Lecturer.hasMany(Models.Room)
-    Models.Room.belongsTo(Models.Lecturer)
-
-
-   
-    Models.Appointment.belongsTo(Models.Request)
-
-
-
-    Models.Appointment.belongsTo(Models.Room)
-
     /**added by pasindu*/
-   
-
     Models.Lecturer.hasMany(Models.FeedBackSession)
     Models.FeedBackSession.belongsTo(Models.Lecturer)
 
-    Models.Subject.belongsToMany(Models.Lecturer,{through: 'SubjectLecturer'})
-    Models.Lecturer.belongsToMany(Models.Subject,{through: 'SubjectLecturer'})
-
-    Models.FeedBackSession.belongsTo(Models.Subject)
-
-    Models.Request.belongsTo(Models.Subject)
+    Models.FeedBackSession.belongsTo(Models.Subject) 
 
     Models.FeedBackSession.belongsTo(Models.Center)
 
@@ -120,6 +129,25 @@ var Relationship = function() {
 
     Models.FeedBackSession.belongsTo(Models.Batch)
 
+    Models.Lecturer.hasMany(Models.FeedBackSession);
+    Models.FeedBackSession.belongsTo(Models.Lecturer);
+
+
+    Models.Lecturer.hasMany(Models.FeedBackSession);
+    Models.FeedBackSession.belongsTo(Models.Lecturer);
+
+
+
+    Models.FeedBackSession.belongsTo(Models.Subject);    
+
+    Models.FeedBackSession.belongsTo(Models.Center);
+
+    Models.FeedBackSession.belongsTo(Models.Faculty);
+
+    Models.FeedBackSession.belongsTo(Models.Department);
+
+    Models.FeedBackSession.belongsTo(Models.Batch);
+
     Models.QuestionTemplate.belongsToMany(Models.Question, {
        through: 'QuestionTemplateQuestion'
     });
@@ -127,31 +155,8 @@ var Relationship = function() {
         through: 'QuestionTemplateQuestion'
     });
 
- 
-   // Models.Request.belongsTo(Models.Subject);
- 
-
-    // Relation for batch - subject
-    Models.Subject.belongsToMany(Models.Batch, {
-        through: {
-            model: Models.BatchSubject,
-            unique: false
-        },
-        foreignKey: 'subjectId',
-        constraints: false
-    });
-    Models.Batch.belongsToMany(Models.Subject, {
-        through: {
-            model: Models.BatchSubject,
-            unique: false
-        },
-        foreignKey: 'batchId',
-        constraints: false
-    });
-
-
-
-    Models.Room.belongsTo(Models.Faculty);
+    /*********************************************************************
+    *********************************************************************/
 
     connection
         .sync()

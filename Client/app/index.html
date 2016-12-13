@@ -17,6 +17,12 @@
 
 
     <!-- build:css(.) styles/modules.css --> 
+    <link rel="stylesheet" href="bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css(.) styles/modules.css -->
+    <link rel="stylesheet" href="bower_components/angular-datatables/dist/css/angular-datatables.min.css">
     <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
     <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css">
     <!-- endbuild -->
@@ -90,6 +96,8 @@
     <script src="bower_components/angular-toggle-switch/angular-toggle-switch.js"></script>
     <script src="bower_components/chart.js/dist/Chart.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+    <script src="bower_components/checklist-model/checklist-model.js"></script>
     <!-- endbower -->
 
     <!-- endbuild -->
@@ -140,14 +148,10 @@
         <script src="scripts/controllers/feedback/feedback.js"></script>
         <!-- Feedback Management -->
 
-        <script src="scripts/controllers/appointments/appointment.js"></script>
-        <script src="scripts/controllers/appointments/request-table.js"></script>
-        <script src="scripts/services/appointments/appointment-dataservice.js"></script>
+
+        <script src="http://code.jboxcdn.com/0.3.2/jBox.min.js"></script>
         <script src="scripts/controllers/faculty/main.js"></script>
-        <script src="scripts/controllers/appointments/appointment-requests.js"></script>
-        <script src="scripts/controllers/appointments/appointment-table.js"></script>
- 
-        <script src="scripts/controllers/appointments/lecture-avilability.js"></script>
+
  
 
         <!-- Question Template Management -->
@@ -159,6 +163,7 @@
         <script src="scripts/services/question.js"></script>
  
         <script src="scripts/controllers/questions.js"></script>
+
         <!-- questions Management -->
 
         <!-- reports Management -->
@@ -172,7 +177,34 @@
         <!-- quiz Management -->
 
 
+
+
+        
+        <script src="scripts/services/subjects/subjectService.js"></script>
+        <script src="scripts/controllers/subjects/subjects.js"></script>
+        <script src="scripts/services/center/centerService.js"></script>
+        <script src="scripts/controllers/center/center.js"></script>
+        <script src="scripts/controllers/department/department.js"></script>
+        <script src="scripts/services/department/departmentService.js"></script>
+        <!-- Appoinments Management -->
+        <script src="scripts/controllers/appointments/appointment.js"></script>
+        <script src="scripts/controllers/appointments/request-table.js"></script>
+        <script src="scripts/services/appointments/appointment-dataservice.js"></script>
+        <script src="scripts/controllers/appointments/appointment-requests.js"></script>
+        <script src="scripts/controllers/appointments/appointment-table.js"></script>
+        <script src="scripts/controllers/appointments/lecture-avilability.js"></script>
         <script src="scripts/controllers/appointments/pending-appointments-request-table.js"></script>
+        <script src="scripts/directives/appointments/reshedule-modal.js"></script>
+        <script src="scripts/directives/appointments/reshedule-modal-lecture.js"></script>
+        <script src="scripts/directives/appointments/cancel-modal.js"></script>
+        <script src="scripts/directives/appointments/cancel-modal-student.js"></script>
+        <script src="scripts/directives/appointments/detail-modal.js"></script>
+        <script src="scripts/controllers/appointments/detail-modal.js"></script>
+        <script src="scripts/controllers/batches/batches.js"></script>
+        <script src="scripts/services/batch/batchService.js"></script>
+        <script src="scripts/controllers/appointments/hod-table.js"></script>
+        <script src="scripts/controllers/appointments/hod-appointments.js"></script>
+
         <!-- endbuild -->
 </body>
 </html>
