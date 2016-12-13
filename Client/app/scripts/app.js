@@ -129,7 +129,7 @@ angular
                 controllerAs: 'QuizCtrl',
                 bindToController: 'true'
             })
-            .when('/feedback/quiz', {
+            .when('/feedback/quiz/:sessionCode?', {
                 templateUrl: 'views/quiz/quiz.html',
                 controller: 'QuizCtrl',
                 controllerAs: 'QuizCtrl',

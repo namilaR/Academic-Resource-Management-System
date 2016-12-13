@@ -19,10 +19,10 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <div class="form-group">
-                    <label for="feedback">Feedback Sessions</label>
-                    <select name="feedback" id="feedback" class="form-control"
+                    <label for="feedbacksessioncodes">Feedback Sessions</label>
+                    <select name="feedbacksessioncodes" id="feedbacksessioncodes" class="form-control"
                             ng-options="option.feed_back for option in feedbacksessioncodes.availableOptions track by option.id"
-                            ng-model="feedback.selectedOption" ng-change="" required>
+                            ng-model="feedbacksessioncodes.selectedOption" ng-change="" required>
                     </select>
                   </div>
                 </div>
@@ -33,7 +33,7 @@
                     <label for="report_type">Report Type</label>
                     <select name="report_type" id="report_type" class="form-control"
                             ng-options="option.report_type for option in report_type.availableOptions track by option.id"
-                            ng-model="report_type.selectedOption" ng-change="loadReportParameters()" required>
+                            ng-model="report_type.selectedOption" ng-change="" required>
                     </select>
                   </div>
                 </div>
@@ -44,7 +44,7 @@
             <div class="col-md-12">
               <div class="col-md-6">
                 <div class="form-group">
-                  <a data-target="#addnewusertype" data-toggle="modal" class="btn btn btn-primary " data-toggle="dropdown" role="menu" ng-click="showReportCharts()" >Generate Report</a>
+                  <a data-target="" data-toggle="modal" class="btn btn btn-primary " data-toggle="dropdown" role="menu" ng-click="GetSelectedFeedbackSessionCodesValue()" >Generate Report</a>
                 </div>
               </div>
             </div>
@@ -69,11 +69,17 @@
         </div>
 
         <div class="box-body">
-            <canvas id="myChart" height="100"></canvas>
+            <canvas id="myChart_1" height="100"></canvas>
+            <canvas id="myChart_2" height="100"></canvas>
+            <canvas id="myChart_3" height="100"></canvas>
+            <canvas id="myChart_4" height="100"></canvas>
+            <canvas id="myChart_5" height="100"></canvas>
         </div>
 
 
       </div>
+
+
       <!-- /.box -->
 
     </section>

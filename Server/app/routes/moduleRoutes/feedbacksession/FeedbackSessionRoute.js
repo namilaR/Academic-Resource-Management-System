@@ -23,8 +23,13 @@ router.post('/update-feedback-session', function(req, res, next) {
 router.get('/get-all-feedback-sessions-for-report', function(req, res, next) {
     FeedbackSessionController.getAllFeedbackSessionsForReport(req.body, res);
 });
-router.get('/check-feedbacksession-available', function(req, res, next) {
+router.post('/check-feedbacksession-available', function(req, res, next) {
     FeedbackSessionController.checkFeedbacksessionAvailable(req.body, res);
 });
+router.post('/get-report-for-feedback-session', function(req, res, next) {
+    FeedbackSessionController.getReportForFeedbackSession(req.body, res);
+});
+
+
 
 module.exports = router;
