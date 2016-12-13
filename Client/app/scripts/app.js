@@ -191,6 +191,8 @@ angular
       .otherwise({
         redirectTo: '/'
       });
+      $locationProvider.html5Mode(false);
+
   }]).run(function ($rootScope, $location, AuthenticationService, AUTH_EVENTS) {
   $rootScope.$on('$routeChangeSuccess', function (event, currentRoute, previous) {
 
@@ -234,6 +236,7 @@ angular
     }
 
   });
-})
-  .constant("moment", moment);
+}).constant("moment", moment);
+
+
  
