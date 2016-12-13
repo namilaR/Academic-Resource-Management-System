@@ -115,13 +115,28 @@ angular
                 bindToController: 'true'
             })
 
+            .when('/feedback-management/report', {
+                templateUrl: 'views/reports/chart.html',
+                controller: 'ReportCtrl',
+                controllerAs: 'report',
+                bindToController: 'true'
+            })
+
             /*  quiz routes  */
+            .when('/feedback/quiz-main', {
+                templateUrl: 'views/quiz/quiz_main.html',
+                controller: 'QuizCtrl',
+                controllerAs: 'QuizCtrl',
+                bindToController: 'true'
+            })
             .when('/feedback/quiz', {
                 templateUrl: 'views/quiz/quiz.html',
                 controller: 'QuizCtrl',
                 controllerAs: 'QuizCtrl',
                 bindToController: 'true'
             })
+
+
 
 
 

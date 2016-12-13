@@ -3,12 +3,62 @@
 
 
 angular.module('armsAngularApp')
-    .controller('QuizCtrl',['$scope','QuizService','DTOptionsBuilder', 'DTColumnBuilder',  function ($scope ,QuizService, DTOptionsBuilder, DTColumnBuilder) {
+    .controller('QuizCtrl',['$scope','$http','$sce','QuizService','DTOptionsBuilder', 'DTColumnBuilder',  function ($scope ,$http,$sce,QuizService, DTOptionsBuilder, DTColumnBuilder) {
         this.awesomeThings = [
             'HTML5 Boilerplate',
             'AngularJS',
             'Karma'
         ];
+
+
+        // Main Quiz
+
+        $scope.feedbacksession_waiting_message = $sce.trustAsHtml('');
+        $scope.feedbacksession_message = $sce.trustAsHtml('');
+        $scope.feed_back_session_code = '';
+        var check_feedbacksession_available_api = 'http://localhost:8002/feedback-session/check-feedbacksession-available';
+
+
+        $scope.authenticateFeedbackSession = function(){
+            $scope.login_btn = {'display':'none'};
+            $scope.feedbacksession_waiting_message = $sce.trustAsHtml('<p style = "color:blue">Please kindly wait until your request is being processed...</p>');
+
+            $scope.submitData = [
+                {
+                    "session_code" : $scope.feed_back_session_code
+                }
+            ];
+
+            alert($scope.feed_back_session_code);
+
+
+
+            return $http.get(check_feedbacksession_available_api).then(function(response){
+                //if( response.data == '[]'){
+                //    console.log(response.data);
+                //}else{
+                //    console.log( "sucess");
+                //}
+                console.log(response.data);
+
+
+                $scope.authentication_message = $sce.trustAsHtml('');
+            });
+
+
+            //AuthenticationService.login($scope.submitData).then(function(success) {
+            //    $scope.waiting_message = $sce.trustAsHtml('<p style = "color:blue"></p>');
+            //}, function(errMsg) {
+            //    $scope.authentication_message = $sce.trustAsHtml('<p style = "color:red" >Login Unsuccessfull. Please try again.</p>');
+            //    $scope.login_btn = {'display':'block'};
+            //    $scope.waiting_message = $sce.trustAsHtml('');
+            //});
+
+            $scope.submitData = '';
+            angular.element('.modal').modal('hide');
+        };
+
+
 
         $scope.feedbacks = [
             {id:1,name:"Very Poor"},
