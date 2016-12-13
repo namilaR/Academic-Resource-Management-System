@@ -10,7 +10,6 @@ Models.Lecturer = require('./entity/Lecturer');
 Models.TimeSlot = require('./entity/TimeSlot');
 Models.User = require('./entity/User');
 Models.Student = require('./entity/Student');
-Models.UserType = require('./entity/UserType');
 Models.Hod = require('./entity/Hod');
  
  
