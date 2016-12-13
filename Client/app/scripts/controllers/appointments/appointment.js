@@ -15,6 +15,7 @@ angular.module('armsAngularApp')
         'appointmentDataService',
         'moment',
         function($rootScope,CONFIG, $scope, $log, appointmentDataService, moment) {
+          $scope.moreTimeSlotsClicked = false;
 
             $scope.pendingRequest = {};
             $scope.appointment = {};
@@ -100,6 +101,7 @@ angular.module('armsAngularApp')
             });
 
             $scope.submitAppoinmentReshedule = function () {
+              $scope.appointmentData.userRole = 'Lecturer';
               appointmentDataService.sendRescheduleRequest($scope.appointmentData).then(function (response) {
                  angular.element("#resheduleModal").modal('hide');
                  appointmentDataService.refreshTables();
@@ -140,6 +142,7 @@ angular.module('armsAngularApp')
                 function(response){
                   $scope.availableTimeSlots = [];
                   $scope.availableTimeSlots = response.data;
+                  $scope.moreTimeSlotsClicked = true;
                   console.log(response.data);
                 }
               );
@@ -153,6 +156,7 @@ angular.module('armsAngularApp')
                 function(response){
                   $scope.availableTimeSlots = [];
                   $scope.availableTimeSlots = response.data;
+                  $scope.moreTimeSlotsClicked = true;
                   console.log(response.data);
                 }
               );
