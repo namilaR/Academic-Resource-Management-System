@@ -223,8 +223,8 @@ angular.module('armsAngularApp')
         $http.post(update_question_template_api + $scope.selectedTemplateID, {questions:$scope.allQuestionTemplateQuestions}).then(function (res) {
           if(res.status===200){
             swal({
-              title: "HUREEQH",
-              text: "ggdfgfddgdg",
+              title: "Question Template Updated",
+              text: "updated sucessfully",
               type: 'success',
               showCancelButton: true
             });

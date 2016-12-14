@@ -6,7 +6,7 @@
  */
 var Sequelize = require('sequelize');
 var sequelize = require('sequelize');
-     sequelize = new Sequelize('acadamic4', 'root', '1234', {
+     sequelize = new Sequelize('acadamic_final', 'root', '1234', {
       dialect: "mysql",
       port:    3306
     });

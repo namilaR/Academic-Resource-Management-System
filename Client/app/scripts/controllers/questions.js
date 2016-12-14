@@ -48,7 +48,7 @@ angular.module('armsAngularApp')
             question.questionType = $scope.questionType;
             QuestionService.createNewQuestion(question).then(function(response) {
                 if (response.status === 200) {
-                    swal('success', "insert new question", 'success');
+                    swal('success', "New question inserted", 'success');
                     getQuestionData();
                 } else {
                     swal('Error', 'Not inserted record', 'error');
@@ -66,7 +66,7 @@ angular.module('armsAngularApp')
         $scope.deleteQuestion = function(questionId) {
             QuestionService.deleteQuestion(questionId).then(function(res) {
                 if (res.status === 200) {
-                    swal('success', "delete the question", 'success');
+                    swal('success', "Question deleted", 'success');
                     getQuestionData();
                 } else {
                     swal('Error', 'Not inserted record', 'error');

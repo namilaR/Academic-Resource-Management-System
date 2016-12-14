@@ -207,7 +207,7 @@ angular
 
     if (!AuthenticationService.isAuthenticated()) {
       event.preventDefault();
-      $rootScope.bodyClass = 'login-page';
+      $rootScope.bodyClass = '';
       $location.path( "/login" );
     }else{
       // get logged in user`s user role
