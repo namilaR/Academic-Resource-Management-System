@@ -11,8 +11,24 @@ RequestController = function() {
             res.send(data);
         });
     };
-    
+
+    this.getStudentRequests = function(RequestInstance, res) {
+        Request.findAll({
+            where: {
+                LecturerId: RequestInstance.id,
+                status: 1
+            },
+
+        }).then(function(data) {
+            console.log(data);
+            res.send(data);
+        });
+    };
+
+
+
     this.create = function(RequestInstance, res) {
+        console.log("create")
         Request.create(RequestInstance).then(function(data) {
             res.send(data);
         });
@@ -35,11 +51,11 @@ RequestController = function() {
             where: {
                 studentDitNo: StudentInstance.studentDitNo
             }
-        }).then(function(err,data) {
-            if(err) {
-                res.send({status: 400, message:"Error goig on"});
+        }).then(function(err, data) {
+            if (err) {
+                res.send({ status: 400, message: "Error goig on" });
             } else {
-                res.send({status:200, message:"successfully deleted"});
+                res.send({ status: 200, message: "successfully deleted" });
             }
         });
     };
@@ -55,4 +71,4 @@ RequestController = function() {
     };
 };
 
-module.exports = new StudentController();
+module.exports = new RequestController();

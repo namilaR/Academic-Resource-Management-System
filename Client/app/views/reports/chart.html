@@ -1,0 +1,83 @@
+  <div nav-bar-user></div>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Feedback Reports
+      </h1>
+    </section>
+
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="box box-orange">
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="form-group">
+                    <label for="feedback">Feedback Sessions</label>
+                    <select name="feedback" id="feedback" class="form-control"
+                            ng-options="option.feed_back for option in feedbacksessioncodes.availableOptions track by option.id"
+                            ng-model="feedback.selectedOption" ng-change="" required>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <div class="form-group">
+                    <label for="report_type">Report Type</label>
+                    <select name="report_type" id="report_type" class="form-control"
+                            ng-options="option.report_type for option in report_type.availableOptions track by option.id"
+                            ng-model="report_type.selectedOption" ng-change="loadReportParameters()" required>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <a data-target="#addnewusertype" data-toggle="modal" class="btn btn btn-primary " data-toggle="dropdown" role="menu" ng-click="showReportCharts()" >Generate Report</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Default box -->
+      <div class="box" id = 'report_chart_div' style="display: none">
+        <div class="box-header with-border">
+          <h3 class="box-title">
+            CHART
+          </h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fa fa-times"></i></button>
+          </div>
+
+        </div>
+
+        <div class="box-body">
+            <canvas id="myChart" height="100"></canvas>
+        </div>
+
+
+      </div>
+      <!-- /.box -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <div footer></div>

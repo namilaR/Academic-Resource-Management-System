@@ -1,5 +1,7 @@
 var Modules = require('../../models/Models');
 var Question = Modules.Question;
+var FeedBackTypes = Modules.FeedBackTypes;
+var QuestionTemplate = Modules.QuestionTemplate;
 
 QuestionController = function() {
     this.create = function(questionInstance, response) {
@@ -15,15 +17,33 @@ QuestionController = function() {
     };
 
 
-    this.update = function(questionInstance, id, res) {
-        console.log(questionInstance);
+    this.getAvailableQuiz = function(res) {
+
+        Question.findAll().then(function(ques) {
+            var aa = [];
+            for (var i in ques) {
+                aa.push({
+                    qus: ques[i],
+                    ans: {}
+                });
+            }
+            res.send(aa);
+        });
+
+
+    };
+
+
+    this.update = function(questionInstance,res) {
+        console.log("********"+JSON.stringify(questionInstance));
         Question.find({
             where: {
-                id: id
+                id: questionInstance.id
             }
-        }).then(function(question) {
-            question.update({
-                question: questionInstance
+        }).then(function(updatedInstance) {
+            updatedInstance.update({
+                question: questionInstance.question,
+                questionType:questionInstance.questionType
             }).then(function(result) {
                 res.send(result);
             });
@@ -42,6 +62,39 @@ QuestionController = function() {
             });
         });
     };
+
+
+
+    this.getAllQuestionsInTemplate = function(RequestInstance, res) {
+        console.log(RequestInstance);
+        QuestionTemplate.findAll({
+            where: {
+                status: 1
+            },
+            include: [{
+                model: Room,
+                where: {
+                    id: Sequelize.col('Appointment.RoomId')
+                }
+            }, {
+                model: Request,
+                where: {
+                    //id: Sequelize.col('Appointment.RequestId'),
+                    LecturerId: RequestInstance.id,
+                }
+            }]
+        }).then(function(data) {
+            res.send(data);
+
+        });
+    };
+
+
+
+
+
+
+
 };
 
 module.exports = new QuestionController();

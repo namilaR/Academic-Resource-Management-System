@@ -70,12 +70,12 @@
 
                                 <div class="col-md-4">
                                     <input ng-disabled="timeSlot.visibility" type="text" class="form-control" size="8" ng-model="timeSlot.from"
-                                           name="time" bs-timepicker>
+                                           name="time" bs-timepicker data-min-time="8:00 am" data-max-time="8:00 pm">
                                 </div>
 
                                 <div class="col-md-4">
                                     <input  ng-disabled="timeSlot.visibility" type="text" class="form-control" size="8" ng-model="timeSlot.to" name="time"
-                                           bs-timepicker>
+                                           bs-timepicker data-min-time="8:00 am" data-max-time="8:00 pm">
                                 </div>
 
                                 <div class="col-md-4">
@@ -87,7 +87,7 @@
                                         <i ng-show="timeSlot.visibility" class="fa fa-eye-slash" aria-hidden="true"></i>
                                     </button>
                                     &nbsp;
-                                    <button ng-show="!timeSlot.status"  type="button" ng-click="saveTimeSlot($parent.$index,$index)" name="button"
+                                    <button ng-disabled="!timeSlot.from || !timeSlot.to" ng-show="!timeSlot.status"  type="button" ng-click="saveTimeSlot($parent.$index,$index)" name="button"
                                             class="btn btn-sm btn-success">
                                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
                                     </button>
