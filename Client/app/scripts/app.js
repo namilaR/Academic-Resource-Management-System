@@ -22,7 +22,8 @@ angular
     'datatables.bootstrap',
     'ui.select2',
     'mgcrea.ngStrap',
-    'checklist-model'
+    'checklist-model',
+    'toggle-switch'
   ])
   .config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider) {
     $routeProvider
