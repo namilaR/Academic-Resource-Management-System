@@ -20,6 +20,8 @@ angular
     'datatables',
     'datatables.bootstrap',
     'ui.select2',
+    'mgcrea.ngStrap',
+    'checklist-model',
     'toggle-switch'
   ])
   .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
@@ -95,14 +97,32 @@ angular
       })
 
 
-
-
       /*  appointment - management  routes  */
-      .when('/appointments/appointment', {
+      .when('/hod/appointments/appointment', {
+        templateUrl: 'views/appointments/hod-appoinments.html',
+        controller: 'HodAppointmentsCtrl',
+        // controllerAs: 'appointment',
+        // bindToController: 'true'
+      })
+      .when('/l/appointments/appointment', {
         templateUrl: 'views/appointments/appointment.html',
         controller: 'AppointmentCtrl',
         controllerAs: 'appointment',
         bindToController: 'true'
+      })
+      .when('/s/appointments/appointment', {
+        templateUrl: 'views/appointments/appointment-request.html',
+        controller: 'AppointmentRequestsCtrl',
+        controllerAs: 'appointmentRequest',
+        bindToController: 'true'
+
+      })
+      .when('/l/appointments/my-availability', {
+        templateUrl: 'views/appointments/lecture-avilability.html',
+        controller: 'LectureAvilabilityCtrl',
+        controllerAs: 'lectureAvailability',
+        bindToController: 'true'
+
       })
 
 
