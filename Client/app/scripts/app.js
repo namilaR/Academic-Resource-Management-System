@@ -16,15 +16,13 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.bootstrap',
     'datatables',
     'datatables.bootstrap',
     'ui.select2',
-    'toggle-switch'
+    'mgcrea.ngStrap'
   ])
-  .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+  .config(['$routeProvider', '$locationProvider','$httpProvider', function($routeProvider, $locationProvider) {
     $routeProvider
-
     /*******************************/
     /*******************************/
     /*        general routes       */
@@ -37,8 +35,6 @@ angular
         controllerAs: 'auth',
         activeTab: 'login'
       })
-
-
       /*******************************/
       /*******************************/
       /**      specific routes      **/
@@ -47,8 +43,8 @@ angular
       /*******************************/
 
       /*  main page route  */
-      .when('/', {             /*  non admin users  */
-        templateUrl: 'views/user_main.html',
+      .when('/', {          /*  non admin users  */
+        templateUrl: 'views/master/main.html',
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
@@ -57,7 +53,6 @@ angular
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
-
       /*  admin - backend management  routes  */
       .when('/about', {
         templateUrl: 'views/about.html',
@@ -69,44 +64,40 @@ angular
         controller: 'FacultyMainCtrl',
         controllerAs: 'facultyController'
       })
-
       /*  user - management  routes  */
       .when('/control-panel/users', {
         templateUrl: 'views/user_management/users.html',
         controller: 'UserCtrl',
         controllerAs: 'user'
       })
+
       .when('/control-panel/user-types', {
         templateUrl: 'views/user_management/user_types.html',
         controller: 'UserTypeCtrl',
         controllerAs: 'usertype'
       })
-
-      /*  question and question template - management  routes  */
-      .when('/control-panel/questions', {
-        templateUrl: 'views/questions/questions.html',
-        controller: 'QuestionsCtrl',
-        controllerAs: 'questions'
-      })
-      .when('/control-panel/question-templates', {
-        templateUrl: 'views/question_template/questionTemplate.html',
-        controller: 'QuestionTemplateCtrl',
-        controllerAs: 'questionTemplate'
-      })
-
-
-
-
       /*  appointment - management  routes  */
-      .when('/appointments/appointment', {
+      .when('/l/appointments/appointment', {
         templateUrl: 'views/appointments/appointment.html',
         controller: 'AppointmentCtrl',
         controllerAs: 'appointment',
         bindToController: 'true'
+
       })
+      .when('/s/appointments/appointment', {
+        templateUrl: 'views/appointments/appointment-request.html',
+        controller: 'AppointmentRequestsCtrl',
+        controllerAs: 'appointmentRequest',
+        bindToController: 'true'
 
+      })
+      .when('/l/appointments/my-availability', {
+        templateUrl: 'views/appointments/lecture-avilability.html',
+        controller: 'LectureAvilabilityCtrl',
+        controllerAs: 'lectureAvailability',
+        bindToController: 'true'
 
-
+      })
       /*  feedback - management  routes  */
       .when('/feedback-management/feedback-sessions', {
         templateUrl: 'views/feedback_management/feedback_sessions.html',
@@ -114,84 +105,88 @@ angular
         controllerAs: 'appointment',
         bindToController: 'true'
       })
-
-      .when('/feedback-management/report', {
-        templateUrl: 'views/reports/chart.html',
-        controller: 'ReportCtrl',
-        controllerAs: 'report',
-        bindToController: 'true'
+      // .when('/faculty/main', {
+      //   templateUrl: 'views/faculty/main.html',
+      //   controller: 'FacultyMainCtrl',
+      //   controllerAs: 'facultyController',
+      // })
+      .when('/admin/questions', {
+        templateUrl: 'views/questions/questions.html',
+        controller: 'QuestionsCtrl',
+        controllerAs: 'questions'
       })
-
-      /*  quiz routes  */
-      .when('/feedback/quiz-main', {
-        templateUrl: 'views/quiz/quiz_main.html',
-        controller: 'QuizCtrl',
-        controllerAs: 'QuizCtrl',
-        bindToController: 'true'
+      .when('/hod/feedbackSession', {
+        templateUrl: 'views/feedbackSession/feedbackSession.html',
+        controller: 'QuestionsCtrl',
+        controllerAs: 'questions'
       })
-      .when('/feedback/quiz/:sessionCode?', {
-        templateUrl: 'views/quiz/quiz.html',
-        controller: 'QuizCtrl',
-        controllerAs: 'QuizCtrl',
-        bindToController: 'true'
-      })
-
-
-
-
-
-
-
-
       .otherwise({
         redirectTo: '/'
       });
-  }]).run(function ($rootScope,$location, AuthenticationService,AUTH_EVENTS) {
-  $rootScope.$on('$routeChangeSuccess', function (event,currentRoute, previous) {
+  }])
+  .config(function($httpProvider){
+    $httpProvider.defaults.headers.delete = { "Content-Type": "application/json;charset=utf-8" };
+  })
+  .run([
+    '$rootScope',
+    '$location',
+    'AuthenticationService',
+    'AUTH_EVENTS',
+    function ($rootScope,$location, AuthenticationService,AUTH_EVENTS){
+      // $rootScope.user = {
+      //   id: 3,
+      //   userName: 'student01',
+      //   role: 'lecture'
+      // };
+      $rootScope.$on('$routeChangeSuccess', function(event, currentRoute,previous) {
+        /*******************************/
+        /*       non authenticated     */
+        /*******************************/
 
-    /*******************************/
-    /*       non authenticated     */
-    /*******************************/
 
+        if (!AuthenticationService.isAuthenticated()) {
+          event.preventDefault();
+          $rootScope.bodyClass = 'login-page';
+          $location.path( "/login" );
+        } else {
+          // get logged in user`s user role
+          var user_credentials = AuthenticationService.getUserCredentials();
+          var user_role = user_credentials.usertype;
+          $rootScope.user_role = user_credentials.usertype;
+          $rootScope.user_name = user_credentials.username;
+          $rootScope.full_name = user_credentials.full_name;
+          $rootScope.email = user_credentials.email;
 
-    if (!AuthenticationService.isAuthenticated()) {
-      event.preventDefault();
-      $rootScope.bodyClass = 'login-page';
-      $location.path( "/login" );
-    }else{
-      // get logged in user`s user role
-      var user_credentials = AuthenticationService.getUserCredentials();
-      var user_role = user_credentials.usertype;
-      $rootScope.user_role = user_credentials.usertype;
-      $rootScope.user_name = user_credentials.username;
-      $rootScope.full_name = user_credentials.full_name;
-      $rootScope.email = user_credentials.email;
+          //check for the request path
+          var current_requested_path = $location.path();
+          var check_path = current_requested_path.substring(14, 1);
 
-      //check for the request path
-      var current_requested_path = $location.path();
-      var check_path = current_requested_path.substring(14, 1);
-
-      if( user_role == 'Admin'){/*  admin routes check  */
-        $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini'; /*  style for admin control panel  */
-        if( check_path != 'control-panel' || $location.path() ==  "/login"){
-          $location.path( "/control-panel" );
+          if( user_role == 'Admin') {/*  admin routes check  */
+            $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini'; /*  style for admin control panel  */
+            if( check_path != 'control-panel' || $location.path() ==  "/login"){
+              $location.path( "/control-panel" );
+            }
+          } else {                    /*  non admin routes check  */
+            $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav'; /*  style for non admin  */
+            if( check_path == 'control-panel' || $location.path() ==  "/login") {
+              $location.path("/");
+            }
+          }
         }
-      }
-      else {                    /*  non admin routes check  */
-        $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini layout-top-nav'; /*  style for non admin  */
-        if( check_path == 'control-panel' || $location.path() ==  "/login") {
-          $location.path("/");
-        }
-      }
-    }
 
-  });
+        // switch (currentRoute.templateUrl) {
+        //   case 'views/login.html':
+        //     $rootScope.bodyClass = 'login-page';
+        //     break;
+        //   default:
+        //     if ($rootScope.user.role === 'Admin') {
+        //       $rootScope.bodyClass = 'hold-transition skin-blue sidebar-mini';
+        //     } else {
+        //       $rootScope.bodyClass = 'hold-transition skin-blue layout-top-nav';
+        //     }
+        //     break;
+        // }
 
-}).constant('CONFIG', {
-  'APP_NAME': 'Acadamic Resource Management',
-  'APP_VERSION': '0.0.1',
-  'GOOGLE_ANALYTICS_ID': '',
-  'BASE_URL': 'http://localhost:8002/',
-  'SYSTEM_LANGUAGE': ''
-})
+      });
+    }])
   .constant("moment", moment);
