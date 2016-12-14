@@ -48,8 +48,8 @@ function FeedbackSessionController() {
                     console.log(user.subjectId);
                     FeedBackSession.create({
                         feedbackSessionDate : today,
-                        feedbackSessionStartTime : '00:00:00 PM',
-                        feedbackSessionEndTime : '00:00:00 PM',
+                        feedbackSessionStartTime : '00:00:00',
+                        feedbackSessionEndTime : '00:00:00',
                         status : 0,
                         SubjectId : user.subjectId,
                         LecturerId: user.LecturerId
@@ -121,8 +121,8 @@ function FeedbackSessionController() {
 
     this.getReportForFeedbackSession = function(req,res){
 
-        var feed_back_session_code = req[0].feed_back_session_code;
-        var report_type = req[0].report_type;
+        var feed_back_session_code = req.feed_back_session_code;
+        var report_type = req.report_type;
 
         var  query_string = " SELECT"+
             " ((Count(feedback.answerOneCount)/(Count(feedback.answerOneCount) + Count(feedback.answerTwoCount) + Count(feedback.answerThreeCount) + Count(feedback.answerFourCount) + Count(feedback.answerFiveCount) )) * 100 ) AS very_poor,"+

@@ -1,7 +1,7 @@
-  <div nav-bar-user></div>
-  <!-- Full Width Column -->
-  <div class="content-wrapper">
-    <div class="container">
+<div nav-bar-user></div>
+<!-- Full Width Column -->
+<div class="content-wrapper">
+  <div class="container">
 
     <section class="content-header">
       <h1>
@@ -57,21 +57,21 @@
               <td ng-style="smallRowWidth" >{{i.subjectName}}</td>
               <td ng-style="smallRowWidth" >{{i.userFullname}}</td>
               <td ng-style="rowWidth">
-                  <p class="input-group">
-                    <input type="text" name="date"  ng-model="feedback_session_date[i.id]" ng-value="i.feedbackSessionDate" ng-change="feedbackSessionDateChange(i.id)" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="items.date"  is-open="feedbackSessionDate[$index]" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                <p class="input-group">
+                  <input type="text" name="date"  ng-model="feedback_session_date[i.id]" ng-value="i.feedbackSessionDate" ng-change="feedbackSessionDateChange(i.id)" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="items.date"  is-open="feedbackSessionDate[$index]" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default" ng-click="openfeedbackSessionDate($event, $index)" ><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
-                  </p>
+                </p>
               </td>
               <td ng-style="rowWidth">
-                  <p class="input-group">
-                      <div uib-timepicker ng-model="feedback_session_start_time[i.id]"  ng-init="setFeedbackSessionStartTime(i.id,i.feedbackSessionStartTime)" ng-change="feedbackSessionStartTimeChange(i.id)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
-                  </p>
+                <p class="input-group">
+                <div uib-timepicker ng-model="feedback_session_start_time[i.id]"  ng-init="setFeedbackSessionStartTime(i.id,i.feedbackSessionStartTime)" ng-change="feedbackSessionStartTimeChange(i.id)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                </p>
               </td>
               <td ng-style="rowWidth" >
                 <p class="input-group">
-                    <div uib-timepicker ng-model="feedback_session_end_time[i.id]"  ng-init="setFeedbackSessionEndTime(i.id,i.feedbackSessionEndTime)"   ng-change="feedbackSessionEndTimeChange(i.id)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                <div uib-timepicker ng-model="feedback_session_end_time[i.id]"  ng-init="setFeedbackSessionEndTime(i.id,i.feedbackSessionEndTime)"   ng-change="feedbackSessionEndTimeChange(i.id)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
                 </p>
               </td>
               <td ng-style="smallRowWidth">  <toggle-switch ng-init="setFeedbackSessionStatus(i.id,i.status)" ng-model="feedback_session_status[i.id]" ng-change="feedbackSessionStatusChange(i.id)" ></toggle-switch> </td>
@@ -164,12 +164,12 @@
                 <div class="box-body">
                   <table>
                     <thead align="center">
-                      <tr>
-                        <td ng-style="smallRowWidth"><b>Code</b></td>
-                        <td ng-style="smallRowWidth"><b>Date</b></td>
-                        <td ng-style="rowWidth"><b>Subject</b></td>
-                        <td ng-style="rowWidth"><b>Lecturer</b></td>
-                      </tr>
+                    <tr>
+                      <td ng-style="smallRowWidth"><b>Code</b></td>
+                      <td ng-style="smallRowWidth"><b>Date</b></td>
+                      <td ng-style="rowWidth"><b>Subject</b></td>
+                      <td ng-style="rowWidth"><b>Lecturer</b></td>
+                    </tr>
                     </thead>
                     <tbody ng:repeat="i in phones" align="center">
                     <tr>
@@ -200,4 +200,4 @@
   <!-- /.container-->
 </div>
 <!-- /.content-wrapper -->
-  <div footer></div>
+<div footer></div>

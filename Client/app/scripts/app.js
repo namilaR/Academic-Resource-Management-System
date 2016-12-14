@@ -84,19 +84,6 @@ angular
         controllerAs: 'usertype'
       })
 
-      /*  question and question template - management  routes  */
-      .when('/control-panel/questions', {
-        templateUrl: 'views/questions/questions.html',
-        controller: 'QuestionsCtrl',
-        controllerAs: 'questions'
-      })
-      .when('/control-panel/question-templates', {
-        templateUrl: 'views/question_template/questionTemplate.html',
-        controller: 'QuestionTemplateCtrl',
-        controllerAs: 'questionTemplate'
-      })
-
-
       /*  appointment - management  routes  */
       .when('/hod/appointments/appointment', {
         templateUrl: 'views/appointments/hod-appoinments.html',
@@ -126,12 +113,56 @@ angular
       })
 
 
+      /*  faculty - management  routes  */
+      .when('/control-panel/faculty/main', {
+        templateUrl: 'views/faculty/main.html',
+        controller: 'FacultyMainCtrl',
+        controllerAs: 'facultyController'
+      })
+      .when('/control-panel/admin/subjects', {
+        templateUrl: 'views/subjects/subjects.html',
+        controller: 'SubjectsCtrl',
+        controllerAs: 'subjects'
+      })
+      .when('/control-panel/admin/center', {
+        templateUrl: 'views/center/center.html',
+        controller: 'CenterCenterCtrl',
+        controllerAs: 'Center/Center'
+      })
+      .when('/control-panel/admin/departments', {
+        templateUrl: 'views/department/department.html',
+        controller: 'DepartmentCtrl',
+        controllerAs: 'Department'
+      })
+      .when('/control-panel/admin/batch', {
+        templateUrl: 'views/batch/batch.html',
+        controller: 'BatchCtrl',
+        controllerAs: 'Batch'
+      })
+
+
+
+
+      /*  question and question template - management  routes  */
+      .when('/control-panel/questions', {
+        templateUrl: 'views/questions/questions.html',
+        controller: 'QuestionsCtrl',
+        controllerAs: 'questions'
+      })
+      .when('/control-panel/question-templates', {
+        templateUrl: 'views/question_template/questionTemplate.html',
+        controller: 'QuestionTemplateCtrl',
+        controllerAs: 'questionTemplate'
+      })
+
+
+
 
       /*  feedback - management  routes  */
       .when('/feedback-management/feedback-sessions', {
         templateUrl: 'views/feedback_management/feedback_sessions.html',
         controller: 'FeedbacksessionsCtrl',
-        controllerAs: 'appointment',
+        controllerAs: 'feedback',
         bindToController: 'true'
       })
 
@@ -181,6 +212,7 @@ angular
     }else{
       // get logged in user`s user role
       var user_credentials = AuthenticationService.getUserCredentials();
+      $rootScope.user = user_credentials;
       var user_role = user_credentials.usertype;
       $rootScope.user_role = user_credentials.usertype;
       $rootScope.user_name = user_credentials.username;

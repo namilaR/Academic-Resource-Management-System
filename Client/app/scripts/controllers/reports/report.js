@@ -65,35 +65,43 @@ angular.module('armsAngularApp').controller('ReportCtrl', [
                     }
                 ];
 
-                $http.post(get_report_for_feedback_session,$scope.submitData)
-                    .success(function(data, status, headers, config){
 
-                        if( data.length != 0 ){
+              $http({
+                url: get_report_for_feedback_session,
+                method: "POST",
+                data:{
+                  "feed_back_session_code": selectedFeedbackSessionCodesValue,
+                  "report_type":selectedReportType
+                }
+              }).then(function(response) {
 
-                            for( var i = 0 ; i < data.length; i++){
-
-                                    var ans =  [
-                                                data[i].very_poor,
-                                                data[i].poor,
-                                                data[i].good,
-                                                data[i].very_good,
-                                                data[i].excellent
-                                            ];
+                var feedback_data =  response.data;
 
 
-                                        loadChart(ans, data[i].question, i + 1);
-                            }
-                            $scope.showReportCharts();
-                        }else{
+                if( feedback_data.length != 0 ){
 
-                            document.getElementById('report_chart_div').style.display = "none";
-                        }
+                  for( var i = 0 ; i < feedback_data.length; i++){
+
+                    var ans =  [
+                      feedback_data[i].very_poor,
+                      feedback_data[i].poor,
+                      feedback_data[i].good,
+                      feedback_data[i].very_good,
+                      feedback_data[i].excellent
+                    ];
 
 
+                    loadChart(ans, feedback_data[i].question, i + 1);
+                  }
+                  $scope.showReportCharts();
+                }else{
 
-                        }).error(function(data, status, headers, config){
+                  document.getElementById('report_chart_div').style.display = "none";
+                }
 
-                    });
+              });
+
+
 
 
             };
@@ -109,7 +117,7 @@ angular.module('armsAngularApp').controller('ReportCtrl', [
             reportsDataservice.getChartData(1).then(function(res) {
                 loadChart(res.data,'Loading....');
             });
-            
+
 
             function loadChart(chart_data,report_type,number) {
                 var ctx        = document.getElementById("myChart_"+number);
@@ -139,8 +147,8 @@ angular.module('armsAngularApp').controller('ReportCtrl', [
                             data: chart_data,
                         }
                     ]
-                };  
-                
+                };
+
                 new Chart(ctx, {
                     type: "bar",
                     data: data,

@@ -23,7 +23,10 @@ angular.module('armsAngularApp')
     var dept_id ;
     var user_credentials = AuthenticationService.getUserCredentials();
     var user_type = user_credentials.usertype;
-    if(user_type == 'HOD'){ dept_id = user_credentials.dept;  }
+
+    if(user_type == 'HOD'){
+      dept_id = user_credentials.dept;
+    }
 
 
     //Loading the batches for select option
@@ -63,17 +66,24 @@ angular.module('armsAngularApp')
       selectedOption : $scope.batch_week[0]
     };
 
+
+    $http.get(get_all_feed_back_sessions).then(function(data) {
+      $scope.mainFeedBackSessionsList = data.data;
+    });
+
     function getAllFeedBackSessions(){
-      $http.get(get_all_feed_back_sessions).success(function(data) {
-        $scope.mainFeedBackSessionsList = data;
-        for(var k in $scope.mainFeedBackSessionsList) {
-          var date = new Date($scope.mainFeedBackSessionsList[k].feedbackSessionDate);
-          var day = date.getDate();
-          var month = date.getMonth();
-          var year = date.getFullYear();
-          var datestring = year +  "-" + month + "-" + day ;
-          $scope.mainFeedBackSessionsList[k].feedbackSessionDate = datestring;
-        }
+      $http.get(get_all_feed_back_sessions).then(function(data) {
+
+              $scope.mainFeedBackSessionsList = data.data;
+              for(var k in $scope.mainFeedBackSessionsList) {
+                var date = new Date($scope.mainFeedBackSessionsList[k].feedbackSessionDate);
+                var day = date.getDate();
+                var month = date.getMonth();
+                var year = date.getFullYear();
+                var datestring = year +  "-" + month + "-" + day ;
+                $scope.mainFeedBackSessionsList[k].feedbackSessionDate = datestring;
+              }
+
 
       });
       console.log('loaded all feedback sessions...');
@@ -81,9 +91,7 @@ angular.module('armsAngularApp')
 
     getAllFeedBackSessions();
 
-    $http.get(get_all_feed_back_sessions).success(function(data) {
-      $scope.sessionsList = data;
-    });
+
 
 
     $scope.smallRowWidth = {'width': '100px' };
@@ -111,10 +119,9 @@ angular.module('armsAngularApp')
       $http.post(create_feedback_sessions_api,$scope.submitData).then(
         (function(){
             alert("New Feed back Sessions Created");
-            $http.get(get_all_feed_back_sessions).success(function(data) {
-              $scope.phones = data;
+            $http.get(get_all_feed_back_sessions).then(function(data) {
+              $scope.mainFeedBackSessionsList = data.data;
             });
-            getAllFeedBackSessions();
           }
         )
       );

@@ -56,10 +56,10 @@ AppointmentController = function() {
     this.saveAppoinmentRescheduleRequest = function(AppoinmentInstance, res) {
         var approvedStatus = 0;
         if (AppoinmentInstance.userRole == 'Lecturer') {
-             approvedStatus = 1;
+            approvedStatus = 1;
         }
-        
-        Appointment.update({           
+
+        Appointment.update({
             appointmentDate : Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate),
             appointmentNoteStudent : AppoinmentInstance.appointmentNoteStudent,
             TimeSlotId: AppoinmentInstance.TimeSlot.id,
@@ -74,8 +74,8 @@ AppointmentController = function() {
         });
 
     };
-   /**
-     * save appointment comment 
+    /**
+     * save appointment comment
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
@@ -124,19 +124,19 @@ AppointmentController = function() {
             }
         }).then(function(data) {
             Appointment.findAll({
+                where: {
+                    status: 1,
+                    StudentId: data.id,
+                    //StudentId: 1,
+                },
+                include: [{
+                    model: TimeSlot,
                     where: {
-                        status: 1,
-                        StudentId: data.id,
-                        //StudentId: 1,
-                    },
-                    include: [{
-                        model: TimeSlot,
-                        where: {
-                            id: Sequelize.col('Appointment.TimeSlotId')
-                        }
-                    }]
+                        id: Sequelize.col('Appointment.TimeSlotId')
+                    }
+                }]
 
-                })
+            })
                 .then(function(data) {
                     res.send(data);
                 });
@@ -174,46 +174,46 @@ AppointmentController = function() {
      */
     this.getAppointmentMoreDetails = function(AppointmentInstance, res) {
         Appointment.findOne({
+            where: {
+                status: 1,
+                id: AppointmentInstance.id,
+            },
+            include: [{
+                model: TimeSlot,
                 where: {
-                    status: 1,
-                    id: AppointmentInstance.id,
+                    id: Sequelize.col('Appointment.TimeSlotId')
                 },
                 include: [{
-                    model: TimeSlot,
+                    model: Lecturer,
                     where: {
-                        id: Sequelize.col('Appointment.TimeSlotId')
-                    },
-                    include: [{
-                        model: Lecturer,
-                        where: {
-                            id: Sequelize.col('TimeSlot.LecturerId')
-                        },
-                        include: [{
-                            model: User,
-                            where: {
-                                id: Sequelize.col('TimeSlot.Lecturer.UserId')
-                            }
-                        }]
-                    }]
-                }, {
-                    model: Room,
-                    where: {
-                        id: Sequelize.col('Appointment.RoomId')
-                    }
-                }, {
-                    model: Student,
-                    where: {
-                        id: Sequelize.col('Appointment.StudentId')
+                        id: Sequelize.col('TimeSlot.LecturerId')
                     },
                     include: [{
                         model: User,
                         where: {
-                            id: Sequelize.col('Student.UserId')
+                            id: Sequelize.col('TimeSlot.Lecturer.UserId')
                         }
                     }]
                 }]
+            }, {
+                model: Room,
+                where: {
+                    id: Sequelize.col('Appointment.RoomId')
+                }
+            }, {
+                model: Student,
+                where: {
+                    id: Sequelize.col('Appointment.StudentId')
+                },
+                include: [{
+                    model: User,
+                    where: {
+                        id: Sequelize.col('Student.UserId')
+                    }
+                }]
+            }]
 
-            })
+        })
             .then(function(data) {
                 res.send(data);
             });
@@ -226,36 +226,36 @@ AppointmentController = function() {
      */
     this.getAnPendingAppoinment = function(AppoimnetInstance, res) {
         Appointment.find({
-                where: {
-                    status: 1,
-                    id: AppoimnetInstance.id,
+            where: {
+                status: 1,
+                id: AppoimnetInstance.id,
 
+            },
+            include: [{
+                model: TimeSlot,
+                where: {
+                    id: Sequelize.col('Appointment.TimeSlotId')
+                }
+            }, {
+                model: Student,
+                where: {
+                    id: Sequelize.col('Appointment.StudentId')
                 },
                 include: [{
-                    model: TimeSlot,
+                    model: User,
                     where: {
-                        id: Sequelize.col('Appointment.TimeSlotId')
-                    }
-                }, {
-                    model: Student,
-                    where: {
-                        id: Sequelize.col('Appointment.StudentId')
+                        id: Sequelize.col('Student.UserId')
                     },
-                    include: [{
-                        model: User,
-                        where: {
-                            id: Sequelize.col('Student.UserId')
-                        },
 
-                    }, {
-                        model: Batch,
-                        where: {
-                            id: Sequelize.col('Student.BatchId')
-                        }
-                    }]
+                }, {
+                    model: Batch,
+                    where: {
+                        id: Sequelize.col('Student.BatchId')
+                    }
                 }]
+            }]
 
-            })
+        })
             .then(function(data) {
 
                 res.send(data);
@@ -274,21 +274,21 @@ AppointmentController = function() {
             }
         }).then(function(data) {
             Appointment.findAll({
+                where: {
+                    status: 1,
+                    approved: 0,
+                    TimeSlotId: {
+                        $in: [Sequelize.literal("SELECT timeSlot.id     FROM timeSlot WHERE timeSlot.LecturerId = '" + data.id + "'")]
+                    }
+                },
+                include: [{
+                    model: TimeSlot,
                     where: {
-                        status: 1,
-                        approved: 0,
-                        TimeSlotId: {
-                            $in: [Sequelize.literal("SELECT timeSlot.id     FROM timeSlot WHERE timeSlot.LecturerId = '" + data.id + "'")]
-                        }
-                    },
-                    include: [{
-                        model: TimeSlot,
-                        where: {
-                            id: Sequelize.col('Appointment.TimeSlotId')
-                        }
-                    }]
+                        id: Sequelize.col('Appointment.TimeSlotId')
+                    }
+                }]
 
-                })
+            })
                 .then(function(data) {
                     res.send(data);
                 });
@@ -307,31 +307,31 @@ AppointmentController = function() {
             }
         }).then(function(data) {
             Appointment.findAll({
+                where: {
+                    status: 1,
+                    approved: 1,
+                    TimeSlotId: {
+                        $in: [Sequelize.literal("SELECT timeSlot.id     FROM timeSlot WHERE timeSlot.LecturerId = '" + data.id + "'")]
+                    }
+                },
+                include: [{
+                    model: TimeSlot,
                     where: {
-                        status: 1,
-                        approved: 1,
-                        TimeSlotId: {
-                            $in: [Sequelize.literal("SELECT timeSlot.id     FROM timeSlot WHERE timeSlot.LecturerId = '" + data.id + "'")]
-                        }
-                    },
-                    include: [{
-                        model: TimeSlot,
-                        where: {
-                            id: Sequelize.col('Appointment.TimeSlotId')
-                        }
-                    }, {
-                        model: Student,
-                        where: {
-                            id: Sequelize.col('Appointment.StudentId')
-                        }
-                    }, {
-                        model: Room,
-                        where: {
-                            id: Sequelize.col('Appointment.RoomId')
-                        }
-                    }]
+                        id: Sequelize.col('Appointment.TimeSlotId')
+                    }
+                }, {
+                    model: Student,
+                    where: {
+                        id: Sequelize.col('Appointment.StudentId')
+                    }
+                }, {
+                    model: Room,
+                    where: {
+                        id: Sequelize.col('Appointment.RoomId')
+                    }
+                }]
 
-                })
+            })
                 .then(function(data) {
                     res.send(data);
                 });
@@ -347,21 +347,21 @@ AppointmentController = function() {
         var timeSlot = JSON.parse(AppoinmentInstance.timeSlot);
         console.log(Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate));
         Room.findAll({
-                where: {
-                    status: 1,
-                    id: {
-                        $notIn: [
-                            Sequelize.literal(
-                                "   SELECT appointment.RoomId\n" +
-                                "   FROM appointment JOIN timeSlot \n" +
-                                "   ON appointment.TimeSlotId = timeSlot.id\n" +
-                                "   WHERE timeSlot.fromTime >= (SELECT timeSlot.fromTime FROM timeSlot WHERE timeSlot.id = " + timeSlot.id + ") AND timeSlot.toTime <= (SELECT timeSlot.toTime FROM timeSlot WHERE timeSlot.id = " + timeSlot.id + ") AND appointment.appointmentDate = '" + Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate) + "' AND appointment.RoomId IS NOT NULL "
-                            )
-                        ]
-                    }
+            where: {
+                status: 1,
+                id: {
+                    $notIn: [
+                        Sequelize.literal(
+                            "   SELECT appointment.RoomId\n" +
+                            "   FROM appointment JOIN timeSlot \n" +
+                            "   ON appointment.TimeSlotId = timeSlot.id\n" +
+                            "   WHERE timeSlot.fromTime >= (SELECT timeSlot.fromTime FROM timeSlot WHERE timeSlot.id = " + timeSlot.id + ") AND timeSlot.toTime <= (SELECT timeSlot.toTime FROM timeSlot WHERE timeSlot.id = " + timeSlot.id + ") AND appointment.appointmentDate = '" + Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate) + "' AND appointment.RoomId IS NOT NULL "
+                        )
+                    ]
                 }
+            }
 
-            })
+        })
             .then(function(data) {
                 res.send(data);
             });
