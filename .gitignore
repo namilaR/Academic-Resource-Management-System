@@ -1,3 +1,4 @@
+.idea/
 Client/node_modules
 Client/dist
 Client/.tmp
@@ -9,5 +10,9 @@ Server/app/modules/Connection.js
 Server/.idea
 /Client/nbproject/private/
 /Server/nbproject/private/
+<<<<<<< HEAD
 
 .idea/
+=======
+Server/mochawesome-reports/
+>>>>>>> unstable-version

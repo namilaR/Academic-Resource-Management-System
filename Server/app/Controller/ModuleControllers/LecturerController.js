@@ -4,10 +4,15 @@
  */
  var Sequelize = require('sequelize');
 var Modules = require('../../models/Models');
+var Sequelize = require('sequelize');
 var Lecturer = Modules.Lecturer;
 var Appointment = Modules.Appointment;
 var Room = Modules.Room;
 var Request = Modules.Request;
+var User = Modules.User;
+
+var moment = require('moment');
+ 
 
 LecturerController = function() {
 
@@ -15,10 +20,44 @@ LecturerController = function() {
         Lecturer.findAll({
             where: {
                 status: 1
-            }
+            },
+            include :[
+              {
+                model: User,
+                where: { id: Sequelize.col('Lecturer.UserId') }
+              }
+            ]
         }).then(function(data) {
           res.send(data);
         });
+    }
+
+    this.getMyAppointments = function(RequestInstance, res) {
+        console.log(RequestInstance);
+        Appointment.findAll({
+            where: {
+                status: 1
+            },
+            include: [{
+                model: Room,
+                where: { id: Sequelize.col('Appointment.RoomId') }
+            }, {
+                model: Request,
+                where: {
+                        //id: Sequelize.col('Appointment.RequestId'),
+                        LecturerId:RequestInstance.id,
+                }
+            }]
+        }).then(function(data) {
+            res.send(data);
+
+        });
+    };
+
+    this.saveTimeslot = function(LecturerInstance, res){
+      console.log(LecturerInstance);
+      console.log(convertTo24Hours(LecturerInstance.slot.from));
+
     };
 
     this.getMyAppointments = function(RequestInstance, res) {
@@ -81,5 +120,9 @@ LecturerController = function() {
         });
     };
 };
+
+function convertTo24Hours(time) {
+  return moment(time.hour + ':' + time.min +' '+time.period , ["h:mm A"]).format("HH:mm");
+}
 
 module.exports = new LecturerController();

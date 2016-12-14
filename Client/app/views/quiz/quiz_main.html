@@ -1,0 +1,50 @@
+<div nav-bar-public></div>
+<div class="login-box">
+    <div class="login-box-body">
+        <div ng-controller="QuizCtrl">
+            <form name="FeedbackSessionForm" ng-submit="authenticateFeedbackSession(FeedbackSessionForm.$valid)" novalidate>
+                
+                <div class="row">
+                    <div ng-bind-html = "feedbacksession_message" class="col-xs-12 text-center"></div>
+                </div>
+
+                <div class="form-group" ng-class="{ 'has-error' : (FeedbackSessionForm.session_code.$invalid && !FeedbackSessionForm.session_code.$pristine) || (FeedbackSessionForm.session_code.$invalid && FeedbackSessionForm.$submitted )}">
+                    <div class="" align="center">
+                        <label><h3>Student Feedback Session</h3></label>
+                    </div>
+                </div>
+                
+                <div class="form-group" ng-class="{ 'has-error' : (FeedbackSessionForm.session_code.$invalid && !FeedbackSessionForm.session_code.$pristine) || (FeedbackSessionForm.session_code.$invalid && FeedbackSessionForm.$submitted )}">
+                    <div class="">
+                        <input type="text" class="form-control" ng-model="feed_back_session_code" placeholder="Session code" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="submit"  class="btn btn-primary btn-block btn-flat">Continue >></button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div ng-bind-html = "feedbacksession_waiting_message" class="col-xs-12 text-center"></div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

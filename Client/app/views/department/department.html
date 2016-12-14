@@ -1,0 +1,128 @@
+<div side-bar></div>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            <i class="fa fa-graduation-cap "></i>
+            Department
+            <small>Admin Department page for any management level purposes of Departments</small>
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Default box -->
+        <div class="box box-orange form-horizontal">
+            <form class="box-body" ng-submit="createDepartment()">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <i class="fa fa-plus"></i>
+                        Add Department <span ng-bind="departmentName"></span>
+                    </h3>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-3">
+                        <label class="pull-right">Department Name</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="departmentName" required="true" placeholder="new department name eg:Department of SoftwareEnginering"
+                               ng-model="departmentName" required="true">
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-sm-3">
+                        <label class="pull-right">Faculty Name</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="faculty">
+                            <option disabled selected value> select a faculty </option>
+                            <option ng-repeat="faculty in faculties" value="{{faculty.id}}" required="true">{{faculty.facultyName}}</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-success pull-right" style="margin-top: 5px;">
+                    <i class="fa fa-plus"></i>
+                    Create Department
+                </button>
+            </form>
+        </div>
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <i class="fa fa-list"></i> Department List
+                </h3>
+                <span class="pull-right">
+                            Search: <input ng-model="$ctrl.query" class="form-horizontal" placeholder="Search any word" />
+                        </span>
+            </div>
+            <div class="box-body">
+                <table class="table table-condensed">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Faculty Name</th>
+                        <th>Department Name</th>
+                        <th>Created Date</th>
+                        <th>Updated Date</th>
+                        <th>Options</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="department in departments | filter:$ctrl.query">
+                        <td>{{department.id}}</td>
+                        <td>{{department.Faculty.facultyName}}</td>
+                        <td>{{department.DepartmentName}}</td>
+                        <td>{{department.createdAt}}</td>
+                        <td>{{department.updatedAt}}</td>
+                        <td>
+                            <button class="btn-warning" ng-click="deleteDepartment(department)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                            <button class="btn-success" ng-click="updateDepartmentDetails(department)" data-toggle="modal" data-target="#myModal">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content box-body">
+            <div class="box-header with-border">
+                <h3 class="box-title">
+                    <i class="fa fa-pencil"></i>
+                    update Department <span ng-bind="updateDepartmentName"></span>
+                </h3>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-3">
+                    <label class="pull-right">Department Name</label>
+                </div>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="departmentName" required="true" placeholder="new department name eg:Department of SoftwareEnginering"
+                           ng-model="updateDepartmentName" required="true">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-sm-3">
+                    <label class="pull-right">Faculty Name</label>
+                </div>
+                <div class="col-sm-9">
+                    <select class="form-control" ng-model="updateFaculty">
+                        <option disabled value> select a faculty </option>
+                        <option ng-repeat="faculty in faculties" value="{{faculty.id}}" required="true" ng-selected="updateFaculty==faculty.id">{{faculty.facultyName}}</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-success pull-right" style="margin-top: 5px;" ng-click="modalUpdate()">
+                <i class="fa fa-plus"></i>
+                Update Department {{updateDepartmentName}}
+            </button>
+        </div>
+    </div>
+</div>

@@ -32,7 +32,6 @@ module.exports = function(config) {
       'bower_components/angular-aria/angular-aria.js',
       'bower_components/angular-material/angular-material.js',
       'bower_components/iCheck/icheck.min.js',
-      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/datatables.net/js/jquery.dataTables.js',
       'bower_components/angular-datatables/dist/angular-datatables.js',
       'bower_components/angular-datatables/dist/plugins/bootstrap/angular-datatables.bootstrap.js',
@@ -54,6 +53,9 @@ module.exports = function(config) {
       'bower_components/angular-strap/dist/angular-strap.tpl.js',
       'bower_components/angular-toggle-switch/angular-toggle-switch.js',
       'bower_components/chart.js/dist/Chart.js',
+      'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+      'bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js',
+      'bower_components/checklist-model/checklist-model.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

@@ -15,13 +15,11 @@ angular.module('armsAngularApp')
           'Karma'
         ];
 
-
         // accessable api`s
         var get_all_batches_api = 'http://localhost:8002/feedback-session/get-all-batches';
         var create_feedback_sessions_api = 'http://localhost:8002/feedback-session/create_feedback_sessions';
         var get_all_feed_back_sessions = 'http://localhost:8002/feedback-session/get-all-feedback-sessions';
-
-
+        var update_feed_back_session_api = 'http://localhost:8002/feedback-session/update-feedback-session';
         var dept_id ;
         var user_credentials = AuthenticationService.getUserCredentials();
         var user_type = user_credentials.usertype;
@@ -65,22 +63,42 @@ angular.module('armsAngularApp')
             selectedOption : $scope.batch_week[0]
         };
 
+        function getAllFeedBackSessions(){
+            $http.get(get_all_feed_back_sessions).success(function(data) {
+                $scope.mainFeedBackSessionsList = data;
+                for(var k in $scope.mainFeedBackSessionsList) {
+                    var date = new Date($scope.mainFeedBackSessionsList[k].feedbackSessionDate);
+                    var day = date.getDate();
+                    var month = date.getMonth();
+                    var year = date.getFullYear();
+                    var datestring = year +  "-" + month + "-" + day ;
+                    $scope.mainFeedBackSessionsList[k].feedbackSessionDate = datestring;
+                }
+
+            });
+            console.log('loaded all feedback sessions...');
+        }
+
+        getAllFeedBackSessions();
+
         $http.get(get_all_feed_back_sessions).success(function(data) {
             $scope.sessionsList = data;
         });
 
+
+        $scope.smallRowWidth = {'width': '100px' };
         $scope.rowWidth = {'width': '200px' };
         function setRowWidth(newWidth){
+            $scope.smallRowWidth = {'width': newWidth + 'px' }
             $scope.rowWidth = {'width': newWidth + 'px' }
         }
 
+        //  creating the new feedbacksessions
         $scope.createFeedbackSession = function() {
 
             var batch = $scope.data.selectedOption.id;
             var batch_week = $scope.batch_week.selectedOption.batch_week;
             var year = $scope.year.selectedOption.id;
-
-            console.log(batch + "-" + batch_week + '-' + year);
 
             $scope.submitData = [
                 {
@@ -90,19 +108,13 @@ angular.module('armsAngularApp')
                 }
             ];
 
-            $scope.myDate = new Date();
-
             $http.post(create_feedback_sessions_api,$scope.submitData).then(
                 (function(){
-                        alert("ok");
-
+                        alert("New Feed back Sessions Created");
                         $http.get(get_all_feed_back_sessions).success(function(data) {
                             $scope.phones = data;
                         });
-
-                        $http.get(get_all_feed_back_sessions).success(function(data) {
-                            $scope.sessionsList = data;
-                        });
+                        getAllFeedBackSessions();
                     }
                 )
             );
@@ -110,47 +122,116 @@ angular.module('armsAngularApp')
 
 
 
+        function updateFeedBackSession(api,update_property,update_value,row_id){
+            $scope.submitData = [
+                {
+                    "update_property": update_property,
+                    "update_value": update_value,
+                    "row_id": row_id
+                }
+            ];
+
+            $http.post(api,$scope.submitData).then(
+                (function(){
+                        getAllFeedBackSessions();
+                    }
+                )
+            );
+        }
 
 
-        /*********************************
-         ANGULAR UI DATEPICKER CONFIGS
-         *********************************/
-        $scope.today = function() {
-            $scope.pendingRequest.appointmentDate = new Date();
+        $scope.feedback_session_start_time = [];
+        $scope.setFeedbackSessionStartTime = function(row_id,value){
+            var res = value.split(":");
+            var d = new Date();
+            d.setHours( res[0]);
+            d.setMinutes( res[1]);
+            $scope.feedback_session_start_time[row_id] = new Date(d);
         };
-        $scope.clear = function() {
-            $scope.pendingRequest.appointmentDate = null;
-        };
-        $scope.dateOptions = {
-            formatYear: 'yy',
-            maxDate: new Date(2020, 5, 22),
-            minDate: new Date(),
-            startingDay: 1
-        };
-        $scope.open2 = function() {
-            $scope.popup2.opened = true;
-        };
-        $scope.setDate = function(year, month, day) {
-            $scope.pendingRequest.appointmentDate = new Date(year, month, day);
-            console.log($scope.pendingRequest.appointmentDate);
-        };
-        $scope.popup2 = {
-            opened: false
-        };
-        /*********************************
-         ANGULAR UI TIMEPICKER CONFIGS
-         *********************************/
 
+        $scope.feedback_session_end_time = [];
+        $scope.setFeedbackSessionEndTime = function(row_id,value){
+            var res = value.split(":");
+            var d = new Date();
+            d.setHours( res[0]);
+            d.setMinutes( res[1]);
+            $scope.feedback_session_end_time[row_id] = new Date(d);
+        };
+
+        $scope.feedback_session_status = [];
+        $scope.setFeedbackSessionStatus = function(row_id,value){
+            if(value == 1){
+                value = true;
+            }else{
+                value = false;
+            }
+            $scope.feedback_session_status[row_id] = value;
+        };
+
+        $scope.feedback_session_date = [];
+        $scope.setFeedbackSessionDate = function(row_id,value){
+            var date = new Date(value);
+            var datestring = date.getFullYear() +  "-" + date.getDate() + "-" + date.getMonth();
+            $scope.feedback_session_date[row_id] = new Date(datestring);
+            console.log(datestring);
+        };
+
+        $scope.feedbackSessionStartTimeChange = function (index) {
+            var time = new Date($scope.feedback_session_start_time[index]);
+            var timestamp = time.toUTCString();
+            console.log('Feedback Session Start time - [ id ] --  ' + time + ' -- '+ index );
+            updateFeedBackSession(update_feed_back_session_api,'feedback_session_start_time',$scope.feedback_session_start_time[index],index);
+        };
+
+
+        $scope.feedbackSessionEndTimeChange = function (index) {
+           console.log('Feedback Session End time [ id ] --  ' +  $scope.feedback_session_end_time[index] + ' -- '+ index);
+            updateFeedBackSession(update_feed_back_session_api,'feedback_session_end_time',$scope.feedback_session_end_time[index],index);
+        };
+
+        $scope.feedbackSessionStatusChange = function (index) {
+           console.log('Feedback Session Status [ id ] --  ' +  $scope.feedback_session_status[index] + ' -- '+ index);
+            updateFeedBackSession(update_feed_back_session_api,'feedback_session_status',$scope.feedback_session_status[index],index);
+        };
+
+        $scope.feedbackSessionDateChange = function (index) {
+            console.log('date -- ' + $scope.feedback_session_date[index] );
+            var date = new Date($scope.feedback_session_date[index]);
+            var day = date.getDate();
+            var month = date.getMonth();
+            var year = date.getFullYear();
+            var datestring = year +  "-" + (month + 1) + "-" + day;
+           console.log('Feedback Session Date [ id ] --  ' +  datestring + ' -- '+ index);
+            updateFeedBackSession(update_feed_back_session_api,'feedback_session_date',datestring,index);
+        };
+
+
+
+        /********************
+         *
+         *  UI Element Configurations
+         *
+         * ****/
+
+
+        //ui-bootstrap-datepicker configurations
+        $scope.feedbackSessionDate = [];
+        $scope.openfeedbackSessionDate = function($event, index) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.feedbackSessionDate[index] = true;
+        };
+
+        // ui-bootstrap-timepicker configurations
+        $scope.mytime = new Date();
         $scope.hstep = 1;
         $scope.mstep = 1;
-        $scope.ismeridian = true;
+        $scope.ismeridian = false;
+
         $scope.toggleMode = function() {
-            $scope.ismeridian = !$scope.ismeridian;
-        };
-        $scope.changed = function() {
-            console.log('startTime' + $scope.pendingRequest.appointmentEndTime);
-            //console.log('endTime' + $scope.endTime);
+            $scope.ismeridian = ! $scope.ismeridian;
         };
 
 
-    }]);
+}]);
+

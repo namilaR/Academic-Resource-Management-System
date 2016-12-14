@@ -40,28 +40,41 @@
           <table>
             <thead align="center">
             <tr>
-              <td ng-style="rowWidth" ><b>Code</b></td>
+              <td ng-style="smallRowWidth" ><b>Code</b></td>
+              <td ng-style="smallRowWidth" ><b>Year</b></td>
+              <td ng-style="smallRowWidth" ><b>Subject</b></td>
+              <td ng-style="smallRowWidth" ><b>Lecturer</b></td>
               <td ng-style="rowWidth" ><b>Date</b></td>
               <td ng-style="rowWidth" ><b>Start Time</b></td>
               <td ng-style="rowWidth" ><b>End Time</b></td>
-              <td ng-style="rowWidth" ><b>Status</b></td>
-              <td ng-style="rowWidth" ><b>Subject</b></td>
-              <td ng-style="rowWidth" ><b>Lecturer</b></td>
+              <td ng-style="smallRowWidth" ><b>Status</b></td>
             </tr>
             </thead>
-            <tbody ng:repeat="i in sessionsList" align="center">
+            <tbody ng:repeat="i in mainFeedBackSessionsList" align="center">
             <tr>
-              <td ng-style="rowWidth" >{{i.id}}</td>
-              <td ng-style="rowWidth" >{{i.feedbackSessionDate}}</td>
-              <!--<td ng-style="rowWidth" >{{i.feedbackSessionStartTime}}</td>-->
-              <td ng-style="rowWidth"><input type="text" required name="date" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="appointmentRequest.requestDate" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" /><span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span></td>
-              <td ng-style="rowWidth" >{{i.feedbackSessionEndTime}}</td>
-              <td ng-style="rowWidth"  ng-if=" i.status == 1 "> <input type="checkbox" name="" value="1" checked="checked" ></td>
-              <td ng-if=" i.status == 0 "><input type="checkbox" name="" value="1" ></td>
-              <td ng-style="rowWidth" >{{i.subjectName}}</td>
-              <td ng-style="rowWidth" >{{i.userFullname}}</td>
+              <td ng-style="smallRowWidth" style="font-weight: bold;" >{{i.id}}</td>
+              <td ng-style="smallRowWidth" style="font-weight: bold;">2016</td>
+              <td ng-style="smallRowWidth" >{{i.subjectName}}</td>
+              <td ng-style="smallRowWidth" >{{i.userFullname}}</td>
+              <td ng-style="rowWidth">
+                  <p class="input-group">
+                    <input type="text" name="date"  ng-model="feedback_session_date[i.id]" ng-value="i.feedbackSessionDate" ng-change="feedbackSessionDateChange(i.id)" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="items.date"  is-open="feedbackSessionDate[$index]" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="openfeedbackSessionDate($event, $index)" ><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+              </td>
+              <td ng-style="rowWidth">
+                  <p class="input-group">
+                      <div uib-timepicker ng-model="feedback_session_start_time[i.id]"  ng-init="setFeedbackSessionStartTime(i.id,i.feedbackSessionStartTime)" ng-change="feedbackSessionStartTimeChange(i.id)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                  </p>
+              </td>
+              <td ng-style="rowWidth" >
+                <p class="input-group">
+                    <div uib-timepicker ng-model="feedback_session_end_time[i.id]"  ng-init="setFeedbackSessionEndTime(i.id,i.feedbackSessionEndTime)"   ng-change="feedbackSessionEndTimeChange(i.id)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                </p>
+              </td>
+              <td ng-style="smallRowWidth">  <toggle-switch ng-init="setFeedbackSessionStatus(i.id,i.status)" ng-model="feedback_session_status[i.id]" ng-change="feedbackSessionStatusChange(i.id)" ></toggle-switch> </td>
             </tr>
             </tbody>
           </table>
@@ -73,7 +86,6 @@
         <!-- /.box-footer -->
 
       </div>
-
 
       <div class="modal fade" id="addnewusertype" >
         <div class="modal-dialog">
@@ -89,7 +101,6 @@
                         </div>
                       </div>
                       <div class="row">
-
                         <div class="col-md-6 text-center">
                           <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.batch.$invalid && !feedbacksessionForm.batch.$pristine) || (feedbacksessionForm.batch.$invalid && feedbacksessionForm.$submitted )}">
                             <label class="control-label ">Batch</label>
@@ -154,23 +165,16 @@
                   <table>
                     <thead align="center">
                       <tr>
-                        <td ng-style="rowWidth"><b>Code</b></td>
-                        <td ng-style="rowWidth"><b>Date</b></td>
-                        <td ng-style="rowWidth"><b>Start Time</b></td>
-                        <td ng-style="rowWidth"><b>End Time</b></td>
-                        <td ng-style="rowWidth"><b>Status</b></td>
+                        <td ng-style="smallRowWidth"><b>Code</b></td>
+                        <td ng-style="smallRowWidth"><b>Date</b></td>
                         <td ng-style="rowWidth"><b>Subject</b></td>
                         <td ng-style="rowWidth"><b>Lecturer</b></td>
                       </tr>
                     </thead>
                     <tbody ng:repeat="i in phones" align="center">
                     <tr>
-                      <td ng-style="rowWidth">{{i.id}}</td>
-                      <td ng-style="rowWidth">{{i.feedbackSessionDate}}</td>
-                      <td ng-style="rowWidth">{{i.feedbackSessionStartTime}}</td>
-                      <td ng-style="rowWidth">{{i.feedbackSessionEndTime}}</td>
-                      <td ng-style="rowWidth" ng-if=" i.status == 1 ">Active</td>
-                      <td ng-style="rowWidth" ng-if=" i.status == 0 ">Inactive</td>
+                      <td ng-style="smallRowWidth">{{i.id}}</td>
+                      <td ng-style="smallRowWidth">{{i.feedbackSessionDate}}</td>
                       <td ng-style="rowWidth">{{i.subjectName}}</td>
                       <td ng-style="rowWidth">{{i.userFullname}}</td>
                     </tr>
@@ -184,8 +188,6 @@
                 <!-- /.box-footer -->
 
               </div>
-
-
             </div>
           </div>
         </div>

@@ -17,5 +17,14 @@ router.get('/get-all-feedback-sessions', function(req, res, next) {
 router.post('/create_feedback_sessions', function(req, res, next) {
     FeedbackSessionController.createFeedbackSessions(req.body, res);
 });
+router.post('/update-feedback-session', function(req, res, next) {
+    FeedbackSessionController.updateFeedbackSession(req.body, res);
+});
+router.get('/get-all-feedback-sessions-for-report', function(req, res, next) {
+    FeedbackSessionController.getAllFeedbackSessionsForReport(req.body, res);
+});
+router.get('/check-feedbacksession-available', function(req, res, next) {
+    FeedbackSessionController.checkFeedbacksessionAvailable(req.body, res);
+});
 
 module.exports = router;
