@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * @ngdoc function
  * @name armsAngularApp.controller:AppointmentsRequestTableCtrl
@@ -7,7 +6,7 @@
  * # AppointmentsRequestTableCtrl
  * Controller of the armsAngularApp
  */
-angular.module('armsAngularApp')
+angular.module('armsAngularApp') 
   .controller('RequestTableCtrl', [
     '$rootScope',
     '$scope',
@@ -41,7 +40,7 @@ angular.module('armsAngularApp')
         DTColumnBuilder.newColumn('approved').withTitle('Status').renderWith(function(data, type, full) {
           var st;
           if (full.cancel == true) {
-             return '<span class="label label-danger">Cancelled</span>';             
+             return '<span class="label label-danger">Cancelled</span>';
           } else if (full.reShedule == true) {
               return '<span class="label label-info">On Reshedule</span>';
           } else if (full.approved == true) {
@@ -63,16 +62,16 @@ angular.module('armsAngularApp')
         // } else {
         //   return '';
         // }
-        // 
-        if (full.approved  === false ) { 
-            return '';         
+        //
+        if (full.approved  === false ) {
+            return '';
         } else if(full.cancel === true){
             return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="triggerMoreDetails()" data-target="#detailModal"> more details</button>';
-        } else {            
+        } else {
           return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" ng-click="triggerMoreDetails()" data-target="#detailModal"> more details</button>'+
-           '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>'+
-           '<button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#cancelModal">Cancel</button>';
-        }  
+           '<button type="button" class="btn btn-primary btn-sm table-action-btn" data-toggle="modal" data-target="#resheduleModal">Reshedule</button>';
+
+        }
 
       }
 
@@ -121,5 +120,11 @@ angular.module('armsAngularApp')
           vm.dtInstance.reloadData();
       });
 
+      function reloadData() {
+        var resetPaging = true;
+        vm.dtInstance.reloadData(callback, resetPaging);
+      }
+
     }
-  ]);
+  ]); 
+

@@ -19,6 +19,7 @@ angular.module('armsAngularApp')
             $scope.appointmentRequest = {};
             $scope.appointmentData = {};
             $scope.called = false;
+            $scope.moreTimeSlotsClicked = false;
 
             var resetEverything = function() {
                 $scope.called = false;
@@ -75,7 +76,8 @@ angular.module('armsAngularApp')
 
             $scope.submitAppoinmentReshedule = function() {
               appointmentDataService.sendRescheduleRequest($scope.appointmentData).then(function (response) {
-                 angular.element("#resheduleModal").modal('hide');             
+                 angular.element("#resheduleModal").modal('hide');
+                 appointmentDataService.refreshTables();
                 swal({
                     title: "Request Sent",
                     text: "You reschedule request has been successfully send",
@@ -87,20 +89,7 @@ angular.module('armsAngularApp')
               });
             };
 
-            $scope.submitAppoinmentCancel = function () {
-              appointmentDataService.sendCancelRequest($scope.appointmentData).then(function (response) {
-                 angular.element("#cancelModal").modal('hide');  
-                 appointmentDataService.refreshTables();           
-                swal({
-                    title: "Request Sent",
-                    text: "You reschedule request has been successfully send",
-                    type: "success",
-                    timer: 2000
-                });
-              }, function (error) {
-                /* body... */
-              });
-            };
+
 
             $scope.reload = function() {
                 appointmentDataService.refreshTables();
@@ -133,11 +122,16 @@ angular.module('armsAngularApp')
                     function(response) {
                         console.log(response);
                         $scope.called = true;
+                        $scope.availableTimeSlots = [];
                         $scope.availableTimeSlots = response.data;
                     },
                     function(error) {
                         console.error(error);
                     });
+            };
+
+            $scope.clearTimeSlots = function () {
+              $scope.availableTimeSlots = [];
             };
 
             $scope.selectTimeSlot = function(timeSlot) {
@@ -168,6 +162,7 @@ angular.module('armsAngularApp')
                         $scope.appoinment.room = data.Room;
                         console.log(data);
                         $scope.appointmentData = data;
+                        $scope.appointmentData.Lecturer = data.TimeSlot.Lecturer;
                         $rootScope.$broadcast('moreDetails',data);
 
 
@@ -183,6 +178,8 @@ angular.module('armsAngularApp')
                     function(response) {
                         $scope.availableTimeSlots = [];
                         $scope.availableTimeSlots = response.data;
+                        $scope.moreTimeSlotsClicked = true;
+                        $scope.called = true;
                         console.log(response.data);
                     }
                 );

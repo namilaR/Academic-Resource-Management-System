@@ -30,6 +30,63 @@
         </div>
       </div>
 
+      <div class="box box-orange">
+        <div class="box-header with-border">
+          <h3 class="box-title">Sessions List</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+          <table>
+            <thead align="center">
+            <tr>
+              <td ng-style="smallRowWidth" ><b>Code</b></td>
+              <td ng-style="smallRowWidth" ><b>Year</b></td>
+              <td ng-style="smallRowWidth" ><b>Subject</b></td>
+              <td ng-style="smallRowWidth" ><b>Lecturer</b></td>
+              <td ng-style="rowWidth" ><b>Date</b></td>
+              <td ng-style="rowWidth" ><b>Start Time</b></td>
+              <td ng-style="rowWidth" ><b>End Time</b></td>
+              <td ng-style="smallRowWidth" ><b>Status</b></td>
+            </tr>
+            </thead>
+            <tbody ng:repeat="i in mainFeedBackSessionsList" align="center">
+            <tr>
+              <td ng-style="smallRowWidth" style="font-weight: bold;" >{{i.id}}</td>
+              <td ng-style="smallRowWidth" style="font-weight: bold;">2016</td>
+              <td ng-style="smallRowWidth" >{{i.subjectName}}</td>
+              <td ng-style="smallRowWidth" >{{i.userFullname}}</td>
+              <td ng-style="rowWidth">
+                  <p class="input-group">
+                    <input type="text" name="date"  ng-model="feedback_session_date[i.id]" ng-value="i.feedbackSessionDate" ng-change="feedbackSessionDateChange(i.id)" class="form-control" min-date="minDate" uib-datepicker-popup ng-model="items.date"  is-open="feedbackSessionDate[$index]" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="openfeedbackSessionDate($event, $index)" ><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+              </td>
+              <td ng-style="rowWidth">
+                  <p class="input-group">
+                      <div uib-timepicker ng-model="feedback_session_start_time[i.id]"  ng-init="setFeedbackSessionStartTime(i.id,i.feedbackSessionStartTime)" ng-change="feedbackSessionStartTimeChange(i.id)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                  </p>
+              </td>
+              <td ng-style="rowWidth" >
+                <p class="input-group">
+                    <div uib-timepicker ng-model="feedback_session_end_time[i.id]"  ng-init="setFeedbackSessionEndTime(i.id,i.feedbackSessionEndTime)"   ng-change="feedbackSessionEndTimeChange(i.id)" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                </p>
+              </td>
+              <td ng-style="smallRowWidth">  <toggle-switch ng-init="setFeedbackSessionStatus(i.id,i.status)" ng-model="feedback_session_status[i.id]" ng-change="feedbackSessionStatusChange(i.id)" ></toggle-switch> </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+
+        </div>
+        <!-- /.box-footer -->
+
+      </div>
+
       <div class="modal fade" id="addnewusertype" >
         <div class="modal-dialog">
           <div class="modal-content">
@@ -37,30 +94,51 @@
               <div class="row">
                 <div class="col-md-12">
                   <div ng-controller="UserTypeCtrl">
-                    <form name="feedbacksessionForm" ng-submit="submitUserRoleForm(feedbacksessionForm.$valid)" novalidate>
+                    <form name="feedbacksessionForm" ng-submit="createFeedbackSession(feedbacksessionForm.$valid)" novalidate>
                       <div class="row">
                         <div class="col-md-12 text-center">
                           <h3>Create New FeedBack Session</h3>
                         </div>
                       </div>
                       <div class="row">
-
                         <div class="col-md-6 text-center">
-                          <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted )}">
-                            <label class="control-label ">Year</label>
+                          <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.batch.$invalid && !feedbacksessionForm.batch.$pristine) || (feedbacksessionForm.batch.$invalid && feedbacksessionForm.$submitted )}">
+                            <label class="control-label ">Batch</label>
                             <div class="">
-                              <input type="text" class="form-control" ng-model="userType" name="userType" required>
-                              <p ng-show="(feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
+                              <select name="batchName" id="batchName" class="form-control"
+                                      ng-options="option.batchName for option in data.availableOptions track by option.id"
+                                      ng-model="data.selectedOption" ng-change="GetValue()" required>
+                              </select>
+                              <p ng-show="(feedbacksessionForm.batch.$invalid && !feedbacksessionForm.batch.$pristine) || (feedbacksessionForm.batch.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
                             </div>
                           </div>
                         </div>
 
                         <div class="col-md-6 text-center">
                           <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted )}">
-                            <label class="control-label ">Batch</label>
+                            <label class="control-label ">Year</label>
                             <div class="">
-                              <input type="text" class="form-control" ng-model="userType" name="userType" required>
-                              <p ng-show="(feedbacksessionForm.userType.$invalid && !feedbacksessionForm.userType.$pristine) || (feedbacksessionForm.userType.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
+                              <select name="year" id="year" class="form-control"
+                                      ng-options="option.year for option in year.availableOptions track by option.id"
+                                      ng-model="year.selectedOption" ng-change="GetValue()" required>
+                              </select>
+                              <p ng-show="(feedbacksessionForm.year.$invalid && !feedbacksessionForm.year.$pristine) || (feedbacksessionForm.year.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="row">
+
+                        <div class="col-md-6 text-center">
+                          <div class="form-group" ng-class="{ 'has-error' : (feedbacksessionForm.batch_week.$invalid && !feedbacksessionForm.batch_week.$pristine) || (feedbacksessionForm.batch_week.$invalid && feedbacksessionForm.$submitted )}">
+                            <label class="control-label ">Batch Week</label>
+                            <div class="">
+                              <select name="batch_week" id="batch_week" class="form-control"
+                                      ng-options="option.batch_week for option in batch_week.availableOptions track by option.id"
+                                      ng-model="batch_week.selectedOption" ng-change="GetValue()" required>
+                              </select>
+                              <p ng-show="(feedbacksessionForm.batch_week.$invalid && !feedbacksessionForm.batch_week.$pristine) || (feedbacksessionForm.batch_week.$invalid && feedbacksessionForm.$submitted ) " class="help-block">Please enter a new user role</p>
                             </div>
                           </div>
                         </div>
@@ -76,6 +154,39 @@
                     </form>
                   </div>
                 </div>
+              </div>
+              <div class="box box-orange">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Sessions</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                  <table>
+                    <thead align="center">
+                      <tr>
+                        <td ng-style="smallRowWidth"><b>Code</b></td>
+                        <td ng-style="smallRowWidth"><b>Date</b></td>
+                        <td ng-style="rowWidth"><b>Subject</b></td>
+                        <td ng-style="rowWidth"><b>Lecturer</b></td>
+                      </tr>
+                    </thead>
+                    <tbody ng:repeat="i in phones" align="center">
+                    <tr>
+                      <td ng-style="smallRowWidth">{{i.id}}</td>
+                      <td ng-style="smallRowWidth">{{i.feedbackSessionDate}}</td>
+                      <td ng-style="rowWidth">{{i.subjectName}}</td>
+                      <td ng-style="rowWidth">{{i.userFullname}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+
+                </div>
+                <!-- /.box-footer -->
+
               </div>
             </div>
           </div>

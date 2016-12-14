@@ -15,11 +15,8 @@ angular.module('armsAngularApp')
         'appointmentDataService',
         'moment',
         function($rootScope,CONFIG, $scope, $log, appointmentDataService, moment) {
-            this.awesomeThings = [
-                'HTML5 Boilerplate',
-                'AngularJS',
-                'Karma'
-            ];
+          $scope.moreTimeSlotsClicked = false;
+
             $scope.pendingRequest = {};
             $scope.appointment = {};
             $scope.appoinment = {};
@@ -27,6 +24,15 @@ angular.module('armsAngularApp')
             $scope.rooms = [];
             $scope.availableTimeSlots = [];
             var data = {};
+
+          var clearAll = function () {
+            $scope.pendingRequest = {};
+            $scope.appointment = {};
+            $scope.appoinment = {};
+            $scope.appointmentData = {};
+            $scope.rooms = [];
+            $scope.availableTimeSlots = [];
+          };
 
             $scope.$on('requestTableRowClick', function() {
                 $scope.pendingRequest = {};
@@ -61,12 +67,13 @@ angular.module('armsAngularApp')
             });
 
             $scope.placeAppoinment = function() {
-                $scope.pendingRequest.appointmentNoteLecturer = $scope.appointmentNoteLecturer;                
+                $scope.pendingRequest.appointmentNoteLecturer = $scope.appointmentNoteLecturer;
                 appointmentDataService.placeAppoinment($scope.pendingRequest).then(
                     function(d) {
                         console.log(d);
                         appointmentDataService.refreshTables();
                         angular.element("#myModal").modal('hide');
+                        clearAll();
                     }
                 );
             };
@@ -85,18 +92,20 @@ angular.module('armsAngularApp')
                         $scope.appoinment.toTime = moment(data.TimeSlot.toTime, 'HH:mm:ss').format("hh:mm A");
                         $scope.appoinment.TimeSlot = data.TimeSlot;
                         $scope.appoinment.room = data.Room;
-                        $scope.appointmentData = data;                        
+                        $scope.appointmentData = data;
                         $rootScope.$broadcast('moreDetails',data);
-                        $scope.getMoreAvailableTimeSlots2 ();                       
+                        $scope.getMoreAvailableTimeSlots2 ();
                         console.log($scope.appointmentData);
                     }
                 );
             });
 
             $scope.submitAppoinmentReshedule = function () {
+              $scope.appointmentData.userRole = 'Lecturer';
               appointmentDataService.sendRescheduleRequest($scope.appointmentData).then(function (response) {
-                 angular.element("#resheduleModal").modal('hide'); 
-                 appointmentDataService.refreshTables();            
+                 angular.element("#resheduleModal").modal('hide');
+                 appointmentDataService.refreshTables();
+                  clearAll();
                 swal({
                     title: "Request Sent",
                     text: "You reschedule request has been successfully send",
@@ -106,12 +115,12 @@ angular.module('armsAngularApp')
               }, function (error) {
                 /* body... */
               });
-            };            
+            };
 
             $scope.submitAppoinmentCancel = function () {
               appointmentDataService.sendCancelRequest($scope.appointmentData).then(function (response) {
-                 angular.element("#cancelModal").modal('hide');  
-                 appointmentDataService.refreshTables();           
+                 angular.element("#cancelModal").modal('hide');
+                 appointmentDataService.refreshTables();
                 swal({
                     title: "Request Sent",
                     text: "You reschedule request has been successfully send",
@@ -133,6 +142,7 @@ angular.module('armsAngularApp')
                 function(response){
                   $scope.availableTimeSlots = [];
                   $scope.availableTimeSlots = response.data;
+                  $scope.moreTimeSlotsClicked = true;
                   console.log(response.data);
                 }
               );
@@ -146,6 +156,7 @@ angular.module('armsAngularApp')
                 function(response){
                   $scope.availableTimeSlots = [];
                   $scope.availableTimeSlots = response.data;
+                  $scope.moreTimeSlotsClicked = true;
                   console.log(response.data);
                 }
               );
@@ -184,11 +195,11 @@ angular.module('armsAngularApp')
             //load time table in new tab
             $scope.showTimeTable = function(operation){
               if (operation == 'make') {
-                 window.open(CONFIG.BASE_URL+$scope.pendingRequest.Student.Batch.timeTable,'_blank');
+                 window.open(CONFIG.BASE_URL+'pdfs/'+$scope.pendingRequest.Student.Batch.timeTable,CONFIG.BASE_URL+'pdfs/'+$scope.pendingRequest.Student.Batch.timeTable);
               } else {
-                 window.open(CONFIG.BASE_URL+$scope.appoinment.Student.Batch.timeTable,'_blank');
+                 window.open(CONFIG.BASE_URL+'pdfs/'+$scope.appoinment.Student.Batch.timeTable,'_blank');
               }
-             
+
             };
 
 

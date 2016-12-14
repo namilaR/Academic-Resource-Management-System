@@ -81,7 +81,7 @@
     <!-- /.container-->
     <detail-modal role="{{user_role}}"></detail-modal>
     <reshedule-modal-lecture role="{{user_role}}"></reshedule-modal-lecture>
-    <cancel-modal></cancel-modal>    
+    <cancel-modal></cancel-modal>
 </div>
 
 <!-- Modal -->
@@ -93,7 +93,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    <h4 class="modal-title" id="myModalLabel">Make appointment</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -160,7 +160,7 @@
                                     <label for="enterRequestTitle" class="control-label  ">Time Slot</label>
                                 </div>
                                 <div class="col-sm-8">
-                                <label class="control-label  ">{{pendingRequest.fromTime}}&nbsp;-&nbsp;{{pendingRequest.toTime}}&nbsp;({{pendingRequest.appointmentDay}})</label>&nbsp;<a ng-click="getMoreAvailableTimeSlots ()" href="">more time slots</a>  
+                                <label class="control-label  ">{{pendingRequest.fromTime}}&nbsp;-&nbsp;{{pendingRequest.toTime}}&nbsp;({{pendingRequest.appointmentDay}})</label>&nbsp;<a ng-click="getMoreAvailableTimeSlots ()" href="">more time slots</a>
                                     <a ng-repeat=" timeSlot in availableTimeSlots" ng-class="{'btn-success text-white' : pendingRequest.timeSlot.id == timeSlot.id }" ng-click="selectTimeSlot(timeSlot)" class="btn btn-time-slot btn-default">
                                       <strong>{{timeSlot.day}}</strong><br>{{timeSlot.fromTime}}-{{timeSlot.toTime}}
                                     </a>
@@ -178,27 +178,27 @@
                                     <a ng-repeat=" room in rooms" ng-class="{'btn-success text-white' : pendingRequest.selectedRoom.id == room.id }" ng-click="selectRoom(room)" class="btn btn-time-slot btn-default">
                                         <strong>{{room.id}}</strong>
                                         <br>{{room.roomName}}
-                                    </a>                                    
+                                    </a>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                               <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label  ">Note from Student</label>                                  
+                                  <label for="enterRequestTitle" class="control-label  ">Note from Student</label>
                               </div>
                               <div class="col-sm-8">
                                 <span>{{pendingRequest.appointmentNoteStudent}}</span>
                               </div>
-                            </div>     
+                            </div>
 
                             <div class="form-group row">
                               <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label  ">Note for Student</label>                                  
+                                  <label for="enterRequestTitle" class="control-label  ">Note for Student</label>
                               </div>
                               <div class="col-sm-8">
                                 <textarea class="form-control" ng-model="appointmentNoteLecturer" rows="8" cols="40"></textarea>
                               </div>
-                            </div>                           
+                            </div>
 
                         </div>
                     </div>

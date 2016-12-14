@@ -2,124 +2,151 @@
 <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="resheduleModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Appointment More Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="inputEmail3" class=" control-label ">DIT</label>
+              </div>
+              <div class="col-sm-8">
+                <label class="control-label  ">
+                  <a href="">{{appointmentData.Student.studentDitNo}}</a>
+                </label>
+              </div>
+            </div>
+            <div ng-if="role == 'Lecturer' || role == 'HOD' " class="form-group row">
+              <div class="col-sm-4">
+                <label for="inputEmail3" class=" control-label  ">Student Name</label>
+              </div>
+              <div class="col-sm-8">
+                <label class="control-label  ">
+                  <a href="">{{appointmentData.Student.User.userUserName}}</a>
+                </label>
+              </div>
+            </div>
 
-            <form class="form-horizontal">            
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Appointment More Details</h4>
+            <div ng-if="role == 'Student'  || role == 'HOD'" class="form-group row">
+              <div class="col-sm-4">
+                <label for="inputEmail3" class=" control-label  ">Lecture Name</label>
+              </div>
+              <div class="col-sm-8">
+                <label class="control-label  ">
+                  <a href="">{{appointmentData.TimeSlot.Lecturer.User.userUserName}}</a>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label ng-if="role == 'Lecturer'  || role == 'HOD'" for="inputEmail3" class=" control-label  ">Batch Time Table</label>
+                <label ng-if="role == 'Student'" for="inputEmail3" class=" control-label  ">My Time Table</label>
+              </div>
+              <div class="col-sm-8">
+                <label class="control-label  ">
+                  <a href="" ng-click="showTimeTable('make')">Click here !</a>
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="inputEmail3" class=" control-label  ">Appointment Title</label>
+              </div>
+              <div class="col-sm-8">
+                <label class="control-label  ">{{appointmentData.appointmentTitle}}</label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="inputEmail3" class=" control-label  ">Appointment Description</label>
+              </div>
+              <div class="col-sm-8">
+                <label class="control-label  ">{{appointmentData.appointmentSmallBref}}</label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="enterRequestTitle" class="control-label ">Date & Time Slot</label>
+              </div>
+              <div class="col-sm-8">
+                <span class="control-label ">&nbsp;{{_JsDateToDate(appointmentData.appointmentDate)}} &nbsp; at &nbsp;{{ _24hoursToAmPm(appointmentData.TimeSlot.fromTime)}}&nbsp;-&nbsp;{{ _24hoursToAmPm(appointmentData.TimeSlot.toTime)}}&nbsp;({{appointmentData.TimeSlot.day}})</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="enterRequestTitle" class="control-label ">Venue</label>
+              </div>
+              <div class="col-sm-8">
+                <span class="control-label ">{{appointmentData.Room.roomName}}</span>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="enterRequestTitle" class="control-label ">Note Student</label>
+              </div>
+              <div class="col-sm-8">
+                <span>{{appointmentData.appointmentNoteStudent}}</span>
+                <span ng-show="!appointmentData.appointmentNoteStudent">--</span>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div class="col-sm-4">
+                <label for="enterRequestTitle" class="control-label  "> Note Lecture </label>
+              </div>
+              <div class="col-sm-8">
+                <span>{{appointmentData.appointmentNoteLecturer}}</span>
+                <span ng-show="!appointmentData.appointmentNoteLecturer">--</span>
+              </div>
+            </div>
+            <div ng-if="role == 'Lecturer'  || role == 'HOD' " class="form-group row">
+              <div class="col-sm-4">
+                <label for="enterRequestTitle" class="control-label  "> Comment </label>
+              </div>
+              <div class="col-sm-8">
+                <span ng-if="appointmentData.appointmentComment">{{appointmentData.appointmentComment}}</span>
+                <div ng-show="!appointmentData.appointmentComment && role == 'Lecturer'">
+                  <textarea ng-model="comment" class="form-control"  rows="8"
+                            cols="40"></textarea>
+                  <button class="btn btn-warning pull-right" style="margin-top: 10px;" ng-click="placeComment()">
+                    Comment
+                  </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label for="inputEmail3" class=" control-label ">DIT</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <label class="control-label  ">
-                                        <a href="">{{appointmentData.Student.studentDitNo}}</a>
-                                    </label>
-                                </div>
-                            </div>
-                            <div ng-if="role == 'Lecturer'" class="form-group row">
-                                <div class="col-sm-4"> 
-                                    <label  for="inputEmail3" class=" control-label  ">Student Name</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <label class="control-label  ">
-                                        <a href="">{{appointmentData.TimeSlot.Lecturer.User.userUserName}}</a>
-                                    </label>
-                                </div>
-                            </div>                            
-
-                            <div ng-if="role == 'Student'"  class="form-group row">
-                                <div class="col-sm-4">
-                                    <label  for="inputEmail3" class=" control-label  ">Lecture Name</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <label class="control-label  ">
-                                        <a href="">{{appointmentData.User.userUserName}}</a>
-                                    </label>
-                                </div>
-                            </div>  
-
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label ng-if="role == 'Lecturer'" for="inputEmail3" class=" control-label  ">Batch Time Table</label>
-                                    <label ng-if="role == 'Student'" for="inputEmail3" class=" control-label  ">My Time Table</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <label class="control-label  ">
-                                        <a href="" ng-click="showTimeTable('make')">Click here !</a>
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label for="inputEmail3" class=" control-label  ">Appointment Title</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <label class="control-label  ">{{appointmentData.appointmentTitle}}</label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label for="inputEmail3" class=" control-label  ">Appointment Description</label>
-                                </div>
-                                <div class="col-sm-8">
-                                    <label class="control-label  ">{{appointmentData.appointmentSmallBref}}</label>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-4">
-                                    <label for="enterRequestTitle" class="control-label ">Date & Time Slot</label>
-                                </div>
-                                <div class="col-sm-8">
-                                <span class="control-label ">&nbsp;{{_JsDateToDate(appointmentData.appointmentDate)}} &nbsp; at &nbsp;{{ _24hoursToAmPm(appointmentData.TimeSlot.fromTime)}}&nbsp;-&nbsp;{{ _24hoursToAmPm(appointmentData.TimeSlot.toTime)}}&nbsp;({{appointmentData.TimeSlot.day}})</span>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                              <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label ">Note Student</label>                                  
-                              </div>
-                              <div class="col-sm-8">
-                                <span>{{appointmentData.appointmentNoteStudent}}</span>
-                                <span ng-show="!appointmentData.appointmentNoteStudent">--</span>
-                              </div>
-                            </div>     
-
-                            <div  class="form-group row">
-                              <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label  "> Note Lecture </label>                                 
-                              </div>
-                              <div class="col-sm-8">
-                                <span>{{appointmentData.appointmentNoteLecturer}}</span> 
-                                <span ng-show="!appointmentData.appointmentNoteLecturer">--</span>
-                              </div>
-                            </div>
-                            <div ng-if="role == 'Lecturer'"  class="form-group row">
-                              <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label  "> Comment </label>                              
-                              </div>
-                              <div class="col-sm-8">
-                                <span ng-if="appointmentData.appointmentComment" >{{appointmentData.appointmentComment}}</span>
-                                <div ng-show="!appointmentData.appointmentComment">
-                                    <textarea  ng-model="comment" class="form-control" ng-model="appointmentNoteLecturer" rows="8" cols="40"></textarea>
-                                    <button class="btn btn-warning pull-right" style="margin-top: 10px;" ng-click="placeComment()">Comment</button>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+            </div>
+           <div ng-show="appointmentData.cancel == false || !appointmentData.cancel">
+              <div class="form-group row">
+                <div class="col-sm-4">
+                  <label for="enterRequestTitle" class="control-label  ">Reason for Cancellation</label>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <div class="col-sm-8">
+                  <textarea class="form-control" ng-model="reasonForCancel" rows="8"
+                            cols="40"></textarea>
                 </div>
-            </form>
+              </div>
+              <div class="form-group row">
+                <div class="col-sm-12" >
+                  <button type="button" ng-click="submitAppoinmentCancel()" ng-disabled="!reasonForCancel" class="btn btn-danger pull-right btn-sm">Cancel Appointment
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+
 
     </div>
   </div>

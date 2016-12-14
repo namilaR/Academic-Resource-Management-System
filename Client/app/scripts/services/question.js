@@ -39,7 +39,7 @@ angular.module('armsAngularApp')
       return $http({
         method: 'put',
         url: baseUrl + 'question',
-        params: questionInstance
+        data: questionInstance
       }).then(function(res) {
         return res;
       });

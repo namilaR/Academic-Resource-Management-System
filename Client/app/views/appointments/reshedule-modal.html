@@ -3,7 +3,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
 
-            <form ng-if="role == 'Student'" class="form-horizontal" ng-submit="submitAppoinmentReshedule()">            
+            <form ng-if="role == 'Student'" class="form-horizontal" ng-submit="submitAppoinmentReshedule()">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -24,15 +24,15 @@
                                 </div>
                             </div>
                             <div ng-if="role == 'Student'" class="form-group row">
-                                <div class="col-sm-4"> 
-                                    <label  for="inputEmail3" class=" control-label  ">Student Name</label>
+                                <div class="col-sm-4">
+                                    <label  for="inputEmail3" class=" control-label  ">Lecturer Name</label>
                                 </div>
                                 <div class="col-sm-8">
                                     <label class="control-label  ">
-                                        <a href="">{{appointmentData.TimeSlot.Lecturer.User.userUserName}}</a>
+                                        <a href="">{{appointmentData.Lecturer.User.userUserName}}</a>
                                     </label>
                                 </div>
-                            </div>                            
+                            </div>
 
                             <div ng-if="role == 'Lecturer'" class="form-group row">
                                 <div class="col-sm-4">
@@ -40,10 +40,10 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <label class="control-label  ">
-                                        <a href="">{{appointmentData..User.userUserName}}</a>
+                                        <a href="">{{appointmentData.User.userUserName}}</a>
                                     </label>
                                 </div>
-                            </div>  
+                            </div>
 
                             <div class="form-group row">
                                 <div class="col-sm-4">
@@ -97,10 +97,11 @@
                                     <label for="enterRequestTitle" class="control-label  ">Time Slot</label>
                                 </div>
                                 <div class="col-sm-8">
-                                <label class="control-label  ">{{ _24hoursToAmPm(appointmentData.TimeSlot.fromTime)}}&nbsp;-&nbsp;{{ _24hoursToAmPm(appointmentData.TimeSlot.toTime)}}&nbsp;({{appointmentData.TimeSlot.day}})</label>&nbsp;<a ng-click="getMoreAvailableTimeSlots ()" href="">more time slots</a>  
+                                <label class="control-label  ">{{ _24hoursToAmPm(appointmentData.TimeSlot.fromTime)}}&nbsp;-&nbsp;{{ _24hoursToAmPm(appointmentData.TimeSlot.toTime)}}&nbsp;({{appointmentData.TimeSlot.day}})</label>&nbsp;<a ng-click="getMoreAvailableTimeSlots ()" href="">more time slots</a>
                                     <a ng-repeat=" timeSlot in availableTimeSlots" ng-class="{'btn-success text-white' : appointmentData.TimeSlot.id == timeSlot.id }" ng-click="selectTimeSlot(timeSlot)" class="btn btn-time-slot btn-default">
                                       <strong>{{timeSlot.day}}</strong><br>{{timeSlot.fromTime}}-{{timeSlot.toTime}}
                                     </a>
+                                  <a ng-show="availableTimeSlots.length == 0 && called " class="btn btn-time-slot btn-danger text-white" style="display: block">There are no free Time Slots Available<br>Please Try a  Diffrent Date</a>
 <!--                                     <a class="btn btn-time-slot btn-default">
                                         <strong>{{appointmentData.appointmentDay}}</strong>
                                         <br>{{appointmentData.fromTime}}-{{appointmentData.toTime}}
@@ -115,22 +116,22 @@
                                     <a ng-repeat=" room in rooms" ng-class="{'btn-success text-white' : appointmentData.selectedRoom.id == room.id }" ng-click="selectRoom(room)" class="btn btn-time-slot btn-default">
                                         <strong>{{room.id}}</strong>
                                         <br>{{room.roomName}}
-                                    </a>                                    
+                                    </a>
                                 </div>
                             </div>
 
                             <div ng-if="role == 'Lecturer'" class="form-group row">
                               <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label  ">Note from Student</label>                                  
+                                  <label for="enterRequestTitle" class="control-label  ">Note from Student</label>
                               </div>
                               <div class="col-sm-8">
                                 <span>{{appointmentData.appointmentNoteStudent}}</span>
                               </div>
-                            </div>     
+                            </div>
 
                             <div ng-if="role == 'Lecturer'" class="form-group row">
                               <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label  ">Note for Student</label>                                  
+                                  <label for="enterRequestTitle" class="control-label  ">Note for Student</label>
                               </div>
                               <div class="col-sm-8">
                                 <textarea class="form-control" ng-model="appointmentData.appointmentNoteLecturer" rows="8" cols="40"></textarea>
@@ -138,20 +139,20 @@
                             </div>
 
                             <div ng-if="role == 'Student'" class="form-group row">
-                              <div class="col-sm-4">                                 
+                              <div class="col-sm-4">
                                   <label for="enterRequestTitle" class="control-label  ">Note form Lecture</label>
                               </div>
                               <div class="col-sm-8">
                                 <span>{{appointmentData.appointmentNoteLecturer}}</span>
-                                
+
                               </div>
-                            </div>                        
+                            </div>
 
                             <div ng-if="role == 'Student'" class="form-group row">
-                              <div class="col-sm-4">                                 
+                              <div class="col-sm-4">
                                   <label for="enterRequestTitle" class="control-label  ">Note for Lecture</label>
                               </div>
-                              <div class="col-sm-8">                                
+                              <div class="col-sm-8">
                                 <textarea class="form-control" ng-model="appointmentData.appointmentNoteStudent" rows="8" cols="40"></textarea>
                               </div>
                             </div>
@@ -161,7 +162,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success pull-right">Make Reschedule Request</button>
+                    <button type="submit" ng-disabled="!moreTimeSlotsClicked || availableTimeSlots.length == 0 || appointmentRequest.selectedTimeSlot == null " class="btn btn-success pull-right">Make Reschedule Request</button>
                 </div>
             </form>
 
@@ -186,7 +187,7 @@
                                 </div>
                             </div>
                             <div ng-if="role == 'Student'" class="form-group row">
-                                <div class="col-sm-4"> 
+                                <div class="col-sm-4">
                                     <label  for="inputEmail3" class=" control-label  ">Student Name</label>
                                 </div>
                                 <div class="col-sm-8">
@@ -194,7 +195,7 @@
                                         <a href="">{{appointmentData.TimeSlot.Lecturer.User.userUserName}}</a>
                                     </label>
                                 </div>
-                            </div>                          
+                            </div>
 
 
                             <!-- <div class="form-group row">
@@ -238,7 +239,7 @@
                                     <label for="enterRequestTitle" class="control-label  ">Time Slot</label>
                                 </div>
                                 <div class="col-sm-8">
-                                <label class="control-label  ">{{ _24hoursToAmPm(appointmentData.TimeSlot.fromTime)}}&nbsp;-&nbsp;{{ _24hoursToAmPm(appointmentData.TimeSlot.toTime)}}&nbsp;({{appointmentData.TimeSlot.day}})</label>&nbsp;<a ng-click="getMoreAvailableTimeSlots2 ()" href="">more time slots</a>  
+                                <label class="control-label  ">{{ _24hoursToAmPm(appointmentData.TimeSlot.fromTime)}}&nbsp;-&nbsp;{{ _24hoursToAmPm(appointmentData.TimeSlot.toTime)}}&nbsp;({{appointmentData.TimeSlot.day}})</label>&nbsp;<a ng-click="getMoreAvailableTimeSlots2 ()" href="">more time slots</a>
                                     <a ng-repeat=" timeSlot in availableTimeSlots" ng-class="{'btn-success text-white' : appointmentData.TimeSlot.id == timeSlot.id }" ng-click="selectTimeSlot(timeSlot)" class="btn btn-time-slot btn-default">
                                       <strong>{{timeSlot.day}}</strong><br>{{timeSlot.fromTime}}-{{timeSlot.toTime}}
                                     </a>
@@ -256,22 +257,22 @@
                                     <a ng-repeat=" room in rooms" ng-class="{'btn-success text-white' : appointmentData.Room.id == room.id }" ng-click="selectRoom(room)" class="btn btn-time-slot btn-default">
                                         <strong>{{room.id}}</strong>
                                         <br>{{room.roomName}}
-                                    </a>                                    
+                                    </a>
                                 </div>
                             </div>
 
                             <div ng-if="role == 'Lecturer'" class="form-group row">
                               <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label  ">Note from Student</label>                                  
+                                  <label for="enterRequestTitle" class="control-label  ">Note from Student</label>
                               </div>
                               <div class="col-sm-8">
                                 <span>{{appointmentData.appointmentNoteStudent}}</span>
                               </div>
-                            </div>     
+                            </div>
 
                             <div ng-if="role == 'Lecturer'" class="form-group row">
                               <div class="col-sm-4">
-                                  <label for="enterRequestTitle" class="control-label  ">Note for Student</label>                                  
+                                  <label for="enterRequestTitle" class="control-label  ">Note for Student</label>
                               </div>
                               <div class="col-sm-8">
                                 <textarea class="form-control" ng-model="appointmentData.appointmentNoteLecturer" rows="8" cols="40"></textarea>
@@ -282,7 +283,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success pull-right">Make Reschedule</button>
+                    <button type="submit"  class="btn btn-success pull-right">Make Reschedule</button>
                 </div>
             </form>
     </div>

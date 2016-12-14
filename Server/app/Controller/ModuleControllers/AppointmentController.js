@@ -74,17 +74,14 @@ AppointmentController = function() {
         });
 
     };
-    /**
-     * save appointment cancel request
+   /**
+     * save appointment comment 
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
-    this.saveAppoinmentCancelRequest = function(AppoinmentInstance, res) {
+    this.saveAppoinmentComment = function(AppoinmentInstance, res) {
         Appointment.update({
-
-            reShedule: 0,          
-            cancel:1,
-            appointmentCancleNote : AppoinmentInstance.appointmentCancleNote
+            appointmentComment : AppoinmentInstance.appointmentComment
         }, {
             where: {
                 id: AppoinmentInstance.id,
@@ -95,13 +92,16 @@ AppointmentController = function() {
 
     };
     /**
-     * save appointment comment 
+     * save appointment cancel request
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
      */
-    this.saveAppoinmentComment = function(AppoinmentInstance, res) {
+    this.saveAppoinmentCancelRequest = function(AppoinmentInstance, res) {
         Appointment.update({
-            appointmentComment : AppoinmentInstance.appointmentComment
+
+            reShedule: 0,
+            cancel:1,
+            appointmentCancleNote : AppoinmentInstance.appointmentCancleNote
         }, {
             where: {
                 id: AppoinmentInstance.id,
@@ -143,6 +143,31 @@ AppointmentController = function() {
         });
     };
     /**
+     * returns all appointments
+     * @param  {REQUEST},{RESPONSE}
+     * @return {RESPONSE}
+     */
+    this.getAllAppoinments = function(UserInstance, res) {
+
+        Appointment.findAll({
+            where: {
+                status: 1,
+
+            },
+            include: [{
+                model: TimeSlot,
+                where: {
+                    id: Sequelize.col('Appointment.TimeSlotId')
+                }
+            }]
+
+        })
+            .then(function(data) {
+                res.send(data);
+            });
+
+    };
+    /**
      * returns more details of given appointment
      * @param  {REQUEST},{RESPONSE}
      * @return {RESPONSE}
@@ -180,7 +205,12 @@ AppointmentController = function() {
                     where: {
                         id: Sequelize.col('Appointment.StudentId')
                     },
-
+                    include: [{
+                        model: User,
+                        where: {
+                            id: Sequelize.col('Student.UserId')
+                        }
+                    }]
                 }]
 
             })
@@ -199,6 +229,7 @@ AppointmentController = function() {
                 where: {
                     status: 1,
                     id: AppoimnetInstance.id,
+
                 },
                 include: [{
                     model: TimeSlot,
@@ -324,7 +355,7 @@ AppointmentController = function() {
                                 "   SELECT appointment.RoomId\n" +
                                 "   FROM appointment JOIN timeSlot \n" +
                                 "   ON appointment.TimeSlotId = timeSlot.id\n" +
-                                "   WHERE timeSlot.fromTime >= (SELECT timeSlot.fromTime FROM timeSlot WHERE timeSlot.id = " + timeSlot.id + ") AND appointment.appointmentDate = '" + Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate) + "' AND appointment.RoomId IS NOT NULL "
+                                "   WHERE timeSlot.fromTime >= (SELECT timeSlot.fromTime FROM timeSlot WHERE timeSlot.id = " + timeSlot.id + ") AND timeSlot.toTime <= (SELECT timeSlot.toTime FROM timeSlot WHERE timeSlot.id = " + timeSlot.id + ") AND appointment.appointmentDate = '" + Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate) + "' AND appointment.RoomId IS NOT NULL "
                             )
                         ]
                     }
@@ -347,7 +378,8 @@ AppointmentController = function() {
             appointmentDate : Helper.JSDateToSQLDate(AppoinmentInstance.appointmentDate),
             appointmentNoteLecturer : AppoinmentInstance.appointmentNoteLecturer,
             TimeSlotId: AppoinmentInstance.timeSlot.id,
-            approved: 1
+            approved: 1,
+            cancel: 0
         }, {
             where: {
                 id: AppoinmentInstance.id,

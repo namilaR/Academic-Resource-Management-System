@@ -1,0 +1,124 @@
+<style>
+    .question-tab .tab-inner-warp {
+        background: transparent;
+        padding: 0;
+    }
+
+    .tab-inner-warp {
+        padding: 20px;
+        color: #2f3239;
+    }
+
+    .question-type-main {
+        font-size: 11px;
+        margin: 0;
+        display: inline-block;
+        padding: 4px 10px;
+        position: absolute;
+        top: 10px;
+        right: 86px;
+    }
+
+    .question-desc {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        line-height: 22px;
+        font-size: 18px;
+        border-bottom: 1px solid #dedede;
+        color: #848991;
+    }
+
+    .question-inner {
+        position: relative;
+    }
+
+    .question {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        margin-bottom: 30px;
+        padding-top: 10px;;
+        padding-left: 20px;;
+        padding-right: 20px;;
+        padding-bottom: 10px;;
+        border: 1px solid #dedede;
+        background: #FFF;
+        -moz-box-shadow: 0 0 5px #dedede;
+        -webkit-box-shadow: 0 0 5px #dedede;
+        box-shadow: 0 0 5px #dedede;
+        position: relative;
+    }
+
+    .options {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    .options li {
+        float: left;
+        margin-right: 50px;
+    }
+
+
+</style>
+<div nav-bar-public></div>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-controller="QuizCtrl">
+    <div class="container">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>Questions</h1>
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="tab-inner-warp" style="display: block;">
+                <div class="tab-inner">
+                    <article class="question question-type-normal" ng-repeat="question in questions">
+                        <h2>
+                            <a href="single_question.html">{{($index + 1)}}.) Question No. {{($index + 1)}}</a>
+                        </h2>
+                        <div class="question-inner">
+                            <div class="clearfix"></div>
+                            <p class="question-desc">{{($index + 1)}}.) {{question.qus.question}}</p>
+                            <div class="question-details">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label class="radio-inline"   ng-repeat="feedback in feedbacks">
+                                            <input type="radio" name="favoriteColors[{{question.qus.id}}]" ng-model="question.ans" ng-value="feedback">
+                                            {{feedback.name}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="text-center">
+                <a ng-click="viewResults()" class="btn btn-primary">Submit</a>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.container -->
+</div>
+<!-- /.content-wrapper -->
+<div footer></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

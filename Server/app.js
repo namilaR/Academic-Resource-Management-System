@@ -10,7 +10,7 @@ var Relationship = require('./app/models/Relationship');
 var app = express();
 var cors = require('cors');
 var config = require('./config');
-var jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken'); 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
