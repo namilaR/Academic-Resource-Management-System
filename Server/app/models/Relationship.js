@@ -8,123 +8,137 @@ var connection = require('./Connection');
 var Relationship = function() {
 
 
-    Models.UserType.hasMany(Models.User);
-    Models.User.belongsTo(Models.UserType);
+    /***********************************************************************
+                            USER-MANAGEMENT  RELATIONSHIPS
+    ***********************************************************************/
+    /**added by Kasun*/
 
-    Models.User.hasMany(Models.Hod);
-    Models.Hod.belongsTo(Models.User);
+    //User Type Relationship
 
-    Models.Hod.hasMany(Models.FeedBackSession);
-    Models.FeedBackSession.belongsTo(Models.Hod);
+    Models.UserRole.hasMany(Models.User)
+    Models.User.belongsTo(Models.UserRole)
 
-    Models.FeedBackSession.hasMany(Models.Feedback);
-    Models.Feedback.belongsTo(Models.FeedBackSession);
+    //User Management Relationship
 
-    Models.User.hasMany(Models.Lecturer);
-    Models.Lecturer.belongsTo(Models.User);
+    Models.User.hasMany(Models.Hod)
+    Models.User.hasMany(Models.Student)
+    Models.User.hasMany(Models.Lecturer)
 
-    Models.User.hasMany(Models.Student);
-    Models.Student.belongsTo(Models.User);
+    Models.Hod.belongsTo(Models.User)
+    Models.Student.belongsTo(Models.User)
+    Models.Lecturer.belongsTo(Models.User)
 
-    Models.Subject.hasMany(Models.FeedBackSession);
-    Models.FeedBackSession.belongsTo(Models.Subject);
+    /*********************************************************************    
+    *********************************************************************/
 
-    Models.Question.hasMany(Models.Feedback);
-    Models.Feedback.belongsTo(Models.Question);
 
-    Models.Center.belongsTo(Models.Subject);
-    Models.Subject.hasMany(Models.Center);
+    /***********************************************************************
+                            FACULTY-MANAGEMENT  RELATIONSHIPS
+    ***********************************************************************/
 
-    Models.Faculty.belongsToMany(Models.Center, {
-        through: 'FacultyCenter'
-    });
-    Models.Center.belongsToMany(Models.Faculty, {
-        through: 'FacultyCenter'
-    });
+    Models.Hod.belongsTo(Models.Department)
 
-    Models.Department.belongsToMany(Models.Faculty, {
-        through: 'DepartmentFaculty'
-    });
-    Models.Faculty.belongsToMany(Models.Department, {
-        through: 'DepartmentFaculty'
-    });
+    Models.Center.belongsToMany(Models.Subject, {through: 'CenterSubject'})
+    Models.Subject.belongsToMany(Models.Center, {through: 'CenterSubject'})
 
-    Models.Center.hasMany(Models.Batch);
-    Models.Batch.belongsTo(Models.Center);
+    Models.Faculty.belongsToMany(Models.Center, {through: 'FacultyCenter'})
+    Models.Center.belongsToMany(Models.Faculty, {through: 'FacultyCenter'})
+
+    Models.Faculty.hasMany(Models.Department)
+    Models.Department.belongsTo(Models.Faculty)
+
+    Models.Department.hasMany(Models.Batch)
+    Models.Batch.belongsTo(Models.Department)
+
+    Models.Center.hasMany(Models.Batch)
+    Models.Batch.belongsTo(Models.Center)
+
+    Models.Faculty.hasMany(Models.Batch)
+    Models.Batch.belongsTo(Models.Faculty)
+
+    Models.Batch.hasMany(Models.Student)
+    Models.Student.belongsTo(Models.Batch)
 
     Models.Department.hasMany(Models.Batch);
     Models.Batch.belongsTo(Models.Department);
 
+    Models.Subject.belongsToMany(Models.Batch, {through: 'BatchSubject'})
+    Models.Batch.belongsToMany(Models.Subject, {through: 'BatchSubject'})
+
     Models.Batch.hasMany(Models.Student);
     Models.Student.belongsTo(Models.Batch);
 
-    Models.Lecturer.belongsToMany(Models.Batch, {
-        through: 'LecturerBatch'
-    });
-    Models.Batch.belongsToMany(Models.Lecturer, {
-        through: 'LecturerBatch'
-    });
+    Models.Lecturer.belongsToMany(Models.Batch, {through: 'LecturerBatch'})
+    Models.Batch.belongsToMany(Models.Lecturer, {through: 'LecturerBatch'})
 
+    Models.Room.belongsTo(Models.Faculty)
+
+    Models.Subject.belongsToMany(Models.Lecturer,{through: 'SubjectLecturer'});
+    Models.Lecturer.belongsToMany(Models.Subject,{through: 'SubjectLecturer'});
+
+    /*********************************************************************    
+    *********************************************************************/
+
+
+    /***********************************************************************
+                            APPOINMENTS RELATIONSHIPS
+    ***********************************************************************/
     Models.Student.hasMany(Models.Appointment);
     Models.Appointment.belongsTo(Models.Student);
 
-    Models.Lecturer.hasMany(Models.Appointment);
-    Models.Appointment.belongsTo(Models.Lecturer);
+    Models.TimeSlot.hasMany(Models.Appointment);
+    Models.Appointment.belongsTo(Models.TimeSlot);
 
-    Models.Lecturer.hasMany(Models.LecturerAvailability);
-    Models.LecturerAvailability.belongsTo(Models.Lecturer);
-
-
-
-    //Models.Appointment.belongsTo(Models.Request);
-
-
+    Models.Lecturer.hasMany(Models.TimeSlot);
+    Models.TimeSlot.belongsTo(Models.Lecturer);
 
     Models.Appointment.belongsTo(Models.Room);
 
+    /*********************************************************************
+    *********************************************************************/
+
+
+
+    /***********************************************************************
+                            FEED-BACK_MANAGEMENT RELATIONSHIPS
+    ***********************************************************************/
+
+    Models.Hod.hasMany(Models.FeedBackSession)
+    Models.FeedBackSession.belongsTo(Models.Hod)
+
+    Models.FeedBackSession.hasMany(Models.Feedback)
+    Models.Feedback.belongsTo(Models.FeedBackSession)
+
+    Models.Subject.hasMany(Models.FeedBackSession)
+    Models.FeedBackSession.belongsTo(Models.Subject)
+
+    Models.Question.hasMany(Models.Feedback)
+    Models.Feedback.belongsTo(Models.Question)
+
     /**added by pasindu*/
-    Models.User.hasMany(Models.Student);
-    Models.Student.belongsTo(Models.User);
+    Models.Lecturer.hasMany(Models.FeedBackSession)
+    Models.FeedBackSession.belongsTo(Models.Lecturer)
 
-    Models.User.hasMany(Models.Hod);
-    Models.Hod.belongsTo(Models.User);
+    Models.FeedBackSession.belongsTo(Models.Subject) 
 
-    Models.User.hasMany(Models.Lecturer);
-    Models.Lecturer.belongsTo(Models.User);
+    Models.FeedBackSession.belongsTo(Models.Center)
 
-    //  Models.QuestionTemplate.hasMany(Models.Question);
-    //  Models.Question.belongsTo(Models.QuestionTemplate);
+    Models.FeedBackSession.belongsTo(Models.Faculty)
 
+    Models.FeedBackSession.belongsTo(Models.Department)
 
+    Models.FeedBackSession.belongsTo(Models.Batch)
 
-    Models.QuestionTemplate.belongsToMany(Models.Question, {
-        through: 'QuestionTemplateQuestion'
-    });
-    Models.Question.belongsToMany(Models.QuestionTemplate, {
-        through: 'QuestionTemplateQuestion'
-    });
-
-
-
-
-
-
-
+    Models.Lecturer.hasMany(Models.FeedBackSession);
+    Models.FeedBackSession.belongsTo(Models.Lecturer);
 
 
     Models.Lecturer.hasMany(Models.FeedBackSession);
     Models.FeedBackSession.belongsTo(Models.Lecturer);
 
-    Models.Subject.belongsToMany(Models.Lecturer, {
-        through: 'SubjectLecturer'
-    });
-    Models.Lecturer.belongsToMany(Models.Subject, {
-        through: 'SubjectLecturer'
-    });
 
-    Models.FeedBackSession.belongsTo(Models.Subject);
 
-   // Models.Request.belongsTo(Models.Subject);
+    Models.FeedBackSession.belongsTo(Models.Subject);    
 
     Models.FeedBackSession.belongsTo(Models.Center);
 
@@ -134,17 +148,21 @@ var Relationship = function() {
 
     Models.FeedBackSession.belongsTo(Models.Batch);
 
-    Models.Room.belongsTo(Models.Faculty);
+    Models.QuestionTemplate.belongsToMany(Models.Question, {
+       through: 'QuestionTemplateQuestion'
+    });
+    Models.Question.belongsToMany(Models.QuestionTemplate, {
+        through: 'QuestionTemplateQuestion'
+    });
 
-    Models.Hod.belongsTo(Models.Department);
-
-
+    /*********************************************************************
+    *********************************************************************/
 
     connection
         .sync()
         .then(function(err) {
             console.log("Database created");
-        }, function(err) {
+        }, function (err) {
             console.log('An error occurred while creating the table:', err);
         });
 };

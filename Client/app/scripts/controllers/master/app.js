@@ -61,7 +61,7 @@ angular
                 redirectTo: '/'
             });
     }]).run(function($rootScope) {        
-        $rootScope.user = {
+        user_role = {
             id: 3,
             userName:'student01',
             role:'lecture'
