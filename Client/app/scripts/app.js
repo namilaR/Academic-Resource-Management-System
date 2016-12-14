@@ -8,7 +8,6 @@
  * Main module of the application.
  */
 
-
 angular
   .module('armsAngularApp', [
     'ngAnimate',

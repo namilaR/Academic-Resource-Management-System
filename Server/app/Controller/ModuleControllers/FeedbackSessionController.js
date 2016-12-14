@@ -107,13 +107,43 @@ function FeedbackSessionController() {
 
     this.checkFeedbacksessionAvailable = function(req,res){
 
-        var  query_string = "SELECT COUNT(feedbacksession.id) as feedback_count FROM feedbacksession WHERE feedbacksession.id = '45' AND DATE(feedbacksession.feedbackSessionDate) = DATE(CURDATE()) AND CURTIME() BETWEEN feedbacksession.feedbackSessionStartTime AND feedbacksession.feedbackSessionEndTime AND feedbacksession.status = '1'";
+        var session_code = req[0].session_code;
+
+        var  query_string = "SELECT COUNT(feedbacksession.id) as feedback_count FROM feedbacksession WHERE feedbacksession.id = '"+session_code+"' AND feedbacksession.status = '1'";
 
         connection.query(query_string,{type: connection.QueryTypes.SELECT}
         ).then(function(sessions) {
                 res.send(sessions);
             })
 
+
+    };
+
+    this.getReportForFeedbackSession = function(req,res){
+
+        var feed_back_session_code = req[0].feed_back_session_code;
+        var report_type = req[0].report_type;
+
+        var  query_string = " SELECT"+
+            " ((Count(feedback.answerOneCount)/(Count(feedback.answerOneCount) + Count(feedback.answerTwoCount) + Count(feedback.answerThreeCount) + Count(feedback.answerFourCount) + Count(feedback.answerFiveCount) )) * 100 ) AS very_poor,"+
+            " ((Count(feedback.answerTwoCount)/(Count(feedback.answerOneCount) + Count(feedback.answerTwoCount) + Count(feedback.answerThreeCount) + Count(feedback.answerFourCount) + Count(feedback.answerFiveCount) )) * 100 ) AS poor,"+
+            " ((Count(feedback.answerThreeCount)/(Count(feedback.answerOneCount) + Count(feedback.answerTwoCount) + Count(feedback.answerThreeCount) + Count(feedback.answerFourCount) + Count(feedback.answerFiveCount) )) * 100 ) AS good,"+
+            " ((Count(feedback.answerFourCount)/(Count(feedback.answerOneCount) + Count(feedback.answerTwoCount) + Count(feedback.answerThreeCount) + Count(feedback.answerFourCount) + Count(feedback.answerFiveCount) )) * 100 ) AS very_good,"+
+            " ((Count(feedback.answerFiveCount)/(Count(feedback.answerOneCount) + Count(feedback.answerTwoCount) + Count(feedback.answerThreeCount) + Count(feedback.answerFourCount) + Count(feedback.answerFiveCount) )) * 100 ) AS excellent,"+
+            " question.question"+
+            " FROM"+
+            " feedback"+
+            " LEFT JOIN question ON question.id = feedback.QuestionId"+
+            " WHERE"+
+            " feedback.FeedbackSessionId = '"+feed_back_session_code+"'"+
+            " AND question.questionType = '"+report_type+"'"+
+            " GROUP BY"+
+            " feedback.QuestionId";
+
+        connection.query(query_string,{type: connection.QueryTypes.SELECT}
+        ).then(function(sessions) {
+                res.send(sessions);
+            })
 
     };
 }

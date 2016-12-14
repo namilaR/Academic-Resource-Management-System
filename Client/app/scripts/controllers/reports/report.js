@@ -20,6 +20,7 @@ angular.module('armsAngularApp').controller('ReportCtrl', [
             ];
 
             var get_all_feedback_session_codes_for_report = 'http://localhost:8002/feedback-session/get-all-feedback-sessions-for-report';
+            var get_report_for_feedback_session = 'http://localhost:8002/feedback-session/get-report-for-feedback-session';
 
             //Loading the feed_back Select
             $scope.array = [];
@@ -27,7 +28,8 @@ angular.module('armsAngularApp').controller('ReportCtrl', [
             $http.get(get_all_feedback_session_codes_for_report)
                 .then(function(response) {
                     angular.forEach(response.data , function(element) {
-                        $scope.array.push({id: element.id, feed_back: element.feed_back });
+                        var element_id = element.id;
+                        $scope.array.push({id: element_id, feed_back: element.feed_back });
                     });
                 });
 
@@ -35,12 +37,6 @@ angular.module('armsAngularApp').controller('ReportCtrl', [
                 availableOptions: $scope.array,
                 selectedOption : $scope.array[0]
             };
-
-            $scope.GetValue = function (type) {
-                var selectedOption = $scope.data.selectedOption
-                $scope.typeChangeHandler(selectedOption.name);
-            };
-
 
             $scope.report_type_array = [];
             $scope.report_type_array.push({id: -1, report_type: "Please select a report type"});
@@ -52,41 +48,55 @@ angular.module('armsAngularApp').controller('ReportCtrl', [
                 selectedOption : $scope.report_type_array[0]
             };
 
-            $scope.clearFeedbackSessionArray =  function(){
-                $scope.feedback_sessions = [];
-                $scope.feedback_sessions.push({id: -1, feedback: "Please select an institute"});
-                $scope.feedback = {
-                    availableOptions: $scope.feedback_sessions,
-                    selectedOption : $scope.feedback_sessions[0]
-                };
-            }
+            $scope.GetSelectedFeedbackSessionCodesValue = function () {
 
-            $scope.feedback_sessions = [];
-            $scope.feedback_sessions.push({id: -1, feedback: "Please select a feedback session"});
-            $scope.feedback = {
-                availableOptions: $scope.feedback_sessions,
-                selectedOption : $scope.feedback_sessions[0]
-            };
+                var selectedFeedbackSessionCodesValue = $scope.feedbacksessioncodes.selectedOption.id;
+                var selectedReportType = $scope.report_type.selectedOption.id;
 
-            $scope.getFeedbackSessions = function(){
-                $http.get(get_all_feedback_session_codes_for_report).success(function(data) {
-                    $scope.feedback_sessions = [];
-                    $scope.feedback_sessions.push({id: -1, feedback: "Please select a feedback session"});
+                if(selectedFeedbackSessionCodesValue == -1 || selectedReportType == -1){
+                    alert("Please select all report filters.");
+                    return;
+                }
 
-                    for(var k in data) {
-                        var feedback = data[k].feed_back;
-                        var id = data[k].feed_back;
-                        $scope.feedback_sessions.push({id: id, feedback: feedback});
+                $scope.submitData = [
+                    {
+                        "feed_back_session_code": selectedFeedbackSessionCodesValue,
+                        "report_type":selectedReportType
                     }
-                    $scope.feedback = {
-                        availableOptions: $scope.feedback_sessions,
-                        selectedOption : $scope.feedback_sessions[0]
-                    };
-                });
-                console.log('loaded all feedback sessions...');
+                ];
+
+                $http.post(get_report_for_feedback_session,$scope.submitData)
+                    .success(function(data, status, headers, config){
+
+                        if( data.length != 0 ){
+
+                            for( var i = 0 ; i < data.length; i++){
+
+                                    var ans =  [
+                                                data[i].very_poor,
+                                                data[i].poor,
+                                                data[i].good,
+                                                data[i].very_good,
+                                                data[i].excellent
+                                            ];
+
+
+                                        loadChart(ans, data[i].question, i + 1);
+                            }
+                            $scope.showReportCharts();
+                        }else{
+
+                            document.getElementById('report_chart_div').style.display = "none";
+                        }
+
+
+
+                        }).error(function(data, status, headers, config){
+
+                    });
+
+
             };
-
-
 
             $scope.showReportCharts = function() {
                 showReport();
@@ -97,18 +107,18 @@ angular.module('armsAngularApp').controller('ReportCtrl', [
             }
 
             reportsDataservice.getChartData(1).then(function(res) {
-                loadChart(res.data);
+                loadChart(res.data,'Loading....');
             });
             
 
-            function loadChart(chart_data) {
-                var ctx        = document.getElementById("myChart");
+            function loadChart(chart_data,report_type,number) {
+                var ctx        = document.getElementById("myChart_"+number);
 
                 var data = {
                     labels: ["Very Poor","Poor","Good","Very Good","Excellent"],
                     datasets: [
                         {
-                            label: "QUESTIONS",
+                            label: report_type,
                             backgroundColor: [
                                 'rgba(255, 99, 132, 0.2)',
                                 'rgba(54, 162, 235, 0.2)',
